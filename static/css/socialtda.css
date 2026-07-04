@@ -1,0 +1,225 @@
+/* SocialTDA overrides + Animated Figure 1 + influence heatmaps.
+   Loaded last so it wins over the vendored FLaME CSS. */
+
+/* ---- Palette tokens (shared with figure1.js legend) ---- */
+:root {
+  --soc-reason:   #762A83; /* SocialIQA  - social reasoning  */
+  --soc-know:     #8C6D1F; /* MMLU SS    - social knowledge  */
+  --stem-reason:  #A14F00; /* ARC-Chal.  - STEM reasoning    */
+  --stem-know:    #1B7837; /* MMLU STEM  - STEM knowledge    */
+  --infl-pos:     #4575B4;
+  --infl-pos-lt:  #67A9CF;
+  --infl-neg:     #D73027;
+  --infl-neg-lt:  #EF8A62;
+  --infl-neutral: #F7F7F7;
+  --slate:        #4B5563;
+}
+
+/* Brand token reused from FLaME's ".flame" small-caps accent */
+.flame {
+  font-variant: small-caps;
+  color: var(--secondary-color);
+  font-weight: bold;
+  letter-spacing: 0.02em;
+}
+
+/* Nicer justified abstract on wide screens */
+.abstract-box p { margin-bottom: 0.9rem; }
+.abstract-box p:last-child { margin-bottom: 0; }
+
+/* 2x2 design mini-grid used in the teaser card */
+.design-2x2 {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 6px;
+  font-size: 0.82rem;
+  margin-top: 0.5rem;
+}
+.design-2x2 .d-head { font-weight: 700; text-align: center; align-self: center; }
+.design-2x2 .d-rowhead { font-weight: 700; align-self: center; }
+.design-2x2 .d-cell {
+  border-radius: 6px;
+  padding: 0.5rem 0.4rem;
+  color: white;
+  text-align: center;
+  line-height: 1.15;
+}
+.d-social-reason { background: var(--soc-reason); }
+.d-social-know   { background: var(--soc-know); }
+.d-stem-reason   { background: var(--stem-reason); }
+.d-stem-know     { background: var(--stem-know); }
+
+/* Benchmark chips */
+.bench-chip {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  color: white;
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin: 0.15rem;
+}
+
+/* ================= Animated Figure 1 ================= */
+.fig1 {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  padding: 1.25rem 1.25rem 1rem;
+  border: 1px solid #eee;
+}
+.fig1-stages {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.fig1-stage-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1.5px solid #e0d3e4;
+  background: #faf7fb;
+  color: var(--slate);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.fig1-stage-btn .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem; height: 1.35rem;
+  border-radius: 50%;
+  background: #e0d3e4;
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+.fig1-stage-btn.is-active {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: white;
+}
+.fig1-stage-btn.is-active .num { background: white; color: var(--primary-color); }
+
+.fig1-stage-wrap { position: relative; }
+.fig1-svg { width: 100%; height: auto; display: block; }
+
+.fig1-caption {
+  min-height: 2.4em;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--slate);
+  margin-top: 0.4rem;
+  padding: 0 0.5rem;
+}
+.fig1-caption strong { color: var(--primary-color); }
+
+.fig1-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.fig1-btn {
+  border: none;
+  background: #f0e9f2;
+  color: var(--primary-color);
+  border-radius: 8px;
+  width: 2.3rem; height: 2.3rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.fig1-btn:hover { background: #e2d3e7; }
+.fig1-progress {
+  flex: 1;
+  max-width: 340px;
+  height: 9px;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  /* track + stage ticks at 25/50/75% */
+  background-color: #ece6ef;
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(25% - 1.5px), #c9b8cf calc(25% - 1.5px), #c9b8cf 25%);
+  transition: height 0.15s ease;
+}
+.fig1-progress:hover { height: 11px; }
+.fig1-progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  pointer-events: none;
+}
+
+/* SVG helper text */
+.fig1 text { font-family: 'Noto Sans', sans-serif; }
+.fig1 .f1-title { font-weight: 700; fill: var(--primary-color); }
+.fig1 .f1-label { fill: var(--slate); }
+.fig1 .f1-cellval { font-size: 11px; font-weight: 600; }
+
+/* Static fallback shown when JS disabled / reduced motion */
+.fig1-fallback { display: none; }
+.no-js .fig1-interactive { display: none; }
+.no-js .fig1-fallback { display: block; }
+
+/* ================= Influence heatmap tables (Results) ================= */
+.heatmap-table {
+  border-collapse: separate;
+  border-spacing: 3px;
+  margin: 0 auto;
+  font-size: 0.85rem;
+}
+.heatmap-table th {
+  padding: 0.4rem 0.55rem;
+  font-weight: 700;
+  color: var(--slate);
+  text-align: center;
+  vertical-align: bottom;
+  background: transparent;
+}
+.heatmap-table td.rowhead {
+  text-align: right;
+  font-weight: 600;
+  color: var(--dark-text);
+  white-space: nowrap;
+  padding-right: 0.6rem;
+  background: transparent;
+}
+.heatmap-table td.cell {
+  text-align: center;
+  border-radius: 5px;
+  padding: 0.5rem 0.7rem;
+  font-weight: 600;
+  min-width: 62px;
+  color: #222;
+}
+.heatmap-table td.cell.signature {
+  outline: 2.5px solid var(--primary-color);
+  outline-offset: -2px;
+}
+.heatmap-legend {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.5rem; flex-wrap: wrap;
+  font-size: 0.8rem; color: var(--slate);
+  margin-top: 0.9rem;
+}
+.heatmap-legend .swatch {
+  display: inline-block; width: 1.2rem; height: 0.8rem; border-radius: 2px;
+  vertical-align: middle; margin: 0 0.15rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fig1-interactive { display: none; }
+  .fig1-fallback { display: block; }
+}

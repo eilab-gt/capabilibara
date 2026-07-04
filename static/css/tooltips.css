@@ -1,0 +1,42 @@
+/* Completely disable CSS-based tooltips for our target elements - we'll handle them with JS */
+.tooltip-right:hover::after,
+.tooltip-trigger:hover::after,
+th[data-tooltip]:hover::after {
+  display: none !important;
+}
+
+/* Custom tooltips created by JS */
+.custom-tooltip {
+  position: absolute;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  width: 300px;
+  max-width: 350px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  text-align: left;
+  pointer-events: none;
+  word-wrap: break-word;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.custom-tooltip strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 2px;
+  color: white;
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 768px) {
+  .custom-tooltip {
+    width: 200px;
+    left: 10px !important;
+    right: auto !important;
+  }
+}

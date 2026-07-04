@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Where Does Social Reasoning Come From? Capability Provenance in Language Models — mapping which regions of the pretraining corpus support social vs. STEM reasoning in OLMo3-7B via training-data attribution.">
+  <meta name="keywords" content="training data attribution, capability provenance, social reasoning, language models, interpretability, OLMo, Dolma, unlearning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Where Does Social Reasoning Come From? Capability Provenance in Language Models</title>
+
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/results.css">
+  <link rel="stylesheet" href="./static/css/tooltips.css">
+  <link rel="stylesheet" href="./static/css/socialtda.css">
+</head>
+<body>
+
+<!-- Navigation bar -->
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#">
+        <img src="./static/images/favicon.svg" alt="Logo" style="width: 28px; height: 28px; margin-right: 0.4rem;">
+        <span class="flame">SocialTDA</span>
+      </a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarMenu" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#abstract">Abstract</a>
+        <a class="navbar-item" href="#findings">Findings</a>
+        <a class="navbar-item" href="#methodology">Methodology</a>
+        <a class="navbar-item" href="#results">Results</a>
+        <a class="navbar-item" href="#resources">Resources</a>
+        <a class="navbar-item" href="#BibTeX">Citation</a>
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-light" href="https://github.com/eilab-gt/social-data-attribution" target="_blank" rel="noopener" title="Project repository">
+              <span class="icon"><i class="fab fa-github"></i></span><span>Project repo</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero has-text-centered pt-6">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Where Does Social Reasoning Come From?</h1>
+          <p class="subtitle is-4" style="color:#f0e6f3; margin-top:-0.5rem;">Capability Provenance in Language Models</p>
+
+          <div class="is-size-5 publication-authors" style="margin-top:1.5rem;">
+            <span class="author-block"><a href="mailto:glenn@gatech.edu">Glenn Matlin</a><sup>1,2,5</sup>,</span>
+            <span class="author-block">Chandreyi Chakraborty<sup>1</sup>,</span>
+            <span class="author-block">Saehee Eom<sup>1</sup>,</span>
+            <span class="author-block">Mika Okamoto<sup>1</sup>,</span>
+            <span class="author-block">Rayan Castilla<sup>1</sup>,</span>
+            <span class="author-block">Louis Jaburi<sup>3</sup>,</span>
+            <span class="author-block">Alvin Deng<sup>3</sup>,</span>
+            <span class="author-block">Taywon Min<sup>4,2</sup>,</span>
+            <span class="author-block">Lucia Quirke<sup>3,2</sup>,</span>
+            <span class="author-block">Stella Biderman<sup>3</sup>,</span>
+            <span class="author-block">Mark Riedl<sup>1</sup></span>
+          </div>
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>1</sup>Georgia Tech</span>&nbsp;·&nbsp;
+            <span class="author-block"><sup>2</sup>MATS</span>&nbsp;·&nbsp;
+            <span class="author-block"><sup>3</sup>EleutherAI</span>&nbsp;·&nbsp;
+            <span class="author-block"><sup>4</sup>KAIST AI</span>&nbsp;·&nbsp;
+            <span class="author-block"><sup>5</sup>GT AI Safety Initiative</span>
+          </div>
+          <div class="publication-venue">Preprint · arXiv:2606.19625</div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2606.19625" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2606.19625" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/eilab-gt/social-data-attribution" target="_blank" rel="noopener" title="Project repository" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Project repo</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/HCAI-Lab" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><img src="./static/images/huggingface_logo.svg" alt="HuggingFace" width="20" height="20"></span><span>Hugging Face</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser: animated Figure 1 -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered mb-5" data-aos="fade-up">
+        We use <strong>training-data attribution</strong> as an interpretable instrument for
+        <strong>capability discovery</strong> — mapping which regions of the pretraining corpus
+        support social- versus STEM-reasoning in <span class="flame">OLMo3-7B</span>.
+      </h2>
+
+      <div class="figure-container mb-5" data-aos="fade-up">
+        <div class="fig1" data-fig1>
+          <figure class="image fig1-fallback">
+            <img src="./static/images/figures/fig-overview-revised.png" alt="Capability provenance pipeline">
+          </figure>
+          <figcaption class="has-text-centered mt-2 is-italic">
+            <strong>Figure 1:</strong> Capability provenance pipeline. (1) Dolma3 binned by WebOrganizer
+            topic–format; (2) Bergson/TrackStar attributes benchmark probes to bins; (3) signed z-scores
+            map supportive and suppressive bins; (4) unlearning high-influence bins versus random in-topic
+            controls tests whether those regions are load-bearing.
+          </figcaption>
+        </div>
+      </div>
+
+      <div class="columns is-multiline mt-5">
+        <div class="column is-half" data-aos="fade-up">
+          <div class="card has-background-light h-100">
+            <div class="card-header"><p class="card-header-title">
+              <span class="icon mr-2"><i class="fas fa-table-cells"></i></span>Topic × Format Taxonomy
+            </p></div>
+            <div class="card-content"><div class="content">
+              <p><strong>576 bins = 24 topics × 24 formats.</strong> The Common Crawl portion of the
+              de-duplicated Dolma3 mix (~1.10B docs) is classified with WebOrganizer's topic and format
+              classifiers. A balanced working set of <strong>5.68M documents (~10.5B tokens; 10k docs/bin)</strong>
+              turns corpus-scale attribution into an interpretable, comparable instrument.</p>
+            </div></div>
+          </div>
+        </div>
+        <div class="column is-half" data-aos="fade-up" data-aos-delay="100">
+          <div class="card has-background-light h-100">
+            <div class="card-header"><p class="card-header-title">
+              <span class="icon mr-2"><i class="fas fa-vials"></i></span>2×2 Contrastive Design
+            </p></div>
+            <div class="card-content"><div class="content">
+              <p>A factorial design decouples <strong>capability type</strong> (reasoning vs. knowledge)
+              from <strong>domain</strong> (social vs. STEM):</p>
+              <div class="design-2x2">
+                <span class="d-head"></span><span class="d-head">Social</span><span class="d-head">STEM</span>
+                <span class="d-rowhead">Reasoning</span>
+                <span class="d-cell d-social-reason">SocialIQA</span>
+                <span class="d-cell d-stem-reason">ARC-Challenge</span>
+                <span class="d-rowhead">Knowledge</span>
+                <span class="d-cell d-social-know">MMLU Soc. Sci.</span>
+                <span class="d-cell d-stem-know">MMLU STEM</span>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section id="abstract" class="section content-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 section-title has-text-centered" data-aos="fade-up">Abstract</h2>
+        <div class="content has-text-justified abstract-content" data-aos="fade-up">
+          <div class="abstract-box p-5 has-background-white-ter">
+            <p>We use training-data attribution as an interpretable tool for capability discovery,
+              mapping which regions of the pretraining corpus support social-reasoning versus
+              STEM-reasoning in OLMo3-7B. Training-data attribution measures how strongly each training
+              document influences a model's predictions on a benchmark, but document-level scores are
+              too noisy to identify which corpus regions support which capabilities, and prior work has
+              emphasized factual knowledge rather than reasoning.</p>
+            <p>We compute gradient-based attribution (TrackStar via Bergson) over a working set drawn
+              from the de-duplicated Dolma3 mix, aggregate influence across WebOrganizer's 24-format ×
+              24-topic taxonomy (576 bins), and contrast benchmark pairs in a 2×2 design that varies
+              domain (social vs. STEM) and capability type (reasoning vs. knowledge): SocialIQA and MMLU
+              Social Sciences against ARC-Challenge and MMLU STEM.</p>
+            <p>Social and STEM reasoning draw on qualitatively distinct corpus regions, and the contrast
+              is sharper at the reasoning level than at the knowledge level. Targeted machine unlearning
+              provides partial causal validation: forgetting high-attribution topic bins (e.g., Literature
+              for SocialIQA) degrades the aligned benchmark more than within-bin random baselines, and we
+              will release audited code, sampling manifests, the bin-level influence matrix, and unlearning
+              checkpoints after the public release review.</p>
+          </div>
+
+          <div class="paper-stats has-text-centered mt-5">
+            <div class="columns is-mobile is-multiline">
+              <div class="column" data-aos="zoom-in"><div class="stat-box p-3">
+                <span class="icon is-large"><i class="fas fa-table-cells-large fa-2x"></i></span>
+                <p class="is-size-5 mt-2"><strong>576</strong></p><p>Taxonomy Bins (24×24)</p>
+              </div></div>
+              <div class="column" data-aos="zoom-in" data-aos-delay="80"><div class="stat-box p-3">
+                <span class="icon is-large"><i class="fas fa-file-lines fa-2x"></i></span>
+                <p class="is-size-5 mt-2"><strong>5.68M</strong></p><p>Documents (~10.5B tokens)</p>
+              </div></div>
+              <div class="column" data-aos="zoom-in" data-aos-delay="160"><div class="stat-box p-3">
+                <span class="icon is-large"><i class="fas fa-vials fa-2x"></i></span>
+                <p class="is-size-5 mt-2"><strong>4</strong></p><p>Benchmarks (2×2 design)</p>
+              </div></div>
+              <div class="column" data-aos="zoom-in" data-aos-delay="240"><div class="stat-box p-3">
+                <span class="icon is-large"><i class="fas fa-microchip fa-2x"></i></span>
+                <p class="is-size-5 mt-2"><strong>~37K</strong></p><p>H200-equiv. GPU-hours</p>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Findings -->
+<section id="findings" class="section content-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered"><div class="column is-full">
+      <h2 class="title is-3 section-title has-text-centered" data-aos="fade-up">Key Findings</h2>
+      <div class="notification is-light mb-5" data-aos="fade-up">
+        <p class="is-size-5 has-text-centered mb-0">
+          Within the OLMo3-7B / Dolma3 setting, a fixed taxonomy turns noisy document-level scores into
+          corpus units that can be compared, inspected, and perturbed.
+        </p>
+      </div>
+      <div class="columns is-multiline">
+        <div class="column is-one-third" data-aos="fade-up"><div class="card h-100"><div class="card-content"><div class="content">
+          <span class="icon is-large has-text-primary mb-3"><i class="fas fa-arrow-up-right-dots fa-2x"></i></span>
+          <h4 class="title is-5">SocialIQA is the outlier</h4>
+          <p>Its 576-bin profile correlates with each comparison benchmark at only <strong>r ≤ 0.22</strong>,
+          versus <strong>r = 0.53–0.86</strong> among the other three. Its influence is diffuse and
+          narrative/interpersonal (top formats: Customer Support, FAQ, Q&amp;A Forum).</p>
+        </div></div></div></div>
+
+        <div class="column is-one-third" data-aos="fade-up" data-aos-delay="80"><div class="card h-100"><div class="card-content"><div class="content">
+          <span class="icon is-large has-text-primary mb-3"><i class="fas fa-right-left fa-2x"></i></span>
+          <h4 class="title is-5">The signature bin sign-flips</h4>
+          <p><em>Literature × Customer Support</em> is SocialIQA's highest-influence bin (z = <strong>+16.0</strong>)
+          yet flips strongly negative for MMLU Social Sciences (<strong>−7.31</strong>) and MMLU STEM (<strong>−5.75</strong>).</p>
+        </div></div></div></div>
+
+        <div class="column is-one-third" data-aos="fade-up" data-aos-delay="160"><div class="card h-100"><div class="card-content"><div class="content">
+          <span class="icon is-large has-text-primary mb-3"><i class="fas fa-scale-unbalanced fa-2x"></i></span>
+          <h4 class="title is-5">Reasoning &gt; domain</h4>
+          <p>The social–STEM split is <strong>sharper for reasoning than for knowledge</strong>
+          (~1.7× wider Δz range). Capability <em>type</em> is more corpus-differentiating than domain.</p>
+        </div></div></div></div>
+
+        <div class="column is-one-third" data-aos="fade-up"><div class="card h-100"><div class="card-content"><div class="content">
+          <span class="icon is-large has-text-primary mb-3"><i class="fas fa-comments fa-2x"></i></span>
+          <h4 class="title is-5">Bimodal lexical signature</h4>
+          <p>SocialIQA's top bins split into short, dialogue-rich interpersonal text and long-form technical
+          documentation — mean document length differs <strong>&gt;20×</strong> across the two clusters.</p>
+        </div></div></div></div>
+
+        <div class="column is-one-third" data-aos="fade-up" data-aos-delay="80"><div class="card h-100"><div class="card-content"><div class="content">
+          <span class="icon is-large has-text-primary mb-3"><i class="fas fa-eraser fa-2x"></i></span>
+          <h4 class="title is-5">Unlearning validates SocialIQA</h4>
+          <p>Influence-targeted forgetting degrades accuracy more than same-topic random controls most clearly
+          for SocialIQA (Wilcoxon <strong>p<sub>BH</sub> &lt; 10⁻⁴</strong>) — a <em>selective damage profile</em>,
+          weaker/null/reversed for the others.</p>
+        </div></div></div></div>
+
+        <div class="column is-one-third" data-aos="fade-up" data-aos-delay="160"><div class="card h-100"><div class="card-content"><div class="content">
+          <span class="icon is-large has-text-primary mb-3"><i class="fas fa-layer-group fa-2x"></i></span>
+          <h4 class="title is-5">Knowledge is concentrated</h4>
+          <p>High-influence bins correlate more tightly with accuracy drop for knowledge benchmarks than for
+          reasoning — knowledge rests on a few load-bearing bins; reasoning is robust to single-bin removal.</p>
+        </div></div></div></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- Methodology -->
+<section id="methodology" class="section content-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered"><div class="column is-full">
+      <h2 class="title is-3 section-title has-text-centered" data-aos="fade-up">Methodology</h2>
+      <div class="notification is-light mb-5" data-aos="fade-up">
+        <p class="is-size-5 has-text-centered mb-0">Four components take corpus-scale gradient attribution to
+          an interpretable, causally-testable instrument.</p>
+      </div>
+      <div class="columns is-multiline">
+        <div class="column is-half" data-aos="fade-up"><div class="card h-100">
+          <div class="card-header"><p class="card-header-title">
+            <span class="icon mr-2"><i class="fas fa-cubes"></i></span>1 · Open Ecosystem</p></div>
+          <div class="card-content"><div class="content">
+            <p><strong>OLMo3-7B</strong> (Base + Instruct) over the <strong>Dolma3</strong> corpus. Document
+            gradients/curvature are computed on Base (tied to pretraining data); benchmark query gradients on
+            Instruct (follows OLMES multiple-choice prompts more reliably).</p>
+          </div></div>
+        </div></div>
+
+        <div class="column is-half" data-aos="fade-up" data-aos-delay="80"><div class="card h-100">
+          <div class="card-header"><p class="card-header-title">
+            <span class="icon mr-2"><i class="fas fa-filter"></i></span>2 · Corpus &amp; Taxonomy</p></div>
+          <div class="card-content"><div class="content">
+            <p>The 6T-token Dolma3 mix is de-duplicated (~67% duplication) to ~1.26B unique documents, then
+            classified with <strong>WebOrganizer</strong> into 24 topics × 24 formats = <strong>576 bins</strong>.
+            A stratified working set samples <strong>10k docs/bin</strong> (5.68M docs) to counter corpus skew.</p>
+          </div></div>
+        </div></div>
+
+        <div class="column is-half" data-aos="fade-up"><div class="card h-100">
+          <div class="card-header"><p class="card-header-title">
+            <span class="icon mr-2"><i class="fas fa-diagram-project"></i></span>3 · Gradient Attribution</p></div>
+          <div class="card-content"><div class="content">
+            <p>Gradient-based TDA using <strong>TrackStar</strong> via <strong>Bergson v0.9.0</strong>, projecting
+            gradients into a low-rank subspace to run at corpus scale. Mean influence per (benchmark, bin) yields
+            a <strong>576×4 influence matrix</strong>, z-standardized within benchmark, with a 1,000-iteration
+            bootstrap noise floor for the contrastive Δz.</p>
+          </div></div>
+        </div></div>
+
+        <div class="column is-half" data-aos="fade-up" data-aos-delay="80"><div class="card h-100">
+          <div class="card-header"><p class="card-header-title">
+            <span class="icon mr-2"><i class="fas fa-eraser"></i></span>4 · Unlearning Validation</p></div>
+          <div class="card-content"><div class="content">
+            <p>Rank-8 <strong>LoRA</strong> adapters trained with the gradient-normalized <strong>NGDiff</strong>
+            objective, across selection strategy (random vs. influence-guided) × scope (single-topic vs. global).
+            A global random control gives the net effect γ<sub>net</sub> = γ<sub>topic</sub> − γ<sub>global</sub>.</p>
+          </div></div>
+        </div></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- Results -->
+<section id="results" class="section content-section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered" data-aos="fade-up">Results</h2>
+
+    <div class="tabs-container" data-aos="fade-up">
+      <div class="tabs is-centered is-boxed">
+        <ul id="results-tabs">
+          <li class="is-active" data-tab="tab-rq1"><a><span class="icon is-small"><i class="fas fa-chart-simple"></i></span><span>Format Concentration</span></a></li>
+          <li data-tab="tab-influence"><a><span class="icon is-small"><i class="fas fa-table-cells"></i></span><span>Influence Map</span></a></li>
+          <li data-tab="tab-unlearning"><a><span class="icon is-small"><i class="fas fa-eraser"></i></span><span>Unlearning</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Format Concentration (RQ1) -->
+      <div id="tab-rq1" class="tab-pane is-active">
+        <p class="mb-4">Figure~2 (RQ1) summarizes the qualitative pattern that sets social-reasoning
+          attribution apart. The social-knowledge and STEM benchmarks concentrate their strongest
+          <strong>positive influence</strong> in documentation-like formats and scientific topics, while
+          <strong>SocialIQA</strong>'s strongest format marginal is <em>Customer Support</em> and its
+          topic marginals lean on <em>Literature</em> and <em>Social Life</em>. Panel C shows the effect is
+          not merely marginal: <em>Literature × Customer Support</em> is SocialIQA's extreme positive bin
+          (z = +16.0) yet flips negative for MMLU Social Sciences and MMLU STEM.</p>
+        <div class="figure-container">
+          <figure class="image"><img src="./static/images/figures/fig_rq1_format_concentration.png" alt="RQ1 format and topic concentration with selected bins"></figure>
+          <figcaption class="has-text-centered mt-2 is-italic">Format marginals (A) and topic marginals (B)
+            for the four benchmarks, plus selected bin-level z-scores (C). SocialIQA separates from the
+            other three benchmarks in both marginals and selected bins.</figcaption>
+        </div>
+      </div>
+
+      <!-- Influence Map -->
+      <div id="tab-influence" class="tab-pane">
+        <p class="mb-4">Selected bin-level influence z-scores (Figure 2, Panel C; blue = supportive,
+          orange = suppressive; color capped at |z| = 2.5). The outlined cell is SocialIQA's
+          <strong>signature bin</strong>, <em>Literature × Customer Support</em> — extreme positive for
+          SocialIQA yet negative for the MMLU benchmarks.</p>
+        <div class="table-container">
+          <table class="heatmap-table">
+            <thead><tr>
+              <th></th><th>SocialIQA</th><th>MMLU Soc. Sci.</th><th>ARC-Challenge</th><th>MMLU STEM</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="rowhead">Lit. × Customer Support</td>
+                <td class="cell signature" data-z="16.0">+16.0</td><td class="cell" data-z="-7.31">−7.31</td><td class="cell" data-z="-0.45">−0.45</td><td class="cell" data-z="-5.75">−5.75</td></tr>
+              <tr><td class="rowhead">Social Life × Q&amp;A</td>
+                <td class="cell" data-z="1.90">+1.90</td><td class="cell" data-z="-0.06">−0.06</td><td class="cell" data-z="-0.78">−0.78</td><td class="cell" data-z="-0.46">−0.46</td></tr>
+              <tr><td class="rowhead">Home × Creative Writing</td>
+                <td class="cell" data-z="1.29">+1.29</td><td class="cell" data-z="-0.63">−0.63</td><td class="cell" data-z="-0.34">−0.34</td><td class="cell" data-z="-0.12">−0.12</td></tr>
+              <tr><td class="rowhead">Politics × Documentation</td>
+                <td class="cell" data-z="0.41">+0.41</td><td class="cell" data-z="6.86">+6.86</td><td class="cell" data-z="1.59">+1.59</td><td class="cell" data-z="5.56">+5.56</td></tr>
+            </tbody>
+          </table>
+          <div class="heatmap-legend">
+            <span><span class="swatch" style="background:#B35806"></span>suppressive (−)</span>
+            <span><span class="swatch" style="background:#f7f7f7;border:1px solid #ccc"></span>~0</span>
+            <span><span class="swatch" style="background:#2166AC"></span>supportive (+)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unlearning -->
+      <div id="tab-unlearning" class="tab-pane">
+        <p class="mb-4">Change in accuracy (percentage points) after influence-targeted unlearning of each
+          topic's high-influence documents (red = accuracy drop). Forgetting social topics degrades
+          <strong>SocialIQA</strong> — sharply for Social Life (−14.68 pp) — while <strong>ARC-Challenge</strong>
+          is largely preserved.</p>
+        <div class="columns is-vcentered">
+          <div class="column is-6">
+            <div class="table-container">
+              <table class="heatmap-table">
+                <thead><tr><th></th><th>SocialIQA<br>Δ acc (pp)</th><th>ARC-Chal.<br>Δ acc (pp)</th></tr></thead>
+                <tbody>
+                  <tr><td class="rowhead">Social Life</td><td class="cell" data-acc="-14.68">−14.68</td><td class="cell" data-acc="0.09">+0.09</td></tr>
+                  <tr><td class="rowhead">Politics</td><td class="cell" data-acc="-0.06">−0.06</td><td class="cell" data-acc="0.34">+0.34</td></tr>
+                  <tr><td class="rowhead">Literature</td><td class="cell" data-acc="-3.85">−3.85</td><td class="cell" data-acc="0.51">+0.51</td></tr>
+                  <tr><td class="rowhead">Health</td><td class="cell" data-acc="-0.14">−0.14</td><td class="cell" data-acc="-0.09">−0.09</td></tr>
+                  <tr><td class="rowhead">Entertainment</td><td class="cell" data-acc="-2.46">−2.46</td><td class="cell" data-acc="0.43">+0.43</td></tr>
+                  <tr><td class="rowhead">History &amp; Geog.</td><td class="cell" data-acc="-0.63">−0.63</td><td class="cell" data-acc="-0.68">−0.68</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="column is-6">
+            <div class="notification is-light">
+              <p class="mb-2"><strong>A selective damage profile.</strong> Across matched topic–seed cells,
+              the paired difference γ<sub>influence</sub> − γ<sub>random</sub> is significantly positive for
+              <strong>SocialIQA</strong> (Wilcoxon BH-adjusted <strong>p ≈ 10⁻⁵</strong>).</p>
+              <p class="mb-0">MMLU-STEM is weaker (pooled significance only), MMLU-Social-Sciences is not
+              significant, and ARC-Challenge reverses — evidence that high-attribution documents identify
+              capability-relevant regions for SocialIQA specifically, not generic topic membership.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Resources -->
+<section id="resources" class="section content-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered"><div class="column is-full">
+      <h2 class="title is-3 section-title has-text-centered" data-aos="fade-up">Framework &amp; Resources</h2>
+
+      <div class="box has-background-white-ter has-text-centered p-5 mb-5" data-aos="fade-up">
+        <span class="icon is-large mb-4"><i class="fas fa-magnifying-glass-chart flame-icon fa-3x"></i></span>
+        <h3 class="title is-4"><span class="flame">SocialTDA</span> — Capability Provenance</h3>
+        <p class="subtitle">Code and artifacts will be released here after the public release audit.</p>
+        <div class="buttons is-centered mt-4">
+          <a href="https://github.com/eilab-gt/social-data-attribution" target="_blank" rel="noopener" title="Project repository" class="button is-primary">
+            <span class="icon"><i class="fab fa-github"></i></span><span>Project repo</span></a>
+          <a href="https://github.com/eilab-gt/social-data-attribution" target="_blank" rel="noopener" class="button is-info" title="Artifacts coming soon">
+            <span class="icon"><i class="fas fa-database"></i></span><span>Artifacts coming soon</span></a>
+        </div>
+      </div>
+
+      <div class="columns is-multiline">
+        <div class="column is-6" data-aos="fade-up"><div class="card h-100">
+          <div class="card-header"><p class="card-header-title">
+            <span class="icon mr-2"><i class="fas fa-box-open"></i></span>Planned Public Artifacts</p></div>
+          <div class="card-content"><div class="content"><div class="feature-list">
+            <div class="feature-item mb-3"><p class="has-text-weight-bold mb-1">
+              <span class="icon has-text-primary"><i class="fas fa-clock"></i></span> Sampling manifests</p>
+              <p class="is-size-7 ml-4">The stratified 5.68M-document working set, reproducible per bin.</p></div>
+            <div class="feature-item mb-3"><p class="has-text-weight-bold mb-1">
+              <span class="icon has-text-primary"><i class="fas fa-clock"></i></span> Bin-level influence matrix</p>
+              <p class="is-size-7 ml-4">The full 576×4 z-standardized influence matrix.</p></div>
+            <div class="feature-item mb-3"><p class="has-text-weight-bold mb-1">
+              <span class="icon has-text-primary"><i class="fas fa-clock"></i></span> Unlearning checkpoints</p>
+              <p class="is-size-7 ml-4">LoRA adapters and merged evaluation checkpoints.</p></div>
+            <div class="feature-item"><p class="has-text-weight-bold mb-1">
+              <span class="icon has-text-primary"><i class="fas fa-clock"></i></span> Attribution &amp; eval code</p>
+              <p class="is-size-7 ml-4">End-to-end pipeline from corpus binning to unlearning validation.</p></div>
+          </div></div></div>
+        </div></div>
+
+        <div class="column is-6" data-aos="fade-up" data-aos-delay="80"><div class="card h-100">
+          <div class="card-header"><p class="card-header-title">
+            <span class="icon mr-2"><i class="fas fa-cubes-stacked"></i></span>Built On Open Resources</p></div>
+          <div class="card-content"><div class="content">
+            <ul>
+              <li><strong>OLMo3-7B</strong> — fully open base + instruct model tied to its pretraining data.</li>
+              <li><strong>Dolma3</strong> — the open 6T-token pretraining corpus.</li>
+              <li><strong>WebOrganizer</strong> — topic × format taxonomy classifiers.</li>
+              <li><strong>Bergson / TrackStar</strong> — scalable gradient-based attribution.</li>
+              <li><strong>NGDiff</strong> — gradient-normalized machine-unlearning objective.</li>
+            </ul>
+          </div></div>
+        </div></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- Benchmarks & Corpus -->
+<section id="benchmarks" class="section content-section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered" data-aos="fade-up">Benchmarks &amp; Corpus</h2>
+    <p class="has-text-centered mb-5" data-aos="fade-up">The 2×2 design uses four uniformly multiple-choice
+      benchmarks, crossing domain with capability type. (GSM8K and ARC-Easy were removed so the final design
+      is format-matched, eliminating a format-vs-content confound.)</p>
+    <div class="columns is-multiline">
+      <div class="column is-6" data-aos="fade-up"><div class="dataset-category box">
+        <p class="has-text-weight-bold"><span class="bench-chip d-social-reason">Social · Reasoning</span></p>
+        <ul><li><strong>SocialIQA</strong> — commonsense reasoning about social situations and intentions.</li></ul>
+      </div></div>
+      <div class="column is-6" data-aos="fade-up" data-aos-delay="80"><div class="dataset-category box">
+        <p class="has-text-weight-bold"><span class="bench-chip d-stem-reason">STEM · Reasoning</span></p>
+        <ul><li><strong>ARC-Challenge</strong> — hard grade-school science reasoning questions.</li></ul>
+      </div></div>
+      <div class="column is-6" data-aos="fade-up"><div class="dataset-category box">
+        <p class="has-text-weight-bold"><span class="bench-chip d-social-know">Social · Knowledge</span></p>
+        <ul><li><strong>MMLU Social Sciences</strong> — factual social-science knowledge.</li></ul>
+      </div></div>
+      <div class="column is-6" data-aos="fade-up" data-aos-delay="80"><div class="dataset-category box">
+        <p class="has-text-weight-bold"><span class="bench-chip d-stem-know">STEM · Knowledge</span></p>
+        <ul><li><strong>MMLU STEM</strong> — factual science, technology, engineering &amp; math knowledge.</li></ul>
+      </div></div>
+      <div class="column is-12" data-aos="fade-up"><div class="dataset-category box">
+        <p class="has-text-weight-bold">🗂️ Corpus</p>
+        <ul>
+          <li><strong>Dolma3</strong> — 6T-token mix → ~1.26B unique docs after de-duplication.</li>
+          <li><strong>WebOrganizer taxonomy</strong> — 24 topics × 24 formats = 576 bins; ~10.5B tokens sampled.</li>
+        </ul>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Citation -->
+<section id="BibTeX" class="section content-section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered" data-aos="fade-up">Citation</h2>
+    <div class="bibtex-container" data-aos="fade-up">
+      <div class="notification is-primary is-light mb-4">
+        <p class="has-text-centered mb-0">If you find this work useful, please cite:</p>
+      </div>
+      <div class="box">
+<pre><code>@article{matlin2026social,
+  title   = {Where Does Social Reasoning Come From? Capability Provenance in Language Models},
+  author  = {Matlin, Glenn and Chakraborty, Chandreyi and Eom, Saehee and Okamoto, Mika and
+             Castilla, Rayan and Jaburi, Louis and Deng, Alvin and Min, Taywon and
+             Quirke, Lucia and Biderman, Stella and Riedl, Mark},
+  journal = {arXiv preprint arXiv:2606.19625},
+  year    = {2026}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered"><div class="column is-8">
+      <div class="content has-text-centered">
+        <h4 class="has-text-white mb-4"><span class="flame">SocialTDA</span> — Where Does Social Reasoning Come From?</h4>
+        <div class="footer-links mb-5">
+          <a class="icon-link mr-3" href="https://arxiv.org/pdf/2606.19625" target="_blank" title="Paper (PDF)"><i class="fas fa-file-pdf fa-lg"></i></a>
+          <a class="icon-link mr-3" href="https://arxiv.org/abs/2606.19625" target="_blank" title="arXiv"><i class="ai ai-arxiv fa-lg"></i></a>
+          <a class="icon-link" href="https://github.com/eilab-gt/social-data-attribution" target="_blank" rel="noopener" title="Project repository"><i class="fab fa-github fa-lg"></i></a>
+        </div>
+        <div class="institution-info mb-4">
+          <p class="has-text-white-ter">Georgia Tech · MATS · EleutherAI · KAIST AI</p>
+        </div>
+        <p class="has-text-white-ter is-size-7">
+          Website adapted from the <a href="https://huggingface.co/spaces/gtfintechlab/FLaME" target="_blank">FLaME</a>
+          project-page template. Licensed under a
+          <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 License</a>.
+        </p>
+      </div>
+    </div></div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="./static/js/figure1.js"></script>
+<script src="./static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+.tab-content {
+  display: none;
+}
+#main {
+  display: block;
+}
+.tab-container {
+  margin-bottom: 2rem;
+}
+.results-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.results-table th,
+.results-table td {
+  text-align: center;
+  padding: 0.4rem 0.2rem;
+  vertical-align: middle;
+  width: 50px;
+  max-width: 50px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.results-table th {
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  text-align: center;
+}
+.results-table tr:nth-child(even) {
+  background-color: #f7f2f9;
+}
+.results-table tr:hover {
+  background-color: #efe6f2;
+}
+.results-table tr:hover td:first-child {
+  background-color: #efe6f2;
+}
+.table-container {
+  padding: 0.75rem;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(10, 10, 10, 0.15);
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.results-title {
+  margin-bottom: 1.5rem;
+  color: #762A83;
+}
+.flame {
+  font-weight: bold;
+  color: #8C6D1F;
+}
+body {
+  padding-top: 52px;
+}
+.tooltip-trigger {
+  position: relative;
+  cursor: help;
+}
+.tooltip-trigger:hover::after {
+  content: attr(data-title) "\A\A" attr(data-tooltip);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  width: 300px;
+  max-width: 350px;
+  z-index: 9999;
+  text-align: left;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  overflow: visible;
+  word-wrap: break-word;
+  pointer-events: none;
+}
+
+.tooltip-trigger::after {
+  display: none;
+}
+
+.tooltip-trigger:hover::after {
+  display: block;
+}
+
+.tooltip-trigger:hover::first-line {
+  font-weight: normal;
+  font-size: inherit;
+  text-decoration: none;
+}
+
+/* Add hover effect to dataset names in all tables */
+.results-table th.has-text-centered:hover {
+  text-decoration: none;
+  cursor: help;
+}
+
+.tooltip-trigger .first-line,
+.tooltip-trigger::first-line {
+  font-weight: normal;
+  font-size: inherit;
+  text-decoration: none;
+}
+
+/* Add a class for manually marking right-aligned tooltips */
+.tooltip-right:hover::after {
+  left: auto !important;
+  right: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 10px !important;
+}
+
+/* Table borders */
+.column-border-right {
+  border-right: 2px solid #e0cfe4;
+}
+.column-border-left {
+  border-left: 2px solid #e0cfe4;
+}
+.row-border-bottom {
+  border-bottom: 2px solid #762A83;
+}
+
+/* Metric labels in headers */
+.metric-label {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: normal;
+  margin-top: 0.1rem;
+  font-style: italic;
+  opacity: 0.75;
+}
+/* Model name column styling */
+.results-table td:first-child {
+  font-weight: 600;
+  text-align: left;
+  background-color: #f8f9fa;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+  /* width: 110px; */
+  /* max-width: 110px; */
+  /* min-width: 110px; */
+}
+
+/* Ensure all data cells are center-aligned */
+.results-table td:not(:first-child) {
+  text-align: center !important;
+}
+
+/* Adjust column widths for task groups */
+.results-table th[colspan="4"],
+.results-table th[colspan="3"],
+.results-table th[colspan="5"],
+.results-table th[colspan="2"] {
+  min-width: auto;
+}
+
+/* Fix for text classification tables */
+/* .results-table th[colspan="4"] {
+  width: 220px;
+  max-width: 220px;
+}
+
+.results-table th[colspan="1"] {
+  width: 60px;
+  max-width: 60px;
+} */
+
+/* Ensure model column in all tabs has enough width */
+.results-table th:first-child {
+  /* width: 110px; */
+  min-width: 110px;
+  /* max-width: 110px; */
+  text-align: left;
+}
+
+/* Performance highlighting colors */
+.performance-best {
+  background-color: #1f93ff !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+.performance-strong {
+  background-color: #70b7ff !important;
+  color: #003366 !important;
+  font-weight: 600 !important;
+}
+.performance-medium {
+  background-color: #a8d1ff !important;
+  color: #003366 !important;
+}
+.performance-low {
+  background-color: #e1efff !important;
+}
+
+/* Legend styles */
+.performance-legend {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.performance-legend-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Responsive tooltip positioning */
+@media screen and (max-width: 768px) {
+  .tooltip-trigger:hover::after,
+  .tooltip-right:hover::after {
+    width: 200px;
+    left: 0 !important;
+    right: auto !important;
+    top: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 5px;
+  }
+}@media (min-width: 768px) {
+  .container {
+    max-width: 1500px !important;
+  }
+}
+
+/* Add line breaks to longer model names */
+.results-table td:first-child {
+  word-break: break-word;
+  hyphens: auto;
+}
