@@ -88,8 +88,9 @@
     document.querySelectorAll(".unlearn-row").forEach(function (row) {
       var social = parseFloat(row.getAttribute("data-social")) || 0;
       var arc = parseFloat(row.getAttribute("data-arc")) || 0;
-      row.style.setProperty("--social-width", clamp(Math.abs(social) / 15 * 50, 1.5, 50) + "%");
-      row.style.setProperty("--arc-width", clamp(Math.abs(arc) / 1 * 50, 1.5, 32) + "%");
+      var max = parseFloat(row.getAttribute("data-max")) || 18;
+      row.style.setProperty("--social-width", clamp(Math.abs(social) / max * 50, 1.5, 50) + "%");
+      row.style.setProperty("--arc-width", clamp(Math.abs(arc) / max * 50, 1.5, 50) + "%");
     });
   }
 
@@ -127,12 +128,30 @@
     nodes.forEach(function (node) { observer.observe(node); });
   }
 
+  function initBibtexCopy() {
+    var button = document.querySelector("[data-copy-bibtex]");
+    var code = document.getElementById("bibtex-code");
+    if (!button || !code) return;
+    if (!navigator.clipboard) {
+      button.hidden = true;
+      return;
+    }
+    button.addEventListener("click", function () {
+      navigator.clipboard.writeText(code.textContent).then(function () {
+        var original = button.textContent;
+        button.textContent = "Copied";
+        window.setTimeout(function () { button.textContent = original; }, 1600);
+      });
+    });
+  }
+
   ready(function () {
     setNavHeight();
     initNavbar();
     initTaxonomyGrid();
     initBarWidths();
     initScrollAnimations();
+    initBibtexCopy();
 
     window.addEventListener("resize", setNavHeight);
 
