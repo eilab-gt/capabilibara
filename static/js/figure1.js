@@ -6,7 +6,7 @@
      1) Corpus Construction   — Dolma3 -> dedup -> WebOrganizer 576 bins
      2) Training Data Attribution — benchmark probes -> Bergson/TrackStar scoring
      3) Bin-Level Influence Map   — 6x4 signed z-score heatmap (real panel-3 data)
-     4) Unlearning Validation     — 6x2 accuracy-delta grid (real panel-4 data)
+     4) Unlearning Validation     — 4x2 grid of Δ = targeted − random damage (real panel-4 data)
 */
 (function () {
   "use strict";
@@ -40,19 +40,17 @@
     rows: [
       { label: "Lit. × Cust. Support", v: [16.0, -7.31, -0.45, -5.75], sig: 0 },
       { label: "Social Life × Q&A", v: [1.90, -0.06, -0.78, -0.46] },
-      { label: "Home × Creative", v: [1.29, -0.63, -0.34, -0.12] },
+      { label: "Home × Creative", v: [1.29, -0.63, -0.34, -0.19] },
       { label: "Politics × Docs", v: [0.41, 6.86, 1.59, 5.56] }
     ]
   };
-  var UNLEARN = { // panel 4: rows x [SocialIQA Δacc, ARC-Chal Δacc]
-    cols: ["SocialIQA Δacc (pp)", "ARC-Chal. Δacc (pp)"],
+  var UNLEARN = { // panel 4: Δ = targeted − random damage (pp); null = not among that benchmark's reported top topics
+    cols: ["SocialIQA Δ (pp)", "MMLU STEM Δ (pp)"],
     rows: [
-      { label: "Social Life", v: [-14.68, 0.09] },
-      { label: "Politics", v: [-0.06, 0.34] },
-      { label: "Literature", v: [-3.85, 0.51] },
-      { label: "Health", v: [-0.14, -0.09] },
-      { label: "Entertainment", v: [-2.46, 0.43] },
-      { label: "History & Geog.", v: [-0.63, -0.68] }
+      { label: "Literature", v: [17.53, 2.13] },
+      { label: "Education & Jobs", v: [15.03, 1.11] },
+      { label: "Sports & Fitness", v: [8.40, null] },
+      { label: "Science & Technology", v: [null, 22.07] }
     ]
   };
 
@@ -66,7 +64,7 @@
     "<strong>1) Corpus Construction.</strong> Dolma3 (6T tokens) is de-duplicated to ~1.26B unique documents, then binned by WebOrganizer into <strong>576 bins</strong> (24 topics × 24 formats).",
     "<strong>2) Training Data Attribution.</strong> Four benchmark probes are attributed to bins with gradient-based TrackStar (via Bergson), then aggregated to a 576×4 influence matrix.",
     "<strong>3) Bin-Level Influence Map.</strong> Signed z-scores map supportive (blue) vs. suppressive (orange) bins. SocialIQA's <strong>signature bin</strong> is positive for social yet negative/flat for STEM.",
-    "<strong>4) Unlearning Validation.</strong> Forgetting high-influence social bins degrades <strong>SocialIQA</strong> (Social Life −14.68 pp) while ARC-Challenge is preserved — targeted removal, not random controls."
+    "<strong>4) Unlearning Validation.</strong> &Delta; = accuracy damage from influence-targeted forgetting minus within-topic random controls (pp). Forgetting <strong>Literature</strong> hits SocialIQA hardest (+17.53); forgetting <strong>Science &amp; Technology</strong> hits MMLU STEM (+22.07). &mdash; marks topics outside that benchmark's reported top regions."
   ];
 
   // ---- helpers ----
@@ -93,12 +91,11 @@
     return z >= 0 ? mix("#f7f7f7", "#2166AC", t) : mix("#f7f7f7", "#B35806", Math.min(Math.abs(z) / 1.2, 1));
   }
   function inflInk(z) { return Math.min(Math.abs(z) / 3.1, 1) > 0.55 ? "#fff" : "#222"; }
-  // accuracy delta: red (drop) / blue (gain)
+  // unlearning damage delta (targeted − random, pp): darker red = more selective damage
   function accColor(d) {
-    return d < 0 ? mix("#fdf2f0", "#67000D", Math.min(Math.abs(d) / 14.68, 1))
-                 : mix("#f7f7f7", "#4575B4", Math.min(d / 0.6, 1));
+    return mix("#fdf2f0", "#67000D", Math.min(Math.abs(d) / 22.07, 1));
   }
-  function accInk(d) { return Math.min(Math.abs(d) / 14.68, 1) > 0.5 ? "#fff" : "#222"; }
+  function accInk(d) { return Math.min(Math.abs(d) / 22.07, 1) > 0.5 ? "#fff" : "#222"; }
   function fmt(v, plus) { return (v >= 0 && plus ? "+" : "") + v.toFixed(2); }
 
   // ================= scene builders =================
@@ -296,7 +293,12 @@
         var rect = el("rect", { x: x, y: y, width: cw, height: ch, rx: 4, fill: "#f4f4f4", opacity: 0 }, g);
         if (row.sig === ci) { rect.setAttribute("stroke", C.socReason); rect.setAttribute("stroke-width", 0); rect._sig = true; }
         var label = txt(g, x + cw / 2, y + ch / 2 + 4, "", { class: "f1-cellval", "text-anchor": "middle", opacity: 0 });
-        cellObjs.push({ rect: rect, label: label, val: val, color: colorFn(val), ink: inkFn(val), sig: row.sig === ci });
+        cellObjs.push({
+          rect: rect, label: label, val: val,
+          color: val === null ? "#f1f1f1" : colorFn(val),
+          ink: val === null ? "#9ca3af" : inkFn(val),
+          sig: row.sig === ci
+        });
       });
     });
 
@@ -306,11 +308,15 @@
         var delay = 0.03 * i;
         tl.to(o.rect, { opacity: 1, fill: o.color, duration: 0.35 }, delay);
         tl.to(o.label, { opacity: 1, duration: 0.25 }, delay + 0.1);
-        var proxy = { n: 0 };
-        tl.to(proxy, {
-          n: o.val, duration: 0.5,
-          onUpdate: function () { o.label.textContent = fmt(proxy.n, true); o.label.setAttribute("fill", o.ink); }
-        }, delay + 0.1);
+        if (o.val === null) {
+          tl.add(function () { o.label.textContent = "—"; o.label.setAttribute("fill", o.ink); }, delay + 0.1);
+        } else {
+          var proxy = { n: 0 };
+          tl.to(proxy, {
+            n: o.val, duration: 0.5,
+            onUpdate: function () { o.label.textContent = fmt(proxy.n, true); o.label.setAttribute("fill", o.ink); }
+          }, delay + 0.1);
+        }
         if (o.sig) tl.to(o.rect, { attr: { "stroke-width": 3 }, duration: 0.3 }, delay + 0.4);
       });
       return tl;
@@ -372,7 +378,7 @@
       sceneCorpus(svg),
       sceneAttribution(svg),
       heatScene(svg, INFLUENCE, inflColor, inflInk, "Bin-Level Influence Map (signed z-score)"),
-      heatScene(svg, UNLEARN, accColor, accInk, "Unlearning Validation (Δ accuracy, pp)")
+      heatScene(svg, UNLEARN, accColor, accInk, "Unlearning Validation (Δ = targeted − random, pp)")
     ];
 
     var cur = -1, playing = true, tl = null, advance = null, progTween = null;
