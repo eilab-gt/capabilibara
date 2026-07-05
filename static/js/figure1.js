@@ -6,7 +6,7 @@
      1) Corpus Construction   — Dolma3 -> dedup -> WebOrganizer 576 bins
      2) Training Data Attribution — benchmark probes -> Bergson/TrackStar scoring
      3) Bin-Level Influence Map   — 6x4 signed z-score heatmap (real panel-3 data)
-     4) Unlearning Validation     — 4x2 grid of Δ = targeted − random damage (real panel-4 data)
+     4) Unlearning Validation     — Table 49 paired Δ per benchmark (γ_influence − γ_random)
 */
 (function () {
   "use strict";
@@ -44,13 +44,13 @@
       { label: "Politics × Docs", v: [0.41, 6.86, 1.59, 5.56] }
     ]
   };
-  var UNLEARN = { // panel 4: Δ = targeted − random damage (pp); null = not among that benchmark's reported top topics
-    cols: ["SocialIQA Δ (pp)", "MMLU STEM Δ (pp)"],
+  var UNLEARN = { // Table 49: paired Δ = γ_influence − γ_random (acc. points) per benchmark
+    cols: ["Paired Δ (pp)"],
     rows: [
-      { label: "Literature", v: [17.53, 2.13] },
-      { label: "Education & Jobs", v: [15.03, 1.11] },
-      { label: "Sports & Fitness", v: [8.40, null] },
-      { label: "Science & Technology", v: [null, 22.07] }
+      { label: "SocialIQA", v: [1.60] },        // p ≈ 1e-5  (selective damage)
+      { label: "MMLU STEM", v: [0.20] },         // p = 0.028
+      { label: "MMLU Soc. Sci.", v: [0.17] },    // p = 0.227 (n.s.)
+      { label: "ARC-Challenge", v: [-0.26] }     // p > 0.99  (reversed)
     ]
   };
 
@@ -64,7 +64,7 @@
     "<strong>1) Corpus Construction.</strong> Dolma3 (6T tokens) is de-duplicated to ~1.26B unique documents, then binned by WebOrganizer into <strong>576 bins</strong> (24 topics × 24 formats).",
     "<strong>2) Training Data Attribution.</strong> Four benchmark probes are attributed to bins with gradient-based TrackStar (via Bergson), then aggregated to a 576×4 influence matrix.",
     "<strong>3) Bin-Level Influence Map.</strong> Signed z-scores map supportive (blue) vs. suppressive (orange) bins. SocialIQA's <strong>signature bin</strong> is positive for social yet negative/flat for STEM.",
-    "<strong>4) Unlearning Validation.</strong> &Delta; = accuracy damage from influence-targeted forgetting minus within-topic random controls (pp). Forgetting <strong>Literature</strong> hits SocialIQA hardest (+17.53); forgetting <strong>Science &amp; Technology</strong> hits MMLU STEM (+22.07). &mdash; marks topics outside that benchmark's reported top regions."
+    "<strong>4) Unlearning Validation.</strong> &Delta; = &gamma;<sub>influence</sub> &minus; &gamma;<sub>random</sub> across 24 topics &times; 3 seeds (paper Table 49). Influence-targeted forgetting damages <strong>SocialIQA</strong> (+1.60 pp, p &asymp; 10<sup>-5</sup>); ARC-Challenge <em>reverses</em> (&minus;0.26 pp). Selective damage, not generic topic removal."
   ];
 
   // ---- helpers ----
@@ -91,11 +91,13 @@
     return z >= 0 ? mix("#f7f7f7", "#2166AC", t) : mix("#f7f7f7", "#B35806", Math.min(Math.abs(z) / 1.2, 1));
   }
   function inflInk(z) { return Math.min(Math.abs(z) / 3.1, 1) > 0.55 ? "#fff" : "#222"; }
-  // unlearning damage delta (targeted − random, pp): darker red = more selective damage
+  // paired unlearning Δ (γ_influence − γ_random): positive = selective damage (red),
+  // negative = reversed (blue). Max |Δ| ≈ 1.6 pp.
   function accColor(d) {
-    return mix("#fdf2f0", "#67000D", Math.min(Math.abs(d) / 22.07, 1));
+    return d >= 0 ? mix("#fdf2f0", "#67000D", Math.min(d / 1.6, 1))
+                  : mix("#eff3ff", "#2166AC", Math.min(Math.abs(d) / 1.6, 1));
   }
-  function accInk(d) { return Math.min(Math.abs(d) / 22.07, 1) > 0.5 ? "#fff" : "#222"; }
+  function accInk(d) { return Math.min(Math.abs(d) / 1.6, 1) > 0.5 ? "#fff" : "#222"; }
   function fmt(v, plus) { return (v >= 0 && plus ? "+" : "") + v.toFixed(2); }
 
   // ================= scene builders =================
@@ -378,7 +380,7 @@
       sceneCorpus(svg),
       sceneAttribution(svg),
       heatScene(svg, INFLUENCE, inflColor, inflInk, "Bin-Level Influence Map (signed z-score)"),
-      heatScene(svg, UNLEARN, accColor, accInk, "Unlearning Validation (Δ = targeted − random, pp)")
+      heatScene(svg, UNLEARN, accColor, accInk, "Unlearning Validation (paired Δ, acc. points)")
     ];
 
     var cur = -1, playing = true, tl = null, advance = null, progTween = null;

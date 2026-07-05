@@ -39,7 +39,6 @@
       { "@type": "Person", "name": "Stella Biderman" },
       { "@type": "Person", "name": "Mark Riedl" }
     ],
-    "datePublished": "2026-06-17",
     "url": "https://eilab.gatech.edu/",
     "sameAs": [
       "https://arxiv.org/abs/2606.19625",
@@ -122,9 +121,6 @@
       </a>
       <a href="https://github.com/eilab-gt/social-data-attribution" target="_blank" rel="noopener" class="paper-link">
         <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
-      </a>
-      <a href="https://huggingface.co/HCAI-Lab" target="_blank" rel="noopener" class="paper-link">
-        <span class="icon"><img src="./static/images/huggingface_logo.svg" alt=""></span><span>Artifacts</span>
       </a>
     </div>
   </div>
@@ -388,28 +384,36 @@
       <article class="living-figure reverse" data-aos="fade-up">
         <div class="living-copy">
           <p class="mini-kicker">Targeted unlearning</p>
-          <h3>Forgetting a capability's top regions hurts that capability most.</h3>
+          <h3>Influence-targeted forgetting selectively damages SocialIQA.</h3>
           <p>
-            Per-topic accuracy damage from influence-targeted unlearning relative to within-topic
-            random baselines (Figure 1). SocialIQA is hit hardest by forgetting Literature; MMLU
-            STEM is hit hardest by forgetting Science &amp; Technology (+22.07) &mdash; the two
-            capabilities depend on different corpus regions.
+            Across 24 topics &times; 3 seeds, the paired difference
+            <em>d</em> = &gamma;<sub>influence</sub> &minus; &gamma;<sub>random</sub> measures how much
+            more influence-targeted forgetting damages a benchmark than same-topic random controls
+            (paper Table 49). The effect is selective: significant for SocialIQA, weak or null
+            elsewhere, and reversed for ARC-Challenge.
           </p>
         </div>
-        <div class="unlearn-viz" data-unlearning>
-          <div class="unlearn-row" data-social="17.53" data-arc="2.13" data-max="18">
-            <span>Literature</span>
-            <span class="mini-bars"><i class="social-drop"></i><i class="arc-change"></i></span>
-            <span>+17.53 / +2.13</span>
+        <div class="bar-viz unlearn-paired-viz" data-bars>
+          <div class="bar-head"><span>Benchmark</span><span>Paired &Delta; (pp)</span></div>
+          <div class="bar-row" data-value="1.60" data-max="1.6">
+            <span class="bar-label">SocialIQA</span>
+            <span class="bar-track"><span class="bar-fill positive"></span></span>
+            <span class="bar-value">+1.60 &nbsp;<small>(p &asymp; 10<sup>-5</sup>)</small></span>
           </div>
-          <div class="unlearn-row" data-social="15.03" data-arc="1.11" data-max="18">
-            <span>Education &amp; Jobs</span>
-            <span class="mini-bars"><i class="social-drop"></i><i class="arc-change"></i></span>
-            <span>+15.03 / +1.11</span>
+          <div class="bar-row" data-value="0.20" data-max="1.6">
+            <span class="bar-label">MMLU STEM</span>
+            <span class="bar-track"><span class="bar-fill positive"></span></span>
+            <span class="bar-value">+0.20 &nbsp;<small>(p = 0.028)</small></span>
           </div>
-          <div class="unlearn-legend">
-            <span><i class="social-drop"></i> SocialIQA &Delta; (pp)</span>
-            <span><i class="arc-change"></i> MMLU STEM &Delta; (pp)</span>
+          <div class="bar-row" data-value="0.17" data-max="1.6">
+            <span class="bar-label">MMLU Soc. Sci.</span>
+            <span class="bar-track"><span class="bar-fill positive"></span></span>
+            <span class="bar-value">+0.17 &nbsp;<small>(p = 0.227, n.s.)</small></span>
+          </div>
+          <div class="bar-row" data-value="-0.26" data-max="1.6">
+            <span class="bar-label">ARC-Challenge</span>
+            <span class="bar-track"><span class="bar-fill negative"></span></span>
+            <span class="bar-value">&minus;0.26 &nbsp;<small>(p &gt; 0.99, reversed)</small></span>
           </div>
         </div>
       </article>
@@ -489,10 +493,10 @@
           <span class="resource-icon"><i class="fab fa-github"></i></span>
           <span><strong>Project repository</strong><small>Attribution, sampling, and unlearning pipeline.</small></span>
         </a>
-        <a href="https://huggingface.co/HCAI-Lab" target="_blank" rel="noopener">
+        <div class="resource-item" aria-label="Artifacts coming soon">
           <span class="resource-icon"><i class="fas fa-database"></i></span>
           <span><strong>Sampling manifests and influence matrix</strong><small>The 576&times;4 bin-level influence matrix and sampling manifests; public release planned alongside review.</small></span>
-        </a>
+        </div>
         <div class="resource-item">
           <span class="resource-icon"><i class="fas fa-table-cells"></i></span>
           <span><strong>Cross-probe influence statistics</strong><small>Aggregate bin-level lexical and influence profiles shared across the held-out social probes.</small></span>
