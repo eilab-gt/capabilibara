@@ -16,7 +16,10 @@ import {
   influenceColor, influenceInk, benchmarkColor,
   INFLUENCE_COLORS, UI_COLORS, Z_COLOR_CAP
 } from "./socialtda-palettes.js";
-import { svgEl, text, formatSigned, zDecimals, createLegend } from "./socialtda-svg-utils.js";
+import { svgEl, text, formatSigned, spokenSigned, zDecimals, createLegend } from "./socialtda-svg-utils.js";
+import {
+  makeSeekBeat, attachBeatControls, applyInitialPosition, makeSceneApi
+} from "./socialtda-timeline-utils.js";
 
 const VB_W = 1280;
 const VB_H = 720;
@@ -77,14 +80,11 @@ export function buildSignatureBinAnimation(container, options = {}) {
     };
   });
 
-  /* Spoken signs ("plus"/"minus") instead of +/− glyphs: several screen
+  /* spokenSigned: "plus"/"minus" words instead of +/− glyphs — several screen
      readers drop U+2212, which would erase the sign flip this chart teaches. */
-  const ariaSigned = function (v) {
-    return (v < 0 ? "minus " : "plus ") + Math.abs(v).toFixed(zDecimals(v));
-  };
   const ariaLabel = "Animated chart. The corpus bin " + bin.bin +
     " has signed influence z-scores of " + cellsData.map(function (c) {
-      return ariaSigned(c.z) + " on " + c.bench.name;
+      return spokenSigned(c.z) + " on " + c.bench.name;
     }).join(", ") +
     ". An extreme SocialIQA-positive signature bin that flips negative for both MMLU benchmarks, in the OLMo3-7B / Dolma3 setting.";
 
@@ -208,7 +208,7 @@ export function buildSignatureBinAnimation(container, options = {}) {
   // ---------- static fallback path ----------
   if (!animated) {
     // Authored DOM already shows the final frame; captions stay hidden.
-    return makeApi(null);
+    return makeSceneApi({ svg, root, timeline: null });
   }
 
   // ---------- timeline ----------
@@ -299,118 +299,16 @@ export function buildSignatureBinAnimation(container, options = {}) {
   // Final hold so exports keep the takeaway on screen.
   tl.to({}, { duration: 1.3 }, 8.5);
 
-  // ---------- controls ----------
-  let controlsBar = null;
-  if (opts.controls) controlsBar = buildControls();
+  // ---------- controls + initial position ----------
+  /* Shared machinery (socialtda-timeline-utils.js) passes suppressEvents=false
+     on every programmatic seek: the value count-ups above write their labels
+     from onUpdate callbacks, which GSAP suppresses on seek/progress by
+     default — leaving stale "+0.00" text otherwise. */
+  const seekBeat = makeSeekBeat(tl, BEATS);
+  let syncPlayUi = null;
+  if (opts.controls) syncPlayUi = attachBeatControls(root, tl, BEATS, seekBeat).syncPlayUi;
+  applyInitialPosition(tl, opts, seekBeat);
+  if (syncPlayUi) syncPlayUi();
 
-  // ---------- initial position ----------
-  if (opts.end) {
-    tl.progress(1, false).pause();
-  } else if (opts.stage !== null && opts.stage !== undefined && opts.stage !== "") {
-    seekBeat(opts.stage);
-    if (opts.autoplay) tl.play();
-  } else if (opts.autoplay) {
-    tl.play(0);
-  }
-  syncPlayUi();
-
-  /* All programmatic seeks pass suppressEvents=false: the value count-ups
-     write their labels from onUpdate callbacks, which GSAP suppresses on
-     seek/progress by default — leaving stale "+0.00" text otherwise. */
-  function seekBeat(beat) {
-    if (typeof beat === "string" && /^\d+$/.test(beat)) beat = Number(beat);
-    const label = typeof beat === "number" ? BEATS[beat] : beat;
-    if (label && tl.labels[label] !== undefined) tl.pause().seek(label, false);
-  }
-
-  function buildControls() {
-    const bar = document.createElement("div");
-    bar.className = "stda-anim-controls";
-
-    const playBtn = document.createElement("button");
-    playBtn.className = "stda-anim-btn stda-anim-play";
-    playBtn.setAttribute("aria-label", "Play or pause");
-    playBtn.addEventListener("click", function () {
-      if (tl.paused() || !tl.isActive()) {
-        if (tl.progress() === 1) tl.restart();
-        else tl.play();
-      } else {
-        tl.pause();
-      }
-      syncPlayUi();
-    });
-    bar.appendChild(playBtn);
-
-    BEATS.forEach(function (name) {
-      const dot = document.createElement("button");
-      dot.className = "stda-beat-dot";
-      dot.dataset.beat = name;
-      dot.setAttribute("aria-label", "Go to beat: " + name);
-      dot.title = name;
-      dot.addEventListener("click", function () {
-        seekBeat(name);
-        syncPlayUi();
-      });
-      bar.appendChild(dot);
-    });
-
-    const endBtn = document.createElement("button");
-    endBtn.className = "stda-anim-btn";
-    endBtn.textContent = "final frame";
-    endBtn.setAttribute("aria-label", "Jump to final frame");
-    endBtn.addEventListener("click", function () {
-      tl.progress(1, false).pause();
-      syncPlayUi();
-    });
-    bar.appendChild(endBtn);
-
-    root.appendChild(bar);
-    tl.eventCallback("onUpdate", syncBeatUi);
-    return bar;
-  }
-
-  function syncPlayUi() {
-    if (!controlsBar) return;
-    const btn = controlsBar.querySelector(".stda-anim-play");
-    btn.textContent = tl.paused() ? "▶" : "❚❚";
-    syncBeatUi();
-  }
-
-  function syncBeatUi() {
-    if (!controlsBar) return;
-    const t = tl.time();
-    let current = BEATS[0];
-    BEATS.forEach(function (name) {
-      if (tl.labels[name] !== undefined && t >= tl.labels[name]) current = name;
-    });
-    controlsBar.querySelectorAll(".stda-beat-dot").forEach(function (d) {
-      d.classList.toggle("is-active", d.dataset.beat === current);
-    });
-  }
-
-  return makeApi(tl);
-
-  function makeApi(timeline) {
-    return {
-      svg,
-      timeline,
-      goTo: function (beat) {
-        if (timeline) { seekBeat(beat); syncPlayUi(); }
-      },
-      exportFrame: function (target) {
-        if (timeline) {
-          timeline.pause();
-          if (target === undefined || target === "end") timeline.progress(1, false);
-          else if (typeof target === "number" && target <= 1) timeline.progress(target, false);
-          else seekBeat(target);
-          syncPlayUi();
-        }
-        return svg;
-      },
-      destroy: function () {
-        if (timeline) timeline.kill();
-        root.remove();
-      }
-    };
-  }
+  return makeSceneApi({ svg, root, timeline: tl, seekBeat, syncPlayUi });
 }

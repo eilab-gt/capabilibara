@@ -30,6 +30,18 @@ export function formatSigned(v, decimals = zDecimals(v)) {
   return (v < 0 ? "−" : "+") + abs;
 }
 
+/* "plus 16.0", "minus 7.31" — spoken signs for aria labels: several screen
+   readers drop the U+2212 glyph, which would silently erase the sign. */
+export function spokenSigned(v, decimals = zDecimals(v)) {
+  return (v < 0 ? "minus " : "plus ") + Math.abs(v).toFixed(decimals);
+}
+
+/* "5,678,621" — deterministic comma grouping (not locale-dependent, so
+   rendered frames are identical across environments). */
+export function formatInt(n) {
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 /* Greedy word wrap into <tspan>s using a deterministic width estimate
    (avoids layout-dependent measurement so hidden/off-screen SVG still wraps). */
 export function wrapSvgText(textEl, width, lineHeight = 1.3) {
