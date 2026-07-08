@@ -20,7 +20,7 @@
   "influence": {
     "positive_supportive": "#2166AC",
     "positive_supportive_light": "#67A9CF",
-    "negative_suppressive": "#B35806",
+    "negative_suppressive": "#B2182B",
     "negative_drop_alt": "#D73027",
     "neutral": "#F7F7F7",
     "slate": "#4B5563"

@@ -27,7 +27,7 @@ Use the current project palette:
 | Meaning | Color |
 |---|---|
 | Supportive / positive signed influence | `#2166AC` |
-| Suppressive / negative signed influence | `#B35806` or existing site red/orange scale |
+| Suppressive / negative signed influence | `#B2182B` (changed 2026-07-08 from #B35806, which was confusable with the ARC-Challenge orange #A14F00) |
 | Neutral / near zero | `#F7F7F7` |
 | Accuracy drop in unlearning | use a red/dark red damage scale |
 | Accuracy gain / preservation | muted neutral or blue depending on context |
@@ -44,7 +44,7 @@ Always include a legend whenever blue/red or blue/orange appears.
 | Bin | one named topic×format cell |
 | Benchmark query | colored probe chip or arrow |
 | Positive influence | blue/supportive glow, aligned arrows |
-| Negative influence | orange/suppressive cell, opposed arrows |
+| Negative influence | red/suppressive cell, opposed arrows |
 | Aggregation | noisy dots snapping into bins |
 | Contrast | two heatmaps subtract into a signed difference map |
 | Correctness differential | correct and incorrect query streams subtracting |

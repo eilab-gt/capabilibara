@@ -30,9 +30,9 @@ Use `data/socialtda_claims.yaml` as the canonical source. If any of these values
 |---:|---|---|---|
 | 0–2s | Query arrow | Benchmark query arrow appears. | Benchmark query gradient. |
 | 2–4s | Aligned training arrow | Document/bin arrow rotates into alignment; cell turns blue. | Aligned → positive/supportive influence. |
-| 4–6s | Opposed arrow | Another arrow rotates opposite; cell turns orange. | Opposed → negative/suppressive or contrasting influence. |
+| 4–6s | Opposed arrow | Another arrow rotates opposite; cell turns red. | Opposed → negative/suppressive or contrasting influence. |
 | 6–9s | Many arrows aggregate | Multiple tiny arrows collapse into one bin score. | Average over documents in a bin. |
-| 9–12s | Legend | Blue/white/orange legend appears. | Signed influence is a measurement, not a moral label. |
+| 9–12s | Legend | Blue/white/red legend appears. | Signed influence is a measurement, not a moral label. |
 
 ## Implementation notes
 

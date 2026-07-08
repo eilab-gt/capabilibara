@@ -13,7 +13,10 @@ export const BENCHMARK_COLORS = {
 export const INFLUENCE_COLORS = {
   positive: "#2166AC",   // supportive signed influence
   positiveLight: "#67A9CF",
-  negative: "#B35806",   // suppressive / contrasting signed influence
+  /* Suppressive red from the same ColorBrewer RdBu ramp as the blue/neutral.
+     Changed 2026-07-08 from #B35806 (orange), which was confusable with the
+     ARC-Challenge benchmark orange #A14F00. */
+  negative: "#B2182B",   // suppressive / contrasting signed influence
   neutral: "#F7F7F7",    // near-zero influence
   neutralStroke: "#C9C9C9"
 };
@@ -39,7 +42,7 @@ export function mix(hexA, hexB, t) {
 }
 
 /* Diverging fill for a signed within-benchmark z-score:
-   neutral -> blue for supportive (z > 0), neutral -> orange for suppressive. */
+   neutral -> blue for supportive (z > 0), neutral -> red for suppressive. */
 export function influenceColor(z, cap = Z_COLOR_CAP) {
   const t = Math.min(Math.abs(z) / cap, 1);
   return z >= 0

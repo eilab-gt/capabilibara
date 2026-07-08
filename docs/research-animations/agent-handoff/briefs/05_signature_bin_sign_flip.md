@@ -28,7 +28,7 @@ Use `data/socialtda_claims.yaml` as the canonical source. If any of these values
 |---:|---|---|---|
 | 0–1s | Single row appears | A row label types or fades in: Literature × Customer Support. | One topic×format bin. |
 | 1–3s | Four benchmark columns | SocialIQA, MMLU SS, ARC-Challenge, MMLU STEM chips appear. | Same bin, four benchmarks. |
-| 3–5s | Cells fill | SocialIQA cell fills deep blue and expands; MMLU cells fill orange; ARC stays neutral. | +16.0, −7.31, −0.45, −5.75. |
+| 3–5s | Cells fill | SocialIQA cell fills deep blue and expands; MMLU cells fill red; ARC stays neutral. | +16.0, −7.31, −0.45, −5.75. |
 | 5–7s | Callout | A line circles the SocialIQA cell then shows the MMLU sign flip. | Same corpus region; different provenance. |
 | 7–10s | End card | Compact legend + takeaway. | Social reasoning has a distinct corpus signature. |
 

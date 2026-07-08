@@ -75,8 +75,8 @@ within the 10–15 s brief window):
 
 - [x] Scientific values match `data/socialtda_claims.yaml` (all 16 matrix
       values verified in-browser via DOM text; row-0 fills verified as exact
-      palette outputs: ±caps `#2166AC`/`#B35806`, and z = −0.45 as the 0.18
-      neutral→orange mix under the 2.5 cap).
+      palette outputs: ±caps `#2166AC`/`#B2182B`, and z = −0.45 as the 0.18
+      neutral→red mix `rgb(235,207,210)` under the 2.5 cap).
 - [x] Final takeaway accurate, not overclaimed ("Not one document — one
       interpretable corpus region." + caveats "Aggregation stabilizes
       estimates under the attribution metric — it does not make them exact."
@@ -137,9 +137,9 @@ within the 10–15 s brief window):
 |---|---|---|
 | `public/static/animations/exports/aggregation_poster.png` | 1920×1080 PNG | ✔ captured |
 | `public/static/animations/exports/aggregation_poster_square.png` | 1080×1080 PNG | ✔ captured |
-| `public/static/animations/exports/aggregation_16x9.mp4` | 1920×1080, 30 fps, H.264 | ✔ rendered, ffprobe-verified (yuv420p, 13.7 s, 411 frames, ~995 KB); browser playback checked (readyState 4) |
+| `public/static/animations/exports/aggregation_16x9.mp4` | 1920×1080, 30 fps, H.264 | ✔ rendered, ffprobe-verified (yuv420p, 13.7 s, 411 frames, ~1.0 MB); browser playback checked (readyState 4) |
 | `public/static/animations/exports/aggregation_square.mp4` | 1080×1080, 30 fps, H.264 | ✔ rendered, ffprobe-verified (yuv420p, 13.7 s, 411 frames, ~1.1 MB); browser playback checked |
-| `public/static/animations/exports/aggregation.gif` | 640 px wide, 15 fps | ✔ produced (~983 KB — larger than signature-bin's because the dot motion churns the palette; MP4 remains the primary social format) |
+| `public/static/animations/exports/aggregation.gif` | 640 px wide, 15 fps | ✔ produced (~949 KB — larger than signature-bin's because the dot motion churns the palette; MP4 remains the primary social format) |
 
 ### Re-render commands
 
@@ -205,6 +205,17 @@ Adjudicated findings:
 - **Kept as-is (nit):** the footnote "printed values exact" (display
   precision) vs. the caveat "does not make them exact" (estimate quality)
   are distinct, both true statements.
+
+## Color note (2026-07-08)
+
+Shortly after the initial render, the suppressive influence color was changed
+repo-wide from orange `#B35806` to the ColorBrewer RdBu red `#B2182B`: the
+orange was confusable with the ARC-Challenge benchmark orange `#A14F00`, and
+the positive blue `#2166AC` / neutral `#F7F7F7` / site light-red
+`--infl-neg-lt: #ef8a62` were already RdBu tokens, so this unifies the
+diverging scale. All exports in this directory were re-rendered with the red
+palette; the site (`socialtda.css`, `figure1.js`) and the handoff docs
+(`palette.json`, `DESIGN_SYSTEM.md`) were migrated in the same change.
 
 ## Remaining caveats / TODOs
 

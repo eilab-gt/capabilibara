@@ -48,7 +48,7 @@ scene reads `SIGNATURE_BIN.values[benchmark.key]`.
 
 - [x] Scientific values match `data/socialtda_claims.yaml` (verified in-browser
       via DOM text: `+16.0, −7.31, −0.45, −5.75`; color for z = −0.45 verified
-      as the exact 0.18 neutral→orange mix under the 2.5 cap).
+      as the exact 0.18 neutral→negative mix under the 2.5 cap).
 - [x] Final takeaway accurate, not overclaimed ("Social reasoning has a
       distinct corpus signature." + two caveat lines).
 - [x] No raw training snippets or document IDs anywhere.
@@ -98,9 +98,9 @@ scene reads `SIGNATURE_BIN.values[benchmark.key]`.
 |---|---|---|
 | `public/static/animations/exports/signature-bin_poster.png` | 1920×1080 PNG | ✔ captured |
 | `public/static/animations/exports/signature-bin_poster_square.png` | 1080×1080 PNG | ✔ captured |
-| `public/static/animations/exports/signature-bin_16x9.mp4` | 1920×1080, 30 fps, H.264 | ✔ rendered, ffprobe-verified (yuv420p, 9.83 s, 295 frames, ~397 KB) |
-| `public/static/animations/exports/signature-bin_square.mp4` | 1080×1080, 30 fps, H.264 | ✔ rendered, ffprobe-verified (yuv420p, 9.83 s, 295 frames, ~415 KB) |
-| `public/static/animations/exports/signature-bin.gif` | 640 px wide, 15 fps | ✔ produced (~332 KB) |
+| `public/static/animations/exports/signature-bin_16x9.mp4` | 1920×1080, 30 fps, H.264 | ✔ rendered, ffprobe-verified (yuv420p, 9.83 s, 295 frames, ~398 KB); re-rendered with the red palette, playback re-checked |
+| `public/static/animations/exports/signature-bin_square.mp4` | 1080×1080, 30 fps, H.264 | ✔ rendered, ffprobe-verified (yuv420p, 9.83 s, 295 frames, ~417 KB); re-rendered with the red palette, playback re-checked |
+| `public/static/animations/exports/signature-bin.gif` | 640 px wide, 15 fps | ✔ produced (~306 KB) |
 
 ### Re-render commands
 
@@ -158,16 +158,23 @@ re-verified every transcribed number against the YAML independently). Outcome:
 - Rejected (cosmetic): ring edge sits ~4 px inside the soft 5% margin; it is
   well inside the hard square-crop zone.
 
+## Color note (2026-07-08)
+
+The suppressive influence color was changed repo-wide from orange `#B35806`
+to the ColorBrewer RdBu red `#B2182B` (the orange was confusable with the
+ARC-Challenge benchmark orange `#A14F00`; blue/neutral were already RdBu
+tokens). All exports below were re-rendered with the red palette; see
+`aggregation_qa.md` for the full change record.
+
 ## Remaining caveats / TODOs
 
 - **No source PDF in repo.** Values rest on the transcribed
   `socialtda_claims.yaml`; re-verify when the submission PDF or data artifact
   lands.
-- **Pre-existing discrepancy (not fixed here):** `public/static/js/figure1.js`
-  hard-codes `Home × Creative` MMLU STEM as `−0.19`, but
-  `socialtda_claims.yaml` says `−0.12`. The new data module transcribes
-  `−0.12`. figure1.js should eventually be refactored onto the shared data
-  module (roadmap Phase 5).
+- ~~Pre-existing discrepancy: figure1.js hard-codes `Home × Creative` MMLU
+  STEM as `−0.19` vs the YAML's `−0.12`.~~ **Resolved:** figure1.js was
+  refactored onto the shared data module (commit `c478b24`, merged into this
+  branch), which fixes the drift.
 - Vertical 1080×1920 variant not built (optional per design system).
 - Site integration (`public/index.html`) intentionally deferred per
   IMPLEMENTATION_GUIDE repo-integration order: dev page first.

@@ -7,7 +7,7 @@
   --stem-know: #1b7837;
   --infl-pos: #2f6fa8;
   --infl-pos-lt: #87b7d5;
-  --infl-neg: #b35806;
+  --infl-neg: #b2182b;
   --infl-neg-lt: #ef8a62;
   --infl-neutral: #f7f7f7;
   --slate: #4b5563;
@@ -263,7 +263,7 @@
 }
 
 .tax-cell.is-negative {
-  background: rgba(179, 88, 6, 0.84);
+  background: rgba(178, 24, 43, 0.84);
 }
 
 .taxonomy-viz.is-visible .tax-cell.is-social,
@@ -419,7 +419,7 @@
   border: 1px solid rgba(23, 23, 23, 0.1);
   border-radius: 6px;
   background:
-    linear-gradient(90deg, rgba(179, 88, 6, 0.08), transparent 50%, rgba(47, 111, 168, 0.08));
+    linear-gradient(90deg, rgba(178, 24, 43, 0.08), transparent 50%, rgba(47, 111, 168, 0.08));
 }
 
 .bar-track::before {
