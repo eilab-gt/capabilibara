@@ -118,8 +118,9 @@ CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
   "http://localhost:8000/public/animations/dev/signature-bin.html?bare=1&end=1&square=1"
 
 # video: deterministic frame capture (playwright-core stepping the timeline
-# with seek(t, false)), then ffmpeg. Capture script: scratch/capture-frames.mjs
-# pattern — drive ?bare=1&noautoplay=1&motion=1 (+&square=1), 30 fps.
+# with seek(t, false)), then ffmpeg. Capture script (checked in):
+#   node docs/research-animations/tools/capture-frames.mjs signature-bin <16x9|square>
+# It drives ?bare=1&noautoplay=1&motion=1 (+&square=1) at 30 fps.
 ffmpeg -y -framerate 30 -i frames_16x9/f_%04d.png -c:v libx264 -pix_fmt yuv420p \
   -crf 18 -movflags +faststart public/static/animations/exports/signature-bin_16x9.mp4
 ffmpeg -y -framerate 30 -i frames_square/f_%04d.png -c:v libx264 -pix_fmt yuv420p \
