@@ -131,6 +131,10 @@ If you use this software, please cite the paper. GitHub's **"Cite this repositor
 }
 ```
 
+## Project site and research animations
+
+The public project page lives under `public/` and deploys via GitHub Pages. Planning, claim guardrails, and agent handoff material for research animations are under [`docs/research-animations/`](docs/research-animations/).
+
 ## License
 
 - **Code** in this repository is licensed under [AGPL-3.0](LICENSE).

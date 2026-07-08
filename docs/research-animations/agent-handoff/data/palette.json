@@ -1,0 +1,33 @@
+{
+  "benchmarks": {
+    "SocialIQA": {
+      "role": "social reasoning",
+      "color": "#762A83"
+    },
+    "MMLU Social Sciences": {
+      "role": "social knowledge",
+      "color": "#8C6D1F"
+    },
+    "ARC-Challenge": {
+      "role": "STEM reasoning",
+      "color": "#A14F00"
+    },
+    "MMLU STEM": {
+      "role": "STEM knowledge",
+      "color": "#1B7837"
+    }
+  },
+  "influence": {
+    "positive_supportive": "#2166AC",
+    "positive_supportive_light": "#67A9CF",
+    "negative_suppressive": "#B35806",
+    "negative_drop_alt": "#D73027",
+    "neutral": "#F7F7F7",
+    "slate": "#4B5563"
+  },
+  "ui": {
+    "background": "#FFFFFF",
+    "grid_fill": "#efe6f2",
+    "grid_stroke": "#c9b8cf"
+  }
+}

@@ -1,0 +1,383 @@
+source_hierarchy:
+- Latest submission PDF or explicitly supplied artifact is the source of truth for
+  claims, values, caveats, and anonymity constraints.
+- This file contains transcribed starter data for animation work. Preserve these
+  scientific values unless a source artifact is added to the repo or a maintainer
+  explicitly supplies updated values.
+- GitHub repository is the source of truth for current web implementation and style
+  tokens.
+- When data artifacts are released later, data files supersede manually transcribed
+  values below.
+project:
+  title: Where Does Social Reasoning Come From? Capability Provenance in Language
+    Models
+  short_name: SocialTDA / capability provenance
+  core_question: Which regions of the pretraining corpus support social reasoning
+    versus STEM reasoning in OLMo3-7B?
+  core_pipeline:
+  - Dolma3 corpus
+  - WebOrganizer topic×format bins
+  - TrackStar via Bergson attribution
+  - 576×4 bin-level influence matrix
+  - targeted unlearning validation
+corpus_and_taxonomy:
+  pretraining_mix: Dolma3 6T-token mix
+  unique_documents_after_dedup: 1263587168
+  duplication_rate: 0.673
+  taxonomized_docs_commoncrawl_olmocr: 1098646162
+  taxonomy:
+    topics: 24
+    formats: 24
+    bins: 576
+    topics_list:
+    - Adult
+    - Art & Design
+    - Crime & Law
+    - Education & Jobs
+    - Entertainment
+    - Fashion & Beauty
+    - Finance & Business
+    - Food & Dining
+    - Games
+    - Hardware
+    - Health
+    - History & Geography
+    - Home & Hobbies
+    - Industrial
+    - Literature
+    - Politics
+    - Religion
+    - Science & Technology
+    - Social Life
+    - Software
+    - Software Development
+    - Sports & Fitness
+    - Transportation
+    - Travel & Tourism
+    formats_list:
+    - About (Organization)
+    - About (Personal)
+    - Academic Writing
+    - Audio Transcript
+    - Comment Section
+    - Content Listing
+    - Creative Writing
+    - Customer Support
+    - Documentation
+    - FAQ
+    - Knowledge Article
+    - Legal Notices
+    - Listicle
+    - News Article
+    - News (Organization)
+    - Nonfiction Writing
+    - Personal Blog
+    - Product Page
+    - Q&A Forum
+    - Spam / Ads
+    - Structured Data
+    - Truncated
+    - Tutorial
+    - User Review
+  working_set:
+    documents: 5678621
+    tokens_approx: 10.5B
+    target_docs_per_bin: 10000
+    full_bins: 559
+    underfilled_bins: 17
+    smallest_realized_bin: Social Life × Documentation (436 docs)
+  corpus_skew:
+    largest_vs_smallest_bin_docs: '>100,000×'
+    gini_documents: 0.6837
+    gini_tokens: 0.7337
+    effective_bins_documents: 236.0
+    effective_bins_tokens: 158.6
+    top_10_token_share: 0.278
+    top_50_token_share: 0.531
+    top_100_token_share: 0.719
+benchmarks:
+  SocialIQA:
+    domain: social
+    capability_type: reasoning
+    query_count: 10000
+    evaluation: 3-shot MC accuracy
+    baseline_unlearning_base: 0.80334
+  MMLU Social Sciences:
+    domain: social
+    capability_type: knowledge
+    query_count: 3077
+    evaluation: 4-shot MC accuracy
+    baseline_unlearning_base: 0.75236
+  ARC-Challenge:
+    domain: STEM
+    capability_type: reasoning
+    query_count: 1172
+    evaluation: 4-shot MC accuracy
+    baseline_unlearning_base: 0.83447
+  MMLU STEM:
+    domain: STEM
+    capability_type: knowledge
+    query_count: 3018
+    evaluation: 4-shot MC accuracy
+    baseline_unlearning_base: 0.59745
+influence_values:
+  selected_bins_panel:
+  - bin: Literature × Customer Support
+    SocialIQA: 16.0
+    MMLU Social Sciences: -7.31
+    ARC-Challenge: -0.45
+    MMLU STEM: -5.75
+  - bin: Social Life × Q&A Forum
+    SocialIQA: 1.9
+    MMLU Social Sciences: -0.06
+    ARC-Challenge: -0.78
+    MMLU STEM: -0.46
+  - bin: Home & Hobbies × Creative Writing
+    SocialIQA: 1.29
+    MMLU Social Sciences: -0.63
+    ARC-Challenge: -0.34
+    MMLU STEM: -0.12
+  - bin: Politics × Documentation
+    SocialIQA: 0.41
+    MMLU Social Sciences: 6.86
+    ARC-Challenge: 1.59
+    MMLU STEM: 5.56
+  profile_correlations:
+    matrix_order:
+    - SocialIQA
+    - MMLU Social Sciences
+    - ARC-Challenge
+    - MMLU STEM
+    matrix:
+    - - 1.0
+      - 0.06
+      - 0.22
+      - 0.09
+    - - 0.06
+      - 1.0
+      - 0.53
+      - 0.86
+    - - 0.22
+      - 0.53
+      - 1.0
+      - 0.55
+    - - 0.09
+      - 0.86
+      - 0.55
+      - 1.0
+    headline: SocialIQA correlates with each comparison benchmark at r ≤ 0.22; the
+      other three correlate at r = 0.53–0.86.
+  top_formats:
+    SocialIQA:
+      positive:
+      - - Customer Support
+        - 1.07
+      - - Documentation
+        - 0.44
+      - - FAQ
+        - 0.35
+      negative:
+      - - Truncated
+        - -0.38
+      - - Knowledge Article
+        - -0.53
+      - - News Article
+        - -0.62
+    MMLU Social Sciences:
+      positive:
+      - - Documentation
+        - 2.4
+      - - Academic Writing
+        - 1.1
+      - - Legal Notices
+        - 1.08
+      negative:
+      - - News (Organization)
+        - -0.49
+      - - Audio Transcript
+        - -0.51
+      - - News Article
+        - -1.02
+    ARC-Challenge:
+      positive:
+      - - Documentation
+        - 1.97
+      - - Academic Writing
+        - 0.66
+      - - Truncated
+        - 0.56
+      negative:
+      - - News (Organization)
+        - -0.58
+      - - News Article
+        - -0.63
+      - - Comment Section
+        - -0.68
+    MMLU STEM:
+      positive:
+      - - Documentation
+        - 2.29
+      - - Legal Notices
+        - 1.24
+      - - Academic Writing
+        - 0.57
+      negative:
+      - - Nonfiction Writing
+        - -0.54
+      - - Listicle
+        - -0.64
+      - - News Article
+        - -0.75
+  contrastive_topics:
+    SocialIQA_minus_ARC-Challenge:
+      social_leaning:
+      - - Literature
+        - 0.91
+      - - Education & Jobs
+        - 0.48
+      - - Sports & Fitness
+        - 0.41
+      stem_leaning:
+      - - Travel & Tourism
+        - -0.67
+      - - Science & Technology
+        - -0.66
+      - - Software Development
+        - -0.56
+      max_abs_delta: 0.91
+    MMLU_Social_Sciences_minus_MMLU_STEM:
+      social_leaning:
+      - - Crime & Law
+        - 0.46
+      - - Politics
+        - 0.38
+      - - Fashion & Beauty
+        - 0.34
+      stem_leaning:
+      - - Software Development
+        - -0.63
+      - - Hardware
+        - -0.38
+      - - Science & Technology
+        - -0.31
+      max_abs_delta: 0.63
+  correctness_differential:
+    SocialIQA:
+      top_positive:
+      - Literature × Customer Support
+      - 13.11
+      - - 2.8
+        - 24.3
+      top_negative:
+      - Health × Documentation
+      - -4.6
+      - - -7.7
+        - 0.8
+    MMLU Social Sciences:
+      top_positive:
+      - Health × Documentation
+      - 0.86
+      - - 0.1
+        - 1.8
+      top_negative:
+      - Literature × Customer Support
+      - -2.19
+      - - -5.4
+        - 1.1
+    ARC-Challenge:
+      top_positive:
+      - Literature × Customer Support
+      - 6.0
+      - - 0.2
+        - 10.8
+      top_negative:
+      - Politics × Legal Notices
+      - -1.31
+      - - -2.6
+        - 0.3
+    MMLU STEM:
+      top_positive:
+      - Fashion & Beauty × Documentation
+      - 1.83
+      - - 0.5
+        - 3.2
+      top_negative:
+      - Literature × Customer Support
+      - -2.17
+      - - -6.1
+        - 1.6
+lexical:
+  socialiqa_top20_bimodal: 10/10 split between interactional formats (dialogic + personal)
+    and expository/structured formats.
+  literature_customer_support_profile:
+    docs: 10000
+    mean_words: 245
+    first_person_per_1k: 26.89
+    second_person_per_1k: 33.39
+    third_person_per_1k: 9.2
+    mental_state_per_1k: 6.22
+    dialogue_z: 2.38
+    social_z: 1.82
+    affect_z: 0.13
+  social_vs_expository_contrast:
+    mean_words_per_doc_delta: -1558
+    mental_state_per_1k_delta: 2.82
+    dialogue_z_delta: 0.61
+    social_z_delta: 0.7
+    affect_z_delta: 0.71
+unlearning:
+  gamma_definition: γ = A_baseline − A_unlearned; positive values mean accuracy damage.
+  paired_influence_vs_random:
+    SocialIQA:
+      n: 72
+      median_d: 0.016
+      ci:
+      - 0.013
+      - 0.022
+      wilcoxon_p_bh: '1.0e-5'
+      paired_t_p_bh: 0.022
+      cohens_dz_pooled: 0.39
+      verdict: clean paired result
+    MMLU STEM:
+      n: 72
+      median_d: 0.002
+      ci:
+      - -0.0003
+      - 0.0055
+      wilcoxon_p_bh: 0.028
+      paired_t_p_bh: 0.227
+      cohens_dz_pooled: 0.23
+      verdict: weaker evidence; CI crosses zero
+    MMLU Social Sciences:
+      n: 72
+      median_d: 0.0017
+      ci:
+      - -0.0018
+      - 0.0042
+      wilcoxon_p_bh: 0.227
+      verdict: not significant
+    ARC-Challenge:
+      n: 72
+      median_d: -0.0026
+      ci:
+      - -0.0043
+      - -0.0009
+      wilcoxon_p_bh: '>0.99'
+      verdict: reversed/noise-floor; influence-targeted slightly less damaging than
+        random
+  selectivity_formula: sel(b)=|γ(b)| / mean_{b'≠b}|γ(b')|; >1 means intended benchmark
+    takes more damage than average collateral benchmark.
+  cross_method_selectivity_verdict:
+    SocialIQA: favorable in both bin-level and faithful per-document constructions
+    MMLU STEM: favorable only under faithful per-document forget-sets
+    MMLU Social Sciences: not favorable; agreeing loss
+    ARC-Challenge: small-γ/noise-floor non-result
+responsible_release:
+  do_not_show_raw_training_text: true
+  release_level: aggregate bin-level statistics and influence matrices rather than
+    document-level scores
+  claim_boundary:
+  - Training-data attribution is approximate, not exact counterfactual tracing.
+  - Unlearning validates load-bearing corpus regions, not full mechanisms or individual
+    causal documents.
+  - Claims are scoped to OLMo3-7B/Dolma3 and the stratified working set.

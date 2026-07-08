@@ -1,0 +1,20 @@
+phase_1_foundation:
+- 05_signature_bin_sign_flip
+- 02_aggregation_576_bins
+- 03_2x2_benchmark_design
+phase_2_validation:
+- 11_attribution_to_unlearning
+- 12_targeted_vs_random_unlearning
+- 13_selective_damage_claim_boundary
+phase_3_story:
+- 01_vision_capability_provenance_map
+- 10_lexical_bimodality
+- 16_responsible_release_aggregate_not_raw
+phase_4_optional:
+- 06_socialiqa_outlier_profile
+- 08_reasoning_sharper_than_knowledge
+- 09_correctness_differential
+- 14_corpus_skew_stratified_sampling
+- 15_open_data_ecosystem
+- 17_heldout_probe_tiering
+- 18_tom_unlearning_optional

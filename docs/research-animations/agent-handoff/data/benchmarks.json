@@ -1,0 +1,30 @@
+{
+  "SocialIQA": {
+    "domain": "social",
+    "capability_type": "reasoning",
+    "query_count": 10000,
+    "evaluation": "3-shot MC accuracy",
+    "baseline_unlearning_base": 0.80334
+  },
+  "MMLU Social Sciences": {
+    "domain": "social",
+    "capability_type": "knowledge",
+    "query_count": 3077,
+    "evaluation": "4-shot MC accuracy",
+    "baseline_unlearning_base": 0.75236
+  },
+  "ARC-Challenge": {
+    "domain": "STEM",
+    "capability_type": "reasoning",
+    "query_count": 1172,
+    "evaluation": "4-shot MC accuracy",
+    "baseline_unlearning_base": 0.83447
+  },
+  "MMLU STEM": {
+    "domain": "STEM",
+    "capability_type": "knowledge",
+    "query_count": 3018,
+    "evaluation": "4-shot MC accuracy",
+    "baseline_unlearning_base": 0.59745
+  }
+}
