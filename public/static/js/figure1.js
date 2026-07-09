@@ -5,7 +5,7 @@
    Stages:
      1) Corpus Construction   — Dolma3 -> dedup -> WebOrganizer 576 bins
      2) Training Data Attribution — benchmark probes -> Bergson/TrackStar scoring
-     3) Bin-Level Influence Map   — 6x4 signed z-score heatmap (real panel-3 data)
+     3) Bin-Level Influence Map   — signed z-score bars per benchmark (real panel-3 data)
      4) Unlearning Validation     — Table 49 paired Δ per benchmark (γ_influence − γ_random)
 */
 (function () {

@@ -16,7 +16,6 @@ export const SOURCE = {
 export const PROJECT = {
   title: "Capability Provenance in Language Models: A Case Study in Social Reasoning",
   shortName: "SocialTDA",
-  // Public identifier: must NOT be rendered when reviewMode is on.
   publicUrl: "eilab.gatech.edu/social-data-attribution"
 };
 

@@ -603,11 +603,17 @@ img {
   text-align: center;
 }
 
+.models-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+}
+
 .models-table {
   width: 100%;
   border-collapse: collapse;
   background: #ffffff;
-  border: 1px solid var(--hairline);
   border-radius: 10px;
   overflow: hidden;
   font-variant-numeric: tabular-nums;
