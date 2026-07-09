@@ -80,6 +80,7 @@
         <a class="navbar-item" href="#data">Data</a>
         <a class="navbar-item" href="#findings">Findings</a>
         <a class="navbar-item" href="#results">Findings in figures</a>
+        <a class="navbar-item" href="#models">Across models</a>
         <a class="navbar-item" href="#limitations">Limitations</a>
         <a class="navbar-item" href="#resources">Resources</a>
         <a class="navbar-item" href="#BibTeX">Citation</a>
@@ -90,26 +91,24 @@
 
 <header id="top" class="paper-hero">
   <div class="paper-shell hero-copy" data-aos="fade-up">
-    <p class="eyebrow">arXiv:2606.19625 &middot; Accepted at COLM 2026 &middot; OLMo3-7B / Dolma3</p>
     <h1 class="publication-title">Capability Provenance in Language Models</h1>
     <p class="publication-subtitle">A Case Study in Social Reasoning</p>
 
     <div class="publication-authors" aria-label="Authors">
-      <span class="author-block"><a href="mailto:glenn@gatech.edu">Glenn Matlin</a><sup>1,2,5</sup></span>
-      <span class="author-block">Chandreyi Chakraborty<sup>1</sup></span>
-      <span class="author-block">Saehee Eom<sup>1</sup></span>
-      <span class="author-block">Mika Okamoto<sup>1</sup></span>
-      <span class="author-block">Rayan Castilla<sup>1</sup></span>
-      <span class="author-block">Louis Jaburi<sup>3</sup></span>
-      <span class="author-block">Alvin Deng<sup>3</sup></span>
-      <span class="author-block">Taywon Min<sup>4,2</sup></span>
-      <span class="author-block">Lucia Quirke<sup>3</sup></span>
-      <span class="author-block">Stella Biderman<sup>3</sup></span>
-      <span class="author-block">Mark Riedl<sup>1</sup></span>
+      <span class="author-block"><a href="mailto:glenn@gatech.edu">Glenn Matlin</a><span class="aff-marker" aria-hidden="true">🐝🔥🛡️</span></span>
+      <span class="author-block">Chandreyi Chakraborty<span class="aff-marker" aria-hidden="true">🐝</span></span>
+      <span class="author-block">Saehee Eom<span class="aff-marker" aria-hidden="true">🐝</span></span>
+      <span class="author-block">Mika Okamoto<span class="aff-marker" aria-hidden="true">🐝</span></span>
+      <span class="author-block">Rayan Castilla<span class="aff-marker" aria-hidden="true">🐝</span></span>
+      <span class="author-block">Louis Jaburi<span class="aff-marker" aria-hidden="true">🕊️</span></span>
+      <span class="author-block">Alvin Deng<span class="aff-marker" aria-hidden="true">🕊️</span></span>
+      <span class="author-block">Taywon Min<span class="aff-marker" aria-hidden="true">🤖🔥</span></span>
+      <span class="author-block">Lucia Quirke<span class="aff-marker" aria-hidden="true">🕊️</span></span>
+      <span class="author-block">Stella Biderman<span class="aff-marker" aria-hidden="true">🕊️</span></span>
+      <span class="author-block">Mark Riedl<span class="aff-marker" aria-hidden="true">🐝</span></span>
     </div>
     <p class="publication-affiliations">
-      <sup>1</sup>Georgia Tech &middot; <sup>2</sup>MATS &middot; <sup>3</sup>EleutherAI &middot;
-      <sup>4</sup>KAIST AI &middot; <sup>5</sup>GT AI Safety Initiative
+      <span aria-hidden="true">🐝</span> Georgia Tech &middot; <span aria-hidden="true">🔥</span> MATS &middot; <span aria-hidden="true">🕊️</span> EleutherAI &middot; <span aria-hidden="true">🤖</span> KAIST AI &middot; <span aria-hidden="true">🛡️</span> GT AI Safety Initiative
     </p>
 
     <div class="publication-links" aria-label="Paper links">
@@ -126,7 +125,6 @@
   </div>
 
   <div class="paper-shell paper-shell-wide hero-teaser" data-aos="fade-up" data-aos-delay="120">
-    <p class="teaser-kicker">Animated paper overview</p>
     <div class="fig1 hero-fig" data-fig1>
       <figure class="image fig1-fallback">
         <img src="./static/images/figures/fig-overview-revised.png" alt="Four-panel capability provenance pipeline: corpus construction bins Dolma3, training-data attribution scores benchmark probes, a signed bin-level influence map, and unlearning validation against random in-topic controls.">
@@ -218,7 +216,7 @@
           <div class="tax-axis tax-axis-y">Topics</div>
           <div class="tax-grid-wrap">
             <div class="tax-axis tax-axis-x">Formats</div>
-            <div class="tax-grid" data-tax-grid aria-label="Animated 24 by 24 topic-format taxonomy"></div>
+            <div class="tax-grid" data-tax-grid aria-label="24 by 24 topic-format taxonomy grid"></div>
           </div>
           <div class="tax-labels">
             <span>Literature x Customer Support</span>
@@ -546,6 +544,32 @@
     </div>
   </section>
 
+  <section id="models" class="paper-section models-section">
+    <div class="paper-shell">
+      <div class="section-heading centered" data-aos="fade-up">
+        <p class="section-kicker">Results across models</p>
+        <h2>Does the signature hold beyond OLMo3?</h2>
+      </div>
+      <div class="models-wrap">
+        <p class="models-intro">
+          We re-run the three headline results against each model's own pretraining
+          corpus. OLMo3-7B is complete; Comma 7B and DCLM 7B are in progress.
+        </p>
+        <div class="models-table-wrap" data-aos="fade-up">
+          <table class="models-table">
+            <thead id="models-head"></thead>
+            <tbody id="models-body"></tbody>
+          </table>
+        </div>
+        <p class="models-note">
+          Metric set is provisional and will be locked when the Comma and DCLM
+          results land. Every number traceable to the released claims data; no
+          values are imputed for pending models.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section id="limitations" class="paper-section">
     <div class="paper-shell section-grid">
       <div class="section-heading" data-aos="fade-up">
@@ -557,7 +581,7 @@
           <li>Attribution is an analytic lens, not an exact proof of causal necessity for individual documents; unlearning validates aggregate patterns without eliminating approximation error.</li>
           <li>Analysis runs on a 5.68M-document stratified working set drawn from the ~1.26B-document population; results should not be read as characterizing every document in the full corpus.</li>
           <li>Unlearning shows a corpus region is load-bearing; it does not explain the mechanism by which those documents shape model behavior.</li>
-          <li>Everything is measured on one open-data ecosystem (OLMo3-7B / Dolma3); whether these patterns hold across model families is an open question.</li>
+          <li>The full deep-dive is measured on one open-data ecosystem (OLMo3-7B / Dolma3). We are extending the three headline results to Comma 7B and DCLM 7B; until those land, generalization across model families remains an open question.</li>
           <li>Released artifacts are aggregate bin-level statistics by design &mdash; no document-level attribution scores.</li>
         </ul>
         <p class="takeaway">
@@ -624,6 +648,7 @@
 <footer class="footer paper-footer">
   <div class="paper-shell">
     <p><strong>SocialTDA</strong> &middot; Capability Provenance in Language Models</p>
+    <p>Accepted at COLM 2026.</p>
     <p>
       <a href="https://arxiv.org/pdf/2606.19625" target="_blank" rel="noopener">Paper</a>
       <span>/</span>
