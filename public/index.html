@@ -2,29 +2,29 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Where Does Social Reasoning Come From? Capability Provenance in Language Models - a project page for training-data attribution analysis of social reasoning in OLMo3-7B.">
+  <meta name="description" content="Capability Provenance in Language Models: A Case Study in Social Reasoning - a project page for training-data attribution analysis of social reasoning in OLMo3-7B.">
   <meta name="keywords" content="training data attribution, capability provenance, social reasoning, language models, interpretability, OLMo, Dolma, unlearning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Where Does Social Reasoning Come From? | Capability Provenance in Language Models</title>
+  <title>Capability Provenance in Language Models: A Case Study in Social Reasoning</title>
 
   <link rel="canonical" href="https://eilab.gatech.edu/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Where Does Social Reasoning Come From? Capability Provenance in Language Models">
+  <meta property="og:title" content="Capability Provenance in Language Models: A Case Study in Social Reasoning">
   <meta property="og:description" content="Training-data attribution maps which regions of the Dolma3 pretraining corpus support social versus STEM reasoning in OLMo3-7B, validated with targeted unlearning.">
   <meta property="og:url" content="https://eilab.gatech.edu/">
   <meta property="og:image" content="https://eilab.gatech.edu/static/images/og-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Where Does Social Reasoning Come From? Capability Provenance in Language Models">
+  <meta name="twitter:title" content="Capability Provenance in Language Models: A Case Study in Social Reasoning">
   <meta name="twitter:description" content="Training-data attribution maps which regions of the Dolma3 pretraining corpus support social versus STEM reasoning in OLMo3-7B, validated with targeted unlearning.">
   <meta name="twitter:image" content="https://eilab.gatech.edu/static/images/og-card.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ScholarlyArticle",
-    "name": "Where Does Social Reasoning Come From? Capability Provenance in Language Models",
-    "headline": "Where Does Social Reasoning Come From? Capability Provenance in Language Models",
+    "name": "Capability Provenance in Language Models: A Case Study in Social Reasoning",
+    "headline": "Capability Provenance in Language Models: A Case Study in Social Reasoning",
     "description": "Training-data attribution as an interpretable tool for capability discovery, mapping which regions of the pretraining corpus support social-reasoning versus STEM-reasoning in OLMo3-7B.",
     "author": [
       { "@type": "Person", "name": "Glenn Matlin" },
@@ -91,8 +91,8 @@
 <header id="top" class="paper-hero">
   <div class="paper-shell hero-copy" data-aos="fade-up">
     <p class="eyebrow">arXiv:2606.19625 &middot; Accepted at COLM 2026 &middot; OLMo3-7B / Dolma3</p>
-    <h1 class="publication-title">Where Does Social Reasoning Come From?</h1>
-    <p class="publication-subtitle">Capability Provenance in Language Models</p>
+    <h1 class="publication-title">Capability Provenance in Language Models</h1>
+    <p class="publication-subtitle">A Case Study in Social Reasoning</p>
 
     <div class="publication-authors" aria-label="Authors">
       <span class="author-block"><a href="mailto:glenn@gatech.edu">Glenn Matlin</a><sup>1,2,5</sup></span>
@@ -307,44 +307,117 @@
         <article class="finding-row" data-aos="fade-up">
           <span class="finding-number">01</span>
           <div>
-            <h3>SocialIQA is the outlier.</h3>
-            <p>
-              Its 576-bin profile correlates with each comparison benchmark at only r &le; 0.22,
-              compared with r = 0.53-0.86 among the other three tasks.
+            <h3>Social reasoning has a different data signature than the other three tasks we tested.</h3>
+            <p class="finding-explain">
+              We compared how each benchmark draws on the 576 corpus bins. Social reasoning stands
+              apart: the regions it relies on look unlike the regions the STEM and social-knowledge
+              tasks rely on, which resemble each other.
             </p>
+            <div class="finding-evidence">
+              <p>
+                SocialIQA's 576-bin influence profile correlates with each comparison benchmark at
+                r &le; 0.22, while the other three tasks correlate among themselves at
+                r = 0.53&ndash;0.86 (full matrix, n = 576 bins).
+              </p>
+              <dl>
+                <div><dt>SocialIQA vs MMLU Social Sciences</dt><dd>r = 0.06</dd></div>
+                <div><dt>SocialIQA vs ARC-Challenge</dt><dd>r = 0.22</dd></div>
+                <div><dt>SocialIQA vs MMLU STEM</dt><dd>r = 0.09</dd></div>
+                <div><dt>Other three, pairwise range</dt><dd>r = 0.53&ndash;0.86</dd></div>
+              </dl>
+            </div>
           </div>
         </article>
+
         <article class="finding-row" data-aos="fade-up">
           <span class="finding-number">02</span>
           <div>
-            <h3>The signature bin sign-flips.</h3>
-            <p>
-              Literature x Customer Support is strongly supportive for SocialIQA (z = +16.0), but
-              suppressive for MMLU Social Sciences (z = -7.31) and MMLU STEM (z = -5.75).
+            <h3>One corpus region, Literature &times; Customer Support, strongly supports social reasoning while suppressing the STEM tasks.</h3>
+            <p class="finding-explain">
+              The same corpus region can be load-bearing for one capability and counterproductive for
+              another. One bin is the cleanest example: it is among the strongest supporters of social
+              reasoning, yet it suppresses the STEM and social-knowledge tasks.
             </p>
+            <div class="finding-evidence">
+              <p>
+                Signed within-benchmark z-scores for the Literature &times; Customer Support bin
+                (supportive &gt; 0, suppressive &lt; 0):
+              </p>
+              <dl>
+                <div><dt>SocialIQA</dt><dd>z = +16.00</dd></div>
+                <div><dt>MMLU Social Sciences</dt><dd>z = &minus;7.31</dd></div>
+                <div><dt>ARC-Challenge</dt><dd>z = &minus;0.45</dd></div>
+                <div><dt>MMLU STEM</dt><dd>z = &minus;5.75</dd></div>
+              </dl>
+              <span class="evidence-caveat">
+                "Suppressive" means bin gradients oppose benchmark query gradients under the attribution
+                metric, not that the data is harmful.
+              </span>
+            </div>
+            <div class="finding-secondary">
+              <span class="secondary-kicker">A second lens confirms the flip</span>
+              A correctness-weighted view of the same bin tells the same story: Literature &times;
+              Customer Support is the top-positive region for SocialIQA (+13.11) and ARC-Challenge
+              (+6.0) but top-negative for MMLU Social Sciences (&minus;2.19) and MMLU STEM
+              (&minus;2.17).
+            </div>
           </div>
         </article>
+
         <article class="finding-row" data-aos="fade-up">
           <span class="finding-number">03</span>
           <div>
-            <h3>Reasoning separates more than knowledge.</h3>
-            <p>
-              Social-STEM differences are sharper for reasoning tasks than knowledge tasks:
-              topic-level contrasts span |&Delta;z| up to 0.91 for the reasoning pair versus
-              0.63 for the knowledge pair.
+            <h3>The social-versus-STEM split is sharper for reasoning tasks than for knowledge tasks.</h3>
+            <p class="finding-explain">
+              We asked whether social reasoning is just social-domain knowledge, or whether reasoning
+              uses different corpus regions than knowledge. The answer: reasoning pulls harder on
+              different topics than knowledge does. The direction is preserved across both pairs, but
+              the gap is larger for reasoning.
             </p>
+            <div class="finding-evidence">
+              <p>
+                Topic-level contrasts (|&Delta;z|, social-minus-STEM), per pair:
+              </p>
+              <dl>
+                <div><dt>Reasoning pair (SocialIQA &minus; ARC-Challenge)</dt><dd>max |&Delta;z| = 0.91</dd></div>
+                <div><dt>Knowledge pair (MMLU Soc. Sci. &minus; MMLU STEM)</dt><dd>max |&Delta;z| = 0.63</dd></div>
+              </dl>
+              <span class="evidence-caveat">
+                Social-leaning topics for reasoning: Literature (+0.91), Education &amp; Jobs (+0.48),
+                Sports &amp; Fitness (+0.41). STEM-leaning: Travel &amp; Tourism (&minus;0.67), Science
+                &amp; Technology (&minus;0.66), Software Development (&minus;0.56).
+              </span>
+            </div>
           </div>
         </article>
+
         <article class="finding-row" data-aos="fade-up">
           <span class="finding-number">04</span>
           <div>
-            <h3>Unlearning gives a selective damage profile.</h3>
-            <p>
-              Influence-targeted forgetting degrades SocialIQA more than same-topic random controls
-              (Wilcoxon adjusted p &asymp; 10<sup>-5</sup>). Effects on the comparison tasks are
-              weaker, null, or reversed &mdash; attribution does not uniformly isolate load-bearing
-              documents.
+            <h3>Unlearning the regions attribution flagged selectively damages social reasoning, confirming the pattern causally. The effect is clearest for SocialIQA.</h3>
+            <p class="finding-explain">
+              Correlation alone does not prove the flagged regions matter. So we tested it: we
+              unlearned the high-influence bins and compared the damage to unlearning matched random
+              bins from the same topics. The influence-targeted forgetting hit social reasoning harder
+              than the random controls. For the other tasks the effect is weaker, null, or reversed.
             </p>
+            <div class="finding-evidence">
+              <p>
+                Paired difference d = &gamma;<sub>influence</sub> &minus; &gamma;<sub>random</sub>
+                (accuracy points; positive = influence-targeted damages more), n = 72 pairs per
+                benchmark, Wilcoxon p<sub>BH</sub>:
+              </p>
+              <dl>
+                <div><dt>SocialIQA</dt><dd>median d = +0.0160, 95% CI [+0.013, +0.022], p<sub>BH</sub> &asymp; 1&times;10<sup>&minus;5</sup></dd></div>
+                <div><dt>MMLU STEM</dt><dd>median d = +0.0020, CI [&minus;0.0003, +0.0055], p<sub>BH</sub> = 0.028 (CI crosses zero)</dd></div>
+                <div><dt>MMLU Social Sciences</dt><dd>median d = +0.0017, CI [&minus;0.0018, +0.0042], p<sub>BH</sub> = 0.227 (n.s.)</dd></div>
+                <div><dt>ARC-Challenge</dt><dd>median d = &minus;0.0026, CI [&minus;0.0043, &minus;0.0009], p<sub>BH</sub> &gt; 0.99 (reversed)</dd></div>
+              </dl>
+              <span class="evidence-caveat">
+                Unlearning validates load-bearing corpus regions in aggregate; it does not identify
+                individually causal documents or a full mechanism. Scoped to OLMo3-7B / Dolma3.
+              </span>
+            </div>
           </div>
         </article>
       </div>
@@ -367,27 +440,27 @@
             another. The Literature x Customer Support bin is the cleanest example.
           </p>
         </div>
-        <div class="bar-viz signflip-viz" data-bars>
+        <div class="bar-viz signflip-viz" data-bars data-claim-set="signature-bin">
           <div class="bar-head"><span>Benchmark</span><span>z-score</span></div>
-          <div class="bar-row" data-value="16.0" data-max="16">
+          <div class="bar-row" data-claim="socialiqa" data-max="16">
             <span class="bar-label">SocialIQA</span>
             <span class="bar-track"><span class="bar-fill positive"></span></span>
-            <span class="bar-value">+16.00</span>
+            <span class="bar-value"></span>
           </div>
-          <div class="bar-row" data-value="-7.31" data-max="16">
+          <div class="bar-row" data-claim="mmlu_social_sciences" data-max="16">
             <span class="bar-label">MMLU Social Sciences</span>
             <span class="bar-track"><span class="bar-fill negative"></span></span>
-            <span class="bar-value">-7.31</span>
+            <span class="bar-value"></span>
           </div>
-          <div class="bar-row" data-value="-0.45" data-max="16">
+          <div class="bar-row" data-claim="arc_challenge" data-max="16">
             <span class="bar-label">ARC-Challenge</span>
             <span class="bar-track"><span class="bar-fill negative"></span></span>
-            <span class="bar-value">-0.45</span>
+            <span class="bar-value"></span>
           </div>
-          <div class="bar-row" data-value="-5.75" data-max="16">
+          <div class="bar-row" data-claim="mmlu_stem" data-max="16">
             <span class="bar-label">MMLU STEM</span>
             <span class="bar-track"><span class="bar-fill negative"></span></span>
-            <span class="bar-value">-5.75</span>
+            <span class="bar-value"></span>
           </div>
         </div>
       </article>
@@ -404,27 +477,27 @@
             elsewhere, and reversed for ARC-Challenge.
           </p>
         </div>
-        <div class="bar-viz unlearn-paired-viz" data-bars>
+        <div class="bar-viz unlearn-paired-viz" data-bars data-claim-set="unlearning">
           <div class="bar-head"><span>Benchmark</span><span>Paired &Delta; (pp)</span></div>
-          <div class="bar-row" data-value="1.60" data-max="1.6">
+          <div class="bar-row" data-claim="socialiqa" data-max="1.6">
             <span class="bar-label">SocialIQA</span>
             <span class="bar-track"><span class="bar-fill positive"></span></span>
-            <span class="bar-value">+1.60 &nbsp;<small>(p &asymp; 10<sup>-5</sup>)</small></span>
+            <span class="bar-value"></span>
           </div>
-          <div class="bar-row" data-value="0.20" data-max="1.6">
+          <div class="bar-row" data-claim="mmlu_stem" data-max="1.6">
             <span class="bar-label">MMLU STEM</span>
             <span class="bar-track"><span class="bar-fill positive"></span></span>
-            <span class="bar-value">+0.20 &nbsp;<small>(p = 0.028)</small></span>
+            <span class="bar-value"></span>
           </div>
-          <div class="bar-row" data-value="0.17" data-max="1.6">
+          <div class="bar-row" data-claim="mmlu_social_sciences" data-max="1.6">
             <span class="bar-label">MMLU Soc. Sci.</span>
             <span class="bar-track"><span class="bar-fill positive"></span></span>
-            <span class="bar-value">+0.17 &nbsp;<small>(p = 0.227, n.s.)</small></span>
+            <span class="bar-value"></span>
           </div>
-          <div class="bar-row" data-value="-0.26" data-max="1.6">
+          <div class="bar-row" data-claim="arc_challenge" data-max="1.6">
             <span class="bar-label">ARC-Challenge</span>
             <span class="bar-track"><span class="bar-fill negative"></span></span>
-            <span class="bar-value">&minus;0.26 &nbsp;<small>(p &gt; 0.99, reversed)</small></span>
+            <span class="bar-value"></span>
           </div>
         </div>
       </article>
@@ -434,8 +507,11 @@
           <p class="mini-kicker">Lexical signature</p>
           <h3>The top SocialIQA bins split into two text regimes.</h3>
           <p>
-            Short dialogue-heavy interpersonal text and long technical documentation both appear in
-            high-influence regions, suggesting social reasoning is not explained by a single genre.
+            The top 20 SocialIQA bins divide cleanly: 10 interactional formats (dialogue-heavy,
+            first- and second-person) and 10 expository formats (long-form, documentation-like). The
+            signature Literature &times; Customer Support bin averages 245 words per document with
+            high first- and second-person rates and a dialogue z of 2.38. Social reasoning is not
+            explained by a single genre.
           </p>
         </div>
         <div class="cluster-viz" data-concept="clusters">
@@ -530,7 +606,7 @@
       <div class="bibtex-wrap" data-aos="fade-up">
         <button class="bibtex-copy" data-copy-bibtex type="button">Copy BibTeX</button>
         <pre class="bibtex"><code id="bibtex-code">@misc{matlin2026doessocialreasoningcome,
-  title         = {Where Does Social Reasoning Come From? Capability Provenance in Language Models},
+  title         = {Capability Provenance in Language Models: A Case Study in Social Reasoning},
   author        = {Glenn Matlin and Chandreyi Chakraborty and Saehee Eom and Mika Okamoto and
                    Rayan Castilla and Louis Jaburi and Alvin Deng and Taywon Min and
                    Lucia Quirke and Stella Biderman and Mark Riedl},
@@ -547,7 +623,7 @@
 
 <footer class="footer paper-footer">
   <div class="paper-shell">
-    <p><strong>SocialTDA</strong> &middot; Where Does Social Reasoning Come From?</p>
+    <p><strong>SocialTDA</strong> &middot; Capability Provenance in Language Models</p>
     <p>
       <a href="https://arxiv.org/pdf/2606.19625" target="_blank" rel="noopener">Paper</a>
       <span>/</span>
@@ -560,7 +636,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="./static/js/figure1.js?v=20260704"></script>
-<script src="./static/js/main.js?v=20260704"></script>
+<script src="./static/js/figure1.js?v=20260705"></script>
+<script type="module" src="./static/js/main.js?v=20260705"></script>
 </body>
 </html>

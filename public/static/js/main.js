@@ -1,4 +1,6 @@
 /* Site interactions: navigation, scroll reveals, taxonomy grid, and compact figure animations. */
+import { SIGNATURE_BIN, BENCHMARKS, UNLEARNING } from "./animations/socialtda-data.js";
+
 (function () {
   "use strict";
 
@@ -72,6 +74,59 @@
     }
   }
 
+  /* Format a signed z-score for display, e.g. +16.00, -7.31. */
+  function fmtZ(z) {
+    var s = z >= 0 ? "+" : "\u2212"; // U+2212 minus sign
+    return s + Math.abs(z).toFixed(2);
+  }
+
+  /* Format an accuracy-fraction delta as percentage points, e.g. +1.60. */
+  function fmtPp(frac) {
+    var pp = frac * 100;
+    var s = pp >= 0 ? "+" : "\u2212";
+    return s + Math.abs(pp).toFixed(2);
+  }
+
+  /* Render a p-value compactly for the unlearning bar annotations. */
+  function fmtP(p) {
+    if (typeof p === "string") {
+      if (p.startsWith("1.0e-")) return "p \u2248 10<sup>\u2212" + p.slice(5) + "</sup>";
+      if (p.startsWith(">")) return "p > 0.99, reversed";
+    }
+    if (p > 0.05) return "p = " + p + ", n.s.";
+    return "p = " + p;
+  }
+
+  /* Populate bar rows from the shared data module so numbers live in one place.
+     Each row carries data-claim="<benchmark key>" and lives under a
+     [data-claim-set] container naming the claim set. */
+  function initClaimBars() {
+    var sets = {
+      "signature-bin": function (key) {
+        var v = SIGNATURE_BIN.values[key];
+        return v == null ? null : { value: v, label: fmtZ(v) };
+      },
+      "unlearning": function (key) {
+        var row = UNLEARNING.pairedInfluenceVsRandom.find(function (r) { return r.key === key; });
+        if (!row) return null;
+        var html = fmtPp(row.medianD) + " &nbsp;<small>(" + fmtP(row.wilcoxonPBH) + ")</small>";
+        return { value: row.medianD * 100, label: html };
+      }
+    };
+
+    document.querySelectorAll("[data-claim-set]").forEach(function (container) {
+      var lookup = sets[container.getAttribute("data-claim-set")];
+      if (!lookup) return;
+      container.querySelectorAll(".bar-row[data-claim]").forEach(function (row) {
+        var hit = lookup(row.getAttribute("data-claim"));
+        if (!hit) return;
+        row.setAttribute("data-value", String(hit.value));
+        var valueEl = row.querySelector(".bar-value");
+        if (valueEl) valueEl.innerHTML = hit.label;
+      });
+    });
+  }
+
   function initBarWidths() {
     document.querySelectorAll(".bar-row[data-value]").forEach(function (row) {
       var value = parseFloat(row.getAttribute("data-value"));
@@ -141,6 +196,7 @@
     setNavHeight();
     initNavbar();
     initTaxonomyGrid();
+    initClaimBars();
     initBarWidths();
     initScrollAnimations();
     initBibtexCopy();
