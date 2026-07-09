@@ -1,4 +1,4 @@
-/* SocialTDA animation data module.
+/* Capability Provenance animation data module.
    Single runtime copy of scientific values, transcribed from
    docs/research-animations/agent-handoff/data/socialtda_claims.yaml.
 
@@ -15,7 +15,7 @@ export const SOURCE = {
 
 export const PROJECT = {
   title: "Capability Provenance in Language Models: A Case Study in Social Reasoning",
-  shortName: "SocialTDA",
+  shortName: "Capability Provenance",
   publicUrl: "eilab.gatech.edu/social-data-attribution"
 };
 

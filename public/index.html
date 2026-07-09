@@ -65,9 +65,9 @@
 <nav class="navbar is-fixed-top paper-nav" role="navigation" aria-label="main navigation">
   <div class="paper-shell nav-shell">
     <div class="navbar-brand">
-      <a class="navbar-item paper-brand" href="#top" aria-label="SocialTDA home">
+      <a class="navbar-item paper-brand" href="#top" aria-label="Capability Provenance home">
         <img src="./static/images/favicon.svg" alt="" width="28" height="28">
-        <span>SocialTDA</span>
+        <span>Capability Provenance</span>
       </a>
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
@@ -337,9 +337,10 @@
           <div>
             <h3>One corpus region, Literature &times; Customer Support, strongly supports social reasoning while suppressing the STEM tasks.</h3>
             <p class="finding-explain">
-              The same corpus region can be load-bearing for one capability and counterproductive for
-              another. One bin is the cleanest example: it is among the strongest supporters of social
-              reasoning, yet it suppresses the STEM and social-knowledge tasks.
+              Influence is signed, so a single bin can register as supportive for one benchmark and
+              suppressive for another at the same time. Literature &times; Customer Support is the
+              extreme case: the most positive bin in the corpus for SocialIQA, and among the most
+              negative for the two MMLU tasks.
             </p>
             <div class="finding-evidence">
               <p>
@@ -431,8 +432,8 @@
   <section id="results" class="paper-section result-lab">
     <div class="paper-shell">
       <div class="section-heading centered" data-aos="fade-up">
-        <p class="section-kicker">Findings in figures</p>
-        <h2>Three claims, three compact visualizations.</h2>
+        <p class="section-kicker">Figures</p>
+        <h2>The signature bin, the unlearning test, and the lexical split.</h2>
       </div>
 
       <article class="living-figure" data-aos="fade-up">
@@ -440,8 +441,9 @@
           <p class="mini-kicker">Signed influence</p>
           <h3>One bin supports social reasoning and suppresses other tasks.</h3>
           <p>
-            The same corpus region can be load-bearing for one capability and counterproductive for
-            another. The Literature x Customer Support bin is the cleanest example.
+            Signed within-benchmark z-scores for the Literature &times; Customer Support bin. Bars run
+            positive for SocialIQA and negative for the other three tasks, the clearest sign-flip in
+            the 576-bin matrix.
           </p>
         </div>
         <div class="bar-viz signflip-viz" data-bars data-claim-set="signature-bin">
@@ -570,8 +572,8 @@
       </div>
       <div class="models-wrap">
         <p class="models-intro">
-          We re-run the three headline results against each model's own pretraining
-          corpus. OLMo3-7B is complete; Comma 7B and DCLM 7B are in progress.
+          The same three headline results, re-run against each model's own pretraining
+          corpus. Comma 7B and DCLM 7B columns fill in as those runs complete.
         </p>
         <div class="models-table-wrap" data-aos="fade-up">
           <table class="models-table">
@@ -671,7 +673,7 @@
 
 <footer class="footer paper-footer">
   <div class="paper-shell">
-    <p><strong>SocialTDA</strong> &middot; Capability Provenance in Language Models</p>
+    <p><strong>Capability Provenance</strong> &middot; in Language Models</p>
     <p>Accepted at COLM 2026.</p>
     <p>
       <a href="https://arxiv.org/pdf/2606.19625" target="_blank" rel="noopener">Paper</a>
@@ -685,7 +687,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="./static/js/figure1.js?v=20260709"></script>
+  <script type="module" src="./static/js/figure1.js?v=20260710"></script>
 <script type="module" src="./static/js/main.js?v=20260709"></script>
 </body>
 </html>
