@@ -13,12 +13,6 @@
   --slate: #4b5563;
 }
 
-.flame {
-  font-variant: small-caps;
-  color: var(--secondary-color);
-  font-weight: 800;
-}
-
 /* ================= Animated Figure 1 ================= */
 .fig1 {
   position: relative;

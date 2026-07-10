@@ -132,10 +132,8 @@ img {
   text-align: center;
 }
 
-.eyebrow,
 .section-kicker,
-.mini-kicker,
-.teaser-kicker {
+.mini-kicker {
   margin: 0 0 0.7rem;
   color: var(--secondary-color);
   font-size: 0.78rem;
@@ -246,11 +244,6 @@ img {
 .hero-teaser {
   position: relative;
   margin-top: 2.4rem;
-}
-
-.teaser-kicker {
-  margin-left: 0.2rem;
-  color: var(--muted);
 }
 
 .figure-note {
