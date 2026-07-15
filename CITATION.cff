@@ -1,0 +1,71 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the accompanying paper."
+title: "Capability Provenance in Language Models: A Case Study in Social Reasoning"
+type: software
+repository-code: "https://github.com/eilab-gt/social-data-attribution"
+url: "https://eilab.gatech.edu/social-data-attribution/"
+abstract: >-
+  Training-data attribution as an interpretable tool for capability discovery,
+  mapping which regions of the pretraining corpus support social-reasoning
+  versus STEM-reasoning in OLMo3-7B. Released artifacts are aggregate bin-level
+  statistics by design.
+keywords:
+  - training-data-attribution
+  - interpretability
+  - language-models
+  - capability-provenance
+  - machine-unlearning
+authors:
+  - family-names: Matlin
+    given-names: Glenn
+  - family-names: Chakraborty
+    given-names: Chandreyi
+  - family-names: Eom
+    given-names: Saehee
+  - family-names: Okamoto
+    given-names: Mika
+  - family-names: Castilla
+    given-names: Rayan
+  - family-names: Jaburi
+    given-names: Louis
+  - family-names: Deng
+    given-names: Alvin
+  - family-names: Min
+    given-names: Taywon
+  - family-names: Quirke
+    given-names: Lucia
+  - family-names: Biderman
+    given-names: Stella
+  - family-names: Riedl
+    given-names: Mark
+license: AGPL-3.0-only
+preferred-citation:
+  type: proceedings
+  title: "Capability Provenance in Language Models: A Case Study in Social Reasoning"
+  authors:
+    - family-names: Matlin
+      given-names: Glenn
+    - family-names: Chakraborty
+      given-names: Chandreyi
+    - family-names: Eom
+      given-names: Saehee
+    - family-names: Okamoto
+      given-names: Mika
+    - family-names: Castilla
+      given-names: Rayan
+    - family-names: Jaburi
+      given-names: Louis
+    - family-names: Deng
+      given-names: Alvin
+    - family-names: Min
+      given-names: Taywon
+    - family-names: Quirke
+      given-names: Lucia
+    - family-names: Biderman
+      given-names: Stella
+    - family-names: Riedl
+      given-names: Mark
+  year: 2026
+  conference:
+    name: "Conference on Language Modeling (COLM 2026)"
+  url: "https://arxiv.org/abs/2606.19625"
