@@ -3,3 +3,6 @@
 .claude/
 .agents/
 skills-lock.json
+
+# Visual brainstorming companion (ephemeral)
+.superpowers/
