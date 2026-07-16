@@ -1,9 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <rect width="64" height="64" rx="14" fill="#762A83"/>
-  <g>
-    <rect x="12" y="12" width="16" height="16" rx="3" fill="#67A9CF"/>
-    <rect x="32" y="12" width="16" height="16" rx="3" fill="#EF8A62"/>
-    <rect x="12" y="32" width="16" height="16" rx="3" fill="#8C6D1F"/>
-    <rect x="32" y="32" width="16" height="16" rx="3" fill="#1B7837"/>
+  <g stroke="#762A83" stroke-width="1.0" stroke-linejoin="round">
+    <!-- top-left: knobs point right and down -->
+    <path fill="#67A9CF" d="M 9 9 L 32 9 L 32 15 A 5.6 5.6 0 0 1 32 26 L 32 32 L 26 32 A 5.6 5.6 0 0 1 15 32 L 9 32 Z"/>
+    <!-- top-right: socket on left, knob points down -->
+    <path fill="#EF8A62" d="M 32 9 L 55 9 L 55 32 L 49 32 A 5.6 5.6 0 0 1 38 32 L 32 32 L 32 26 A 5.6 5.6 0 0 0 32 15 L 32 9 Z"/>
+    <!-- bottom-left: socket on top, knob points right -->
+    <path fill="#8C6D1F" d="M 9 32 L 15 32 A 5.6 5.6 0 0 0 26 32 L 32 32 L 32 38 A 5.6 5.6 0 0 1 32 49 L 32 55 L 9 55 Z"/>
+    <!-- bottom-right: sockets on top and left -->
+    <path fill="#1B7837" d="M 32 32 L 38 32 A 5.6 5.6 0 0 0 49 32 L 55 32 L 55 55 L 32 55 L 32 49 A 5.6 5.6 0 0 0 32 38 L 32 32 Z"/>
   </g>
 </svg>
