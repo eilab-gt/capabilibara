@@ -1,0 +1,178 @@
+/* SocialTDA research animations — component + dev harness styles.
+   Component styles are scoped under .socialtda-animation. */
+
+.socialtda-animation {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(23, 23, 23, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.socialtda-animation .stda-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.socialtda-animation svg text {
+  font-family: "Noto Sans", "Google Sans", Arial, sans-serif;
+}
+
+/* ---- component controls ---- */
+.stda-anim-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid #eee8f1;
+  background: #fbf8fc;
+}
+
+.stda-anim-btn {
+  min-width: 2rem;
+  min-height: 1.7rem;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid #dfd5e4;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.stda-anim-btn:hover {
+  border-color: #762a83;
+  color: #762a83;
+}
+
+.stda-beat-dot {
+  width: 0.85rem;
+  height: 0.85rem;
+  padding: 0;
+  border: 1px solid #c9b8cf;
+  border-radius: 50%;
+  background: #efe6f2;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.stda-beat-dot.is-active,
+.stda-beat-dot:hover {
+  background: #762a83;
+  border-color: #762a83;
+}
+
+/* Static build (reduced motion / no GSAP) has no timeline to control. */
+.socialtda-animation.is-static .stda-anim-controls {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stda-anim-controls {
+    display: none;
+  }
+}
+
+/* ---- dev harness (public/animations/dev/*.html) ---- */
+body.stda-dev {
+  margin: 0;
+  background: #f6f4f8;
+  color: #171717;
+  font-family: "Noto Sans", "Google Sans", Arial, sans-serif;
+}
+
+.stda-dev-wrap {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.stda-dev-wrap h1 {
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem;
+}
+
+.stda-dev-meta {
+  font-size: 0.8rem;
+  color: #4b5563;
+  margin: 0 0 1rem;
+}
+
+.stda-dev-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e3dbe8;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 0.82rem;
+}
+
+.stda-dev-toolbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.stda-dev-note {
+  margin-top: 1.25rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #e3dbe8;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 0.8rem;
+  color: #4b5563;
+  line-height: 1.55;
+}
+
+.stda-dev-note code {
+  background: #f2edf5;
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  font-size: 0.75rem;
+}
+
+/* ---- bare capture mode (?bare=1): component only, no chrome ----
+   Poster / 16:9 video: window 1920×1080 → the 1280×720 viewBox fills it.
+   Square (?bare=1&square=1): window 1080×1080 → render the SVG 1920px wide
+   and shift it left so the central 720-unit square fills the viewport. */
+html.stda-bare,
+html.stda-bare body {
+  margin: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+html.stda-bare .stda-dev-chrome {
+  display: none;
+}
+
+html.stda-bare .stda-dev-wrap {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+html.stda-bare .socialtda-animation {
+  border: none;
+  border-radius: 0;
+  width: 100vw;
+}
+
+html.stda-bare .stda-anim-controls {
+  display: none;
+}
+
+html.stda-bare.stda-square .socialtda-animation {
+  width: 1920px;
+  margin-left: -420px;
+}

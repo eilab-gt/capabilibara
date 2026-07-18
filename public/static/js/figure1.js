@@ -79,7 +79,7 @@ var STAGES = [
 var CAPTIONS = [
   "<strong>1) Corpus Construction.</strong> Dolma3 (6T tokens) is de-duplicated to ~1.26B unique documents, then binned by WebOrganizer into <strong>576 bins</strong> (24 topics × 24 formats).",
   "<strong>2) Training Data Attribution.</strong> Four benchmark probes are attributed to bins with gradient-based TrackStar (via Bergson), then aggregated to a 576×4 influence matrix.",
-  "<strong>3) Bin-Level Influence Map.</strong> Signed z-scores map supportive (blue) vs. suppressive (orange) bins. SocialIQA's <strong>signature bin</strong> is positive for social yet negative/flat for STEM.",
+  "<strong>3) Bin-Level Influence Map.</strong> Signed z-scores map supportive (blue) vs. suppressive (red) bins. SocialIQA's <strong>signature bin</strong> is positive for social yet negative/flat for STEM.",
   "<strong>4) Unlearning Validation.</strong> &Delta; = &gamma;<sub>influence</sub> &minus; &gamma;<sub>random</sub> across 24 topics &times; 3 seeds (paper Table 49). Influence-targeted forgetting damages <strong>SocialIQA</strong> (+1.60 pp, p &asymp; 10<sup>-5</sup>); ARC-Challenge <em>reverses</em> (&minus;0.26 pp). Selective damage, not generic topic removal."
 ];
 
@@ -101,10 +101,10 @@ function mix(c1, c2, t) {
   var a = hex(c1), b = hex(c2);
   return "rgb(" + Math.round(lerp(a[0], b[0], t)) + "," + Math.round(lerp(a[1], b[1], t)) + "," + Math.round(lerp(a[2], b[2], t)) + ")";
 }
-// influence: blue (+) / orange (-), diverging from near-white
+// influence: blue (+) / red (-), diverging from near-white
 function inflColor(z) {
   var t = Math.min(Math.abs(z) / 3.1, 1);
-  return z >= 0 ? mix("#f7f7f7", "#2166AC", t) : mix("#f7f7f7", "#B35806", Math.min(Math.abs(z) / 1.2, 1));
+  return z >= 0 ? mix("#f7f7f7", "#2166AC", t) : mix("#f7f7f7", "#B2182B", Math.min(Math.abs(z) / 1.2, 1));
 }
 function inflInk(z) { return Math.min(Math.abs(z) / 3.1, 1) > 0.55 ? "#fff" : "#222"; }
 // paired unlearning Δ (γ_influence − γ_random): positive = selective damage (red),
@@ -273,7 +273,7 @@ function sceneAttribution(root) {
       bm.setAttribute("opacity", 0.8);
       tl.to(bm, { attr: { "stroke-dashoffset": 0 }, duration: 0.55 }, 0.5 + i * 0.16);
     });
-    // score every bin: wash the grid with a signed-influence field (blue supportive / orange suppressive)
+    // score every bin: wash the grid with a signed-influence field (blue supportive / red suppressive)
     cells.forEach(function (cell, idx) {
       var r = Math.floor(idx / GRID.n), c = idx % GRID.n;
       var z = 2.4 * Math.sin(r * 0.85 + 0.6) + 1.7 * Math.cos(c * 0.8) - 0.3;
