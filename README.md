@@ -117,7 +117,7 @@ Released artifacts are **aggregate, bin-level by design** — document-level att
 If you use this software, please cite the paper. GitHub's **"Cite this repository"** button (from `CITATION.cff`) surfaces the same BibTeX; the canonical text matches the project site.
 
 ```bibtex
-@inproceedings{matlin2026doessocialreasoningcome,
+@inproceedings{matlin2026capabilityprovenance,
   title         = {Capability Provenance in Language Models: A Case Study in Social Reasoning},
   author        = {Glenn Matlin and Chandreyi Chakraborty and Saehee Eom and Mika Okamoto and
                    Rayan Castilla and Louis Jaburi and Alvin Deng and Taywon Min and

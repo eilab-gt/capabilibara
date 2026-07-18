@@ -293,6 +293,14 @@
   background: #fffdf8;
 }
 
+.tax-note {
+  grid-column: 2;
+  margin: 0.55rem 0 0;
+  color: var(--faint);
+  font-size: 0.76rem;
+  font-style: italic;
+}
+
 /* ================= 2 by 2 design ================= */
 .contrast-viz {
   padding: 1rem;

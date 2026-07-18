@@ -141,6 +141,21 @@ img {
   text-transform: uppercase;
 }
 
+.publication-venue {
+  display: inline-block;
+  margin: 0 0 1.35rem;
+  padding: 0.4rem 0.95rem;
+  border: 1px solid rgba(118, 42, 131, 0.32);
+  border-radius: 999px;
+  background: rgba(118, 42, 131, 0.07);
+  color: var(--primary-color);
+  font-family: "Google Sans", "Noto Sans", Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
 .publication-title {
   max-width: 980px;
   margin: 0 auto;
@@ -630,9 +645,18 @@ img {
 
 .models-table {
   width: 100%;
+  min-width: 720px;
+  table-layout: fixed;
   border-collapse: collapse;
   background: #ffffff;
   font-variant-numeric: tabular-nums;
+}
+
+/* With table-layout: fixed, the first column takes this width and the
+   three model columns share the remaining space equally, so a long
+   OLMo3 value cell can no longer squeeze the pending-model columns. */
+.models-table thead th:first-child {
+  width: 27%;
 }
 
 .models-table th,
@@ -709,6 +733,7 @@ img {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .models-table .status-done {

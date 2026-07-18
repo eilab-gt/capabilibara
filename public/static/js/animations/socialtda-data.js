@@ -156,13 +156,13 @@ export const MODELS = [
   {
     key: "comma7b",
     name: "Comma 7B",
-    corpus: "DCLM-Baseline",
+    corpus: "Common Pile",
     status: "pending"
   },
   {
     key: "dclm7b",
     name: "DCLM 7B",
-    corpus: "DCLM",
+    corpus: "DCLM-Baseline",
     status: "pending"
   }
 ];
