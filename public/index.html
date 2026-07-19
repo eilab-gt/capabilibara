@@ -318,11 +318,11 @@
       </div>
       <div class="paper-copy" data-aos="fade-up" data-aos-delay="100">
         <p>
-          All four probes are OLMES-standard multiple-choice benchmarks: SocialIQA (10,000 queries,
-          3-shot), MMLU Social Sciences (3,077 queries, 4-shot), ARC-Challenge (1,172 queries,
-          4-shot), and MMLU STEM (3,018 queries, 4-shot). Benchmark query gradients come from
-          OLMo3-7B Instruct; document gradients and corpus-side curvature are computed on OLMo3-7B
-          Base, keeping the analysis tied to pretraining data.
+          All four probes are OLMES-standard multiple-choice benchmarks, evaluated 5-shot:
+          SocialIQA (10,000 queries), MMLU Social Sciences (3,077 queries), ARC-Challenge
+          (1,172 queries), and MMLU STEM (3,018 queries). Benchmark query gradients come from
+          OLMo3-7B Instruct on the bare questions; document gradients and corpus-side curvature
+          are computed on OLMo3-7B Base, keeping the analysis tied to pretraining data.
         </p>
         <dl class="inline-facts">
           <div><dt>Unique documents</dt><dd>1.26B after de-duplication</dd></div>
