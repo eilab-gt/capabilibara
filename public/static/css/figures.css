@@ -18,16 +18,9 @@
   position: relative;
   padding: 1rem;
   overflow: hidden;
-  border: 1px solid rgba(23, 23, 23, 0.12);
+  border: 1px solid var(--hairline);
   border-radius: 8px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 253, 248, 0.98)),
-    radial-gradient(circle at 52% 0%, rgba(118, 42, 131, 0.08), transparent 48%);
-  box-shadow: 0 26px 70px rgba(23, 23, 23, 0.12);
-}
-
-.hero-fig {
-  padding: 1.25rem;
+  background: #ffffff;
 }
 
 .fig1-interactive {
@@ -210,7 +203,6 @@
   border: 1px solid var(--hairline);
   border-radius: 8px;
   background: #ffffff;
-  box-shadow: 0 20px 48px rgba(23, 23, 23, 0.08);
 }
 
 .tax-axis {
@@ -307,7 +299,6 @@
   border: 1px solid var(--hairline);
   border-radius: 8px;
   background: #ffffff;
-  box-shadow: 0 20px 48px rgba(23, 23, 23, 0.08);
 }
 
 .contrast-grid {
@@ -362,20 +353,24 @@
   font-size: 0.86rem;
 }
 
+/* 2×2 encoding: column = domain hue (social = purple family, STEM = gold
+   family), row = capability type (reasoning = solid, knowledge = tint). */
 .social-reason {
-  background: var(--soc-reason);
+  background: var(--primary-color);
 }
 
 .social-know {
-  background: var(--soc-know);
+  background: rgba(118, 42, 131, 0.14);
+  color: #5e2470;
 }
 
 .stem-reason {
-  background: var(--stem-reason);
+  background: var(--secondary-color);
 }
 
 .stem-know {
-  background: var(--stem-know);
+  background: rgba(140, 109, 31, 0.16);
+  color: #6b5418;
 }
 
 /* ================= Bar animations ================= */
@@ -507,7 +502,7 @@
 }
 
 .cloud-docs span {
-  background: var(--accent-green);
+  background: var(--secondary-color);
 }
 
 .cloud-dialogue span:nth-child(1) { top: 12px; left: 8%; transition-delay: 80ms; }
@@ -523,7 +518,6 @@
 .cloud-docs span:nth-child(5) { top: 154px; left: 48%; transition-delay: 520ms; }
 
 @media screen and (max-width: 768px) {
-  .hero-fig,
   .fig1 {
     padding: 0.7rem;
   }

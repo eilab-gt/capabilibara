@@ -68,7 +68,7 @@
   <link rel="apple-touch-icon" href="./static/images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;600;800&family=Castoro:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&family=Castoro:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -146,17 +146,16 @@
   </div>
 
   <div class="paper-shell paper-shell-wide hero-teaser" data-aos="fade-up" data-aos-delay="120">
-    <div class="fig1 hero-fig" data-fig1>
-      <figure class="image fig1-fallback">
-        <picture>
-          <source srcset="./static/images/figures/fig-overview-revised.webp" type="image/webp">
-          <img src="./static/images/figures/fig-overview-revised.png" width="1672" height="753" fetchpriority="high" alt="Four-panel capability provenance pipeline: corpus construction bins Dolma3, training-data attribution scores benchmark probes, a signed bin-level influence map, and unlearning validation against random in-topic controls.">
-        </picture>
-      </figure>
-    </div>
+    <figure class="hero-static-fig">
+      <picture>
+        <source srcset="./static/images/figures/fig-overview-revised.webp" type="image/webp">
+        <img src="./static/images/figures/fig-overview-revised.png" width="1672" height="753" fetchpriority="high" alt="Four-panel capability provenance pipeline: corpus construction bins Dolma3, training-data attribution scores benchmark probes, a signed bin-level influence map, and unlearning validation against random in-topic controls.">
+      </picture>
+    </figure>
     <p class="figure-note">
       Figure 1: a corpus-scale attribution pipeline that bins Dolma3, scores benchmark probes with
       Bergson / TrackStar, aggregates signed influence, and validates selected regions with unlearning.
+      An animated walkthrough is in the Method section below.
     </p>
   </div>
 </header>
@@ -217,6 +216,21 @@
         <p>
           The central move is aggregation: every benchmark query is traced back to many individual
           documents, then summarized into comparable topic-format regions.
+        </p>
+      </div>
+
+      <div class="method-walkthrough" data-aos="fade-up">
+        <div class="fig1" data-fig1>
+          <figure class="image fig1-fallback">
+            <picture>
+              <source srcset="./static/images/figures/fig-overview-revised.webp" type="image/webp">
+              <img loading="lazy" decoding="async" src="./static/images/figures/fig-overview-revised.png" width="1672" height="753" alt="Four-panel capability provenance pipeline: corpus construction bins Dolma3, training-data attribution scores benchmark probes, a signed bin-level influence map, and unlearning validation against random in-topic controls.">
+            </picture>
+          </figure>
+        </div>
+        <p class="figure-note">
+          Animated walkthrough of the pipeline: corpus construction, attribution scoring, the signed
+          influence map, and unlearning validation. Step through with the stage buttons or press play.
         </p>
       </div>
 
@@ -707,7 +721,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script type="module" src="./static/js/figure1.js?v=20260710"></script>
+  <script type="module" src="./static/js/figure1.js?v=20260718"></script>
 <script type="module" src="./static/js/main.js?v=20260709"></script>
 </body>
 </html>

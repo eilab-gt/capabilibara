@@ -25,8 +25,8 @@ var GCY = GRID.y + GRID_W / 2;                          // grid center Y
 
 // ---- palette ----
 var C = {
-  socReason: "#762A83", socKnow: "#8C6D1F",
-  stemReason: "#A14F00", stemKnow: "#1B7837",
+  socReason: "#762A83", socKnow: "#5E2470",
+  stemReason: "#8C6D1F", stemKnow: "#6B5418",
   slate: "#4B5563", grid: "#c9b8cf", gridFill: "#efe6f2",
   doc: "#b9a7c0"
 };
@@ -101,17 +101,17 @@ function mix(c1, c2, t) {
   var a = hex(c1), b = hex(c2);
   return "rgb(" + Math.round(lerp(a[0], b[0], t)) + "," + Math.round(lerp(a[1], b[1], t)) + "," + Math.round(lerp(a[2], b[2], t)) + ")";
 }
-// influence: blue (+) / orange (-), diverging from near-white
+// influence: blue (+) / orange (-), diverging from near-white — matches the site-wide signed scale
 function inflColor(z) {
   var t = Math.min(Math.abs(z) / 3.1, 1);
-  return z >= 0 ? mix("#f7f7f7", "#2166AC", t) : mix("#f7f7f7", "#B35806", Math.min(Math.abs(z) / 1.2, 1));
+  return z >= 0 ? mix("#f7f7f7", "#2F6FA8", t) : mix("#f7f7f7", "#B35806", Math.min(Math.abs(z) / 1.2, 1));
 }
 function inflInk(z) { return Math.min(Math.abs(z) / 3.1, 1) > 0.55 ? "#fff" : "#222"; }
-// paired unlearning Δ (γ_influence − γ_random): positive = selective damage (red),
-// negative = reversed (blue). Max |Δ| ≈ 1.6 pp.
+// paired unlearning Δ (γ_influence − γ_random): same signed scale as the rest of
+// the site — positive (selective damage) blue, negative (reversed) orange. Max |Δ| ≈ 1.6 pp.
 function accColor(d) {
-  return d >= 0 ? mix("#fdf2f0", "#67000D", Math.min(d / 1.6, 1))
-                : mix("#eff3ff", "#2166AC", Math.min(Math.abs(d) / 1.6, 1));
+  return d >= 0 ? mix("#eff3ff", "#2F6FA8", Math.min(d / 1.6, 1))
+                : mix("#f7f7f7", "#B35806", Math.min(Math.abs(d) / 1.6, 1));
 }
 function accInk(d) { return Math.min(Math.abs(d) / 1.6, 1) > 0.5 ? "#fff" : "#222"; }
 function fmt(v, plus) { return (v >= 0 && plus ? "+" : "") + v.toFixed(2); }
@@ -119,8 +119,8 @@ function fmt(v, plus) { return (v >= 0 && plus ? "+" : "") + v.toFixed(2); }
 // ================= scene builders =================
 // Each returns { g: <g>, enter: function(gsap)->timeline }
 
-// soft multi-hue palette used to suggest distinct strata/bins
-var STRATA = ["#762A83", "#8C6D1F", "#A14F00", "#1B7837", "#006D5B", "#4575B4", "#67A9CF", "#4B5563"];
+// restrained two-family palette (purple social / gold STEM + neutral) used to suggest distinct strata/bins
+var STRATA = ["#762A83", "#8C6D1F", "#96529F", "#B3964A", "#4B5563", "#762A83", "#8C6D1F", "#96529F"];
 
 // a "document" page glyph: rounded page with a folded corner + text lines (fills its height)
 function docGlyph(parent, x, y, w, h) {
