@@ -239,7 +239,7 @@
           <p class="mini-kicker">Corpus taxonomy</p>
           <h3>24 topics crossed with 24 formats.</h3>
           <p>
-            Dolma3 is de-duplicated, classified, and sampled into 10,000 documents per occupied bin.
+            Dolma3 is de-duplicated and classified, then sampled into 10,000 documents per occupied bin.
             This turns attribution from a document retrieval problem into a structured corpus
             comparison problem.
           </p>
@@ -370,7 +370,7 @@
             <h3>One corpus region, Literature &times; Customer Support, strongly supports social reasoning while suppressing the STEM tasks.</h3>
             <p class="finding-explain">
               Influence is signed, so a single bin can register as supportive for one benchmark and
-              suppressive for another at the same time. Literature &times; Customer Support is the
+              suppressive for another. Literature &times; Customer Support is the
               extreme case: the most positive bin in the corpus for SocialIQA, and among the most
               negative for the two MMLU tasks.
             </p>
@@ -405,8 +405,8 @@
           <div>
             <h3>The social-versus-STEM split is sharper for reasoning tasks than for knowledge tasks.</h3>
             <p class="finding-explain">
-              Reasoning tasks ask the model to work over a domain, not just retrieve it, so they
-              should stress different corpus regions than the matching knowledge task. The
+              Knowledge tasks ask the model to retrieve a domain; reasoning tasks ask it to work
+              over one, so the two should stress different corpus regions. The
               social-minus-STEM topic contrast is larger for the reasoning pair than the knowledge
               pair, while leaning in the same direction across both.
             </p>
@@ -548,8 +548,8 @@
             The top 20 SocialIQA bins divide cleanly: 10 interactional formats (dialogue-heavy,
             first- and second-person) and 10 expository formats (long-form, documentation-like). The
             signature Literature &times; Customer Support bin averages 245 words per document with
-            high first- and second-person rates and a dialogue z of 2.38. Social reasoning is not
-            explained by a single genre.
+            high first- and second-person rates and a dialogue z of 2.38. Social reasoning draws on
+            more than one genre.
           </p>
         </div>
         <div class="cluster-viz" data-concept="clusters">
@@ -632,9 +632,8 @@
         <ul class="limitations-list">
           <li>Attribution is an analytic lens, not an exact proof of causal necessity for individual documents; unlearning validates aggregate patterns without eliminating approximation error.</li>
           <li>Analysis runs on a 5.68M-document stratified working set drawn from the ~1.26B-document population; results should not be read as characterizing every document in the full corpus.</li>
-          <li>Unlearning shows a corpus region is load-bearing; it does not explain the mechanism by which those documents shape model behavior.</li>
+          <li>Unlearning shows a corpus region materially supports the aligned benchmark; it does not explain the mechanism by which those documents shape model behavior.</li>
           <li>The full deep-dive is measured on one open-data ecosystem (OLMo3-7B / Dolma3). The Comma 7B and DCLM 7B extensions are in progress; until they land, generalization across model families remains an open question.</li>
-          <li>Released artifacts are aggregate bin-level statistics by design &mdash; no document-level attribution scores.</li>
         </ul>
         <p class="takeaway">
           The contrastive design probes the structure of capability provenance. It does not
@@ -654,7 +653,7 @@
       <div class="resource-list" data-aos="fade-up" data-aos-delay="100">
         <a href="https://github.com/eilab-gt/capabilibara" target="_blank" rel="noopener">
           <span class="resource-icon"><i class="fab fa-github"></i></span>
-          <span><strong>Project repository</strong><small>Attribution, sampling, and unlearning pipeline.</small></span>
+          <span><strong>Project repository</strong><small>The full pipeline, from attribution through unlearning.</small></span>
         </a>
         <div class="resource-item resource-pending">
           <span class="resource-icon"><i class="fas fa-database"></i></span>
