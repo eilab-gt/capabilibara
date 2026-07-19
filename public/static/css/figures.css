@@ -327,7 +327,7 @@
   min-height: 118px;
   padding: 1rem;
   border-radius: 8px;
-  color: #ffffff;
+  color: var(--ink);
   transform: translateY(12px);
   opacity: 0.2;
   transition: opacity 500ms ease, transform 500ms ease;
@@ -353,24 +353,39 @@
   font-size: 0.86rem;
 }
 
-/* 2×2 encoding: column = domain hue (social = purple family, STEM = gold
-   family), row = capability type (reasoning = solid, knowledge = tint). */
+/* 2×2 cells keep the paper's four benchmark hues (continuity with the
+   published figures), softened to light tints with dark same-hue ink so
+   the text stays readable. */
 .social-reason {
-  background: var(--primary-color);
+  background: rgba(118, 42, 131, 0.15);
 }
 
-.social-know {
-  background: rgba(118, 42, 131, 0.14);
+.social-reason strong {
   color: #5e2470;
 }
 
+.social-know {
+  background: rgba(140, 109, 31, 0.15);
+}
+
+.social-know strong {
+  color: #6b5418;
+}
+
 .stem-reason {
-  background: var(--secondary-color);
+  background: rgba(161, 79, 0, 0.13);
+}
+
+.stem-reason strong {
+  color: #7a3c00;
 }
 
 .stem-know {
-  background: rgba(140, 109, 31, 0.16);
-  color: #6b5418;
+  background: rgba(27, 120, 55, 0.14);
+}
+
+.stem-know strong {
+  color: #145a2a;
 }
 
 /* ================= Bar animations ================= */

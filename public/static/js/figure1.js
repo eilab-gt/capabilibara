@@ -25,8 +25,8 @@ var GCY = GRID.y + GRID_W / 2;                          // grid center Y
 
 // ---- palette ----
 var C = {
-  socReason: "#762A83", socKnow: "#5E2470",
-  stemReason: "#8C6D1F", stemKnow: "#6B5418",
+  socReason: "#762A83", socKnow: "#8C6D1F",
+  stemReason: "#A14F00", stemKnow: "#1B7837",
   slate: "#4B5563", grid: "#c9b8cf", gridFill: "#efe6f2",
   doc: "#b9a7c0"
 };
@@ -119,8 +119,8 @@ function fmt(v, plus) { return (v >= 0 && plus ? "+" : "") + v.toFixed(2); }
 // ================= scene builders =================
 // Each returns { g: <g>, enter: function(gsap)->timeline }
 
-// restrained two-family palette (purple social / gold STEM + neutral) used to suggest distinct strata/bins
-var STRATA = ["#762A83", "#8C6D1F", "#96529F", "#B3964A", "#4B5563", "#762A83", "#8C6D1F", "#96529F"];
+// soft multi-hue palette used to suggest distinct strata/bins
+var STRATA = ["#762A83", "#8C6D1F", "#A14F00", "#1B7837", "#006D5B", "#4575B4", "#67A9CF", "#4B5563"];
 
 // a "document" page glyph: rounded page with a folded corner + text lines (fills its height)
 function docGlyph(parent, x, y, w, h) {
