@@ -475,6 +475,10 @@
 }
 
 /* ================= Cluster animation ================= */
+.finding-row .cluster-viz {
+  margin-top: 1.3rem;
+}
+
 .cluster-viz {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 2px minmax(0, 1fr);
