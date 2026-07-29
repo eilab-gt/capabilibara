@@ -1,7 +1,7 @@
 # Camera-Ready Frontend Plan
 
-Status: ready for implementation  
-Working branch: `codex/camera-ready-website`  
+Status: ready for implementation
+Working branch: `rcz-05/website-improvements`
 Baseline: `main` at `dfa6c62`
 
 ## Goal
