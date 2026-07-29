@@ -2,23 +2,23 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Capability Provenance in Language Models: A Case Study in Social Reasoning - a project page for training-data attribution analysis of social reasoning in OLMo3-7B.">
-  <meta name="keywords" content="training data attribution, capability provenance, social reasoning, language models, interpretability, OLMo, Dolma, unlearning">
+  <meta name="description" content="Where does a language model's social reasoning come from? Training-data attribution traces model skills back to the open training text that supports them, explained in plain language and checked with unlearning.">
+  <meta name="keywords" content="training data attribution, influence functions, capability provenance, social reasoning, language models, interpretability, OLMo, Dolma, unlearning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Capability Provenance in Language Models: A Case Study in Social Reasoning</title>
 
-  <link rel="canonical" href="https://eilab.gatech.edu/capabilibara/">
+  <link rel="canonical" href="https://eilab.gatech.edu/social-data-attribution/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Capability Provenance in Language Models: A Case Study in Social Reasoning">
-  <meta property="og:description" content="Training-data attribution maps which regions of the Dolma3 pretraining corpus support social versus STEM reasoning in OLMo3-7B, validated with targeted unlearning.">
-  <meta property="og:url" content="https://eilab.gatech.edu/capabilibara/">
-  <meta property="og:image" content="https://eilab.gatech.edu/capabilibara/static/images/og-card.png">
+  <meta property="og:description" content="Training-data attribution traces which kinds of open training text support social versus STEM reasoning in language models, explained in plain language and checked with unlearning.">
+  <meta property="og:url" content="https://eilab.gatech.edu/social-data-attribution/">
+  <meta property="og:image" content="https://eilab.gatech.edu/social-data-attribution/static/images/og-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Capability Provenance in Language Models: A Case Study in Social Reasoning">
-  <meta name="twitter:description" content="Training-data attribution maps which regions of the Dolma3 pretraining corpus support social versus STEM reasoning in OLMo3-7B, validated with targeted unlearning.">
-  <meta name="twitter:image" content="https://eilab.gatech.edu/capabilibara/static/images/og-card.png">
+  <meta name="twitter:description" content="Training-data attribution traces which kinds of open training text support social versus STEM reasoning in language models, explained in plain language and checked with unlearning.">
+  <meta name="twitter:image" content="https://eilab.gatech.edu/social-data-attribution/static/images/og-card.png">
   <meta name="citation_title" content="Capability Provenance in Language Models: A Case Study in Social Reasoning">
   <meta name="citation_author" content="Glenn Matlin">
   <meta name="citation_author" content="Chandreyi Chakraborty">
@@ -41,7 +41,7 @@
     "@type": "ScholarlyArticle",
     "name": "Capability Provenance in Language Models: A Case Study in Social Reasoning",
     "headline": "Capability Provenance in Language Models: A Case Study in Social Reasoning",
-    "description": "Training-data attribution as an interpretable tool for capability discovery, mapping which regions of the pretraining corpus support social-reasoning versus STEM-reasoning in OLMo3-7B.",
+    "description": "Training-data attribution as an interpretable tool for capability discovery: tracing which kinds of open training text support social reasoning versus STEM reasoning in language models, checked with targeted unlearning.",
     "author": [
       { "@type": "Person", "name": "Glenn Matlin" },
       { "@type": "Person", "name": "Chandreyi Chakraborty" },
@@ -55,7 +55,7 @@
       { "@type": "Person", "name": "Stella Biderman" },
       { "@type": "Person", "name": "Mark Riedl" }
     ],
-    "url": "https://eilab.gatech.edu/capabilibara/",
+    "url": "https://eilab.gatech.edu/social-data-attribution/",
     "sameAs": [
       "https://arxiv.org/abs/2606.19625",
       "https://github.com/eilab-gt/capabilibara"
@@ -112,7 +112,7 @@
 
 <header id="top" class="paper-hero">
   <div class="paper-shell hero-copy" data-aos="fade-up">
-    <p class="publication-venue">Accepted at COLM 2026</p>
+    <p class="publication-venue">Accepted at COLM 2026 &middot; SciFM Workshop</p>
     <h1 class="publication-title">Capability Provenance in Language Models</h1>
     <p class="publication-subtitle">A Case Study in Social Reasoning</p>
 
@@ -146,41 +146,37 @@
     </div>
   </div>
 
-  <div class="paper-shell paper-shell-wide hero-teaser" data-aos="fade-up" data-aos-delay="120">
-    <figure class="hero-static-fig">
-      <picture>
-        <source srcset="./static/images/figures/fig-overview-revised.webp" type="image/webp">
-        <img src="./static/images/figures/fig-overview-revised.png" width="1672" height="753" fetchpriority="high" alt="Four-panel capability provenance pipeline: corpus construction bins Dolma3, training-data attribution scores benchmark probes, a signed bin-level influence map, and unlearning validation against random in-topic controls.">
-      </picture>
-    </figure>
-    <p class="figure-note">
-      Figure 1: a corpus-scale attribution pipeline that bins Dolma3, scores benchmark probes with
-      Bergson / TrackStar, aggregates signed influence, and validates selected regions with unlearning.
-      An animated walkthrough is in the Method section below.
-    </p>
-  </div>
 </header>
 
 <main id="main">
   <section class="contribution-band" aria-label="One-sentence contribution">
     <div class="paper-shell">
       <p class="contribution-statement">
-        Training-data attribution shows that social reasoning and STEM reasoning
-        draw on distinct regions of the pretraining corpus. Unlearning the
-        flagged regions damages the matching benchmark more than random
-        controls &mdash; causal evidence, strongest for social reasoning.
+        Where does a language model's social reasoning come from? We trace
+        skills back to the training data that supports them. Affective,
+        informal, conversational text supports social reasoning; math and STEM
+        reasoning draw on different text. And when a model is made to forget
+        the flagged data, the matching skill weakens more than when it forgets
+        random data.
       </p>
     </div>
   </section>
 
+  <!-- Metrics band: intentionally disabled (maintainer decision, 2026-07-29).
+       Quantitative results are being rerun across more models and none are
+       final; the site leads with contribution + methodology until they are.
+       When final cross-model metrics land, restore this section and fill in
+       the values.
   <section class="metrics-band" aria-label="Paper summary metrics">
     <div class="paper-shell metrics-grid">
-      <div><strong>+1.60 pp</strong><span>SocialIQA unlearning damage (p &asymp; 10<sup>-5</sup>)</span></div>
+      <div><strong>TBD</strong><span>headline metric</span></div>
       <div><strong>576</strong><span>topic-format bins</span></div>
-      <div><strong>5.68M</strong><span>documents sampled</span></div>
+      <div><strong>TBD</strong><span>documents sampled</span></div>
       <div><strong>4</strong><span>contrastive benchmarks</span></div>
     </div>
   </section>
+  -->
+
 
   <section id="abstract" class="paper-section">
     <div class="paper-shell section-grid">
