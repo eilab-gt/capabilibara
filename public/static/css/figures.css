@@ -184,6 +184,42 @@
   display: block;
 }
 
+/* Static schematic shown when the animated walkthrough is unavailable. */
+.fig1-schematic {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fig1-schematic .f1s-box rect {
+  fill: #fffdf8;
+  stroke: var(--hairline);
+  stroke-width: 1.4;
+}
+
+.fig1-schematic .f1s-title {
+  fill: var(--ink);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.fig1-schematic .f1s-copy {
+  fill: var(--faint);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 12.5px;
+  text-anchor: middle;
+}
+
+.fig1-schematic .f1s-arrow {
+  fill: none;
+  stroke: var(--soc-reason);
+  stroke-width: 3;
+  stroke-linecap: round;
+  marker-end: none;
+}
+
 /* Without JS the scroll-reveal cells would stay faded or invisible.
    Force them to their final visible state so the page is readable. */
 .no-js .tax-cell,

@@ -274,15 +274,41 @@
       <div class="method-walkthrough" data-aos="fade-up">
         <div class="fig1" data-fig1>
           <figure class="image fig1-fallback">
-            <picture>
-              <source srcset="./static/images/figures/fig-overview-revised.webp" type="image/webp">
-              <img loading="lazy" decoding="async" src="./static/images/figures/fig-overview-revised.png" width="1672" height="753" alt="Four-panel capability provenance pipeline: corpus construction bins Dolma3, training-data attribution scores benchmark probes, a signed bin-level influence map, and unlearning validation against random in-topic controls.">
-            </picture>
+            <svg class="fig1-schematic" viewBox="0 0 880 200" role="img" aria-label="Four-stage capability provenance pipeline: build a labeled corpus, score influence per region, read the influence map, and check it causally with unlearning.">
+              <g class="f1s-box">
+                <rect x="10" y="40" width="190" height="110" rx="10"></rect>
+                <text x="105" y="76" class="f1s-title">1 &middot; Labeled corpus</text>
+                <text x="105" y="100" class="f1s-copy">open training data,</text>
+                <text x="105" y="118" class="f1s-copy">binned by topic &times; format</text>
+              </g>
+              <path class="f1s-arrow" d="M 202 95 H 228"></path>
+              <g class="f1s-box">
+                <rect x="232" y="40" width="190" height="110" rx="10"></rect>
+                <text x="327" y="76" class="f1s-title">2 &middot; Attribution</text>
+                <text x="327" y="100" class="f1s-copy">score how each region</text>
+                <text x="327" y="118" class="f1s-copy">supports each skill</text>
+              </g>
+              <path class="f1s-arrow" d="M 424 95 H 450"></path>
+              <g class="f1s-box">
+                <rect x="454" y="40" width="190" height="110" rx="10"></rect>
+                <text x="549" y="76" class="f1s-title">3 &middot; Influence map</text>
+                <text x="549" y="100" class="f1s-copy">supportive vs opposing</text>
+                <text x="549" y="118" class="f1s-copy">corpus regions</text>
+              </g>
+              <path class="f1s-arrow" d="M 646 95 H 672"></path>
+              <g class="f1s-box">
+                <rect x="676" y="40" width="190" height="110" rx="10"></rect>
+                <text x="771" y="76" class="f1s-title">4 &middot; Unlearning check</text>
+                <text x="771" y="100" class="f1s-copy">forget flagged data,</text>
+                <text x="771" y="118" class="f1s-copy">re-test the skill</text>
+              </g>
+            </svg>
           </figure>
         </div>
         <p class="figure-note">
-          Animated walkthrough of the pipeline: corpus construction, attribution scoring, the signed
-          influence map, and unlearning validation. Step through with the stage buttons or press play.
+          Animated walkthrough of the pipeline: build a labeled corpus, score influence per
+          region, read the map, and check it causally with unlearning. Step through with the
+          stage buttons or press play.
         </p>
       </div>
 
