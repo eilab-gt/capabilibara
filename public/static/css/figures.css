@@ -490,8 +490,7 @@
   transform: translateY(0);
 }
 
-/* ================= Bar animations ================= */
-.bar-viz,
+/* ================= Cluster animation ================= */
 .cluster-viz {
   padding: 1rem;
   border: 1px solid var(--hairline);
@@ -499,84 +498,6 @@
   background: #fffdf8;
 }
 
-.bar-head,
-.bar-row {
-  display: grid;
-  grid-template-columns: minmax(150px, 0.75fr) minmax(180px, 1.5fr) minmax(100px, auto);
-  gap: 0.8rem;
-  align-items: center;
-}
-
-.bar-head {
-  margin-bottom: 0.7rem;
-  color: var(--faint);
-  font-size: 0.75rem;
-  font-weight: 850;
-  text-transform: uppercase;
-}
-
-.bar-row {
-  min-height: 46px;
-  border-top: 1px solid rgba(23, 23, 23, 0.08);
-}
-
-.bar-label {
-  color: var(--ink);
-  font-weight: 800;
-}
-
-.bar-value {
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  font-weight: 850;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.bar-track {
-  position: relative;
-  height: 22px;
-  overflow: hidden;
-  border: 1px solid rgba(23, 23, 23, 0.1);
-  border-radius: 6px;
-  background:
-    linear-gradient(90deg, rgba(179, 88, 6, 0.08), transparent 50%, rgba(47, 111, 168, 0.08));
-}
-
-.bar-track::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: rgba(23, 23, 23, 0.24);
-}
-
-.bar-fill {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  width: 0;
-  border-radius: 4px;
-  transition: width 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.bar-fill.positive {
-  left: 50%;
-  background: var(--infl-pos);
-}
-
-.bar-fill.negative {
-  right: 50%;
-  background: var(--infl-neg);
-}
-
-.bar-row.is-visible .bar-fill {
-  width: var(--bar-width, 0%);
-}
-
-/* ================= Cluster animation ================= */
 .finding-row .cluster-viz {
   margin-top: 1.3rem;
 }
@@ -695,20 +616,6 @@
     font-size: 0.92rem;
   }
 
-  .bar-head,
-  .bar-row {
-    grid-template-columns: 1fr;
-    gap: 0.35rem;
-  }
-
-  .bar-head span:last-child {
-    display: none;
-  }
-
-  .bar-value {
-    text-align: left;
-  }
-
   .cluster-viz {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -738,26 +645,6 @@
     transform: none;
     transition: none;
   }
-}
-
-
-/* Benchmark-tinted bar fills (paper palette): color encodes the benchmark,
-   fill direction already encodes the sign. Higher specificity than
-   .bar-fill.positive / .bar-fill.negative, so it wins. */
-.bar-row[data-claim="socialiqa"] .bar-fill {
-  background: #762a83;
-}
-
-.bar-row[data-claim="mmlu_social_sciences"] .bar-fill {
-  background: #8c6d1f;
-}
-
-.bar-row[data-claim="arc_challenge"] .bar-fill {
-  background: #a14f00;
-}
-
-.bar-row[data-claim="mmlu_stem"] .bar-fill {
-  background: #1b7837;
 }
 
 

@@ -97,8 +97,8 @@ function inflColor(z) {
   return z >= 0 ? mix("#f7f7f7", "#2F6FA8", t) : mix("#f7f7f7", "#B35806", Math.min(Math.abs(z) / 1.2, 1));
 }
 function inflInk(z) { return Math.min(Math.abs(z) / 3.1, 1) > 0.55 ? "#fff" : "#222"; }
-// paired unlearning Δ (γ_influence − γ_random): same signed scale as the rest of
-// the site — positive (selective damage) blue, negative (reversed) orange. Max |Δ| ≈ 1.6 pp.
+// unlearning-check scale (schematic): positive (damage) blue, negative orange;
+// normalized to the illustrative max used in UNLEARN.
 function accColor(d) {
   return d >= 0 ? mix("#eff3ff", "#2F6FA8", Math.min(d / 1.6, 1))
                 : mix("#f7f7f7", "#B35806", Math.min(Math.abs(d) / 1.6, 1));
