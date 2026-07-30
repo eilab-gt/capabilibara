@@ -507,45 +507,71 @@
       </div>
       <div class="models-wrap">
         <p class="models-intro">
-          The same three headline results, re-run against each model's own pretraining corpus.
+          The pattern was measured first in OLMo3. The same pipeline is being re-run across a
+          family of open-data models &mdash; different corpora, different token budgets, same
+          question.
         </p>
         <div class="models-table-wrap" data-aos="fade-up">
           <table class="models-table">
-            <caption class="sr-only">Three headline attribution results re-run across three model corpora. OLMo3-7B is complete; Comma 7B and DCLM 7B are pending.</caption>
+            <caption class="sr-only">Roster of open-data models in the study: the OLMo3 Base 7B primary study, in-progress runs for OLMo3 Instruct, Marin, DCLM, and Comma, and planned 32B-scale runs.</caption>
             <thead id="models-head">
               <tr>
-                <th scope="col">Metric</th>
-                <th scope="col">OLMo3-7B<span class="corpus">Dolma3</span><span class="status-badge status-done">Complete</span></th>
-                <th scope="col">Comma 7B<span class="corpus">Common Pile</span><span class="status-badge status-pending">In progress</span></th>
-                <th scope="col">DCLM 7B<span class="corpus">DCLM-Baseline</span><span class="status-badge status-pending">In progress</span></th>
+                <th scope="col">Model</th>
+                <th scope="col">Training corpus</th>
+                <th scope="col">Scale</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody id="models-body">
               <tr>
-                <th scope="row" class="metric-cell">SocialIQA outlier signature<span class="detail">r-range vs the other 3 tasks</span></th>
-                <td class="value-cell">r = 0.06&ndash;0.22<span class="detail">vs the other three tasks (r = 0.76&ndash;0.86 among themselves)</span></td>
-                <td class="value-cell value-pending col-pending">In progress<span class="detail">results pending</span></td>
-                <td class="value-cell value-pending col-pending">In progress<span class="detail">results pending</span></td>
+                <th scope="row" class="metric-cell">OLMo3 Base</th>
+                <td class="value-cell">Dolma3</td>
+                <td class="value-cell">7B</td>
+                <td class="value-cell"><span class="status-badge status-done">Primary study</span></td>
               </tr>
               <tr>
-                <th scope="row" class="metric-cell">Signature-bin sign flip<span class="detail">signed z, Literature &times; Customer Support</span></th>
-                <td class="value-cell">SocialIQA +16.00 &middot; MMLU Soc. Sci. &minus;7.31 &middot; ARC-Challenge &minus;1.92 &middot; MMLU STEM &minus;5.75<span class="detail">Literature &times; Customer Support</span></td>
-                <td class="value-cell value-pending col-pending">In progress<span class="detail">results pending</span></td>
-                <td class="value-cell value-pending col-pending">In progress<span class="detail">results pending</span></td>
+                <th scope="row" class="metric-cell">OLMo3 Instruct</th>
+                <td class="value-cell">Dolma3 + post-training</td>
+                <td class="value-cell">7B</td>
+                <td class="value-cell"><span class="status-badge status-pending">In progress</span></td>
               </tr>
               <tr>
-                <th scope="row" class="metric-cell">SocialIQA unlearning damage<span class="detail">influence &minus; random, paired</span></th>
-                <td class="value-cell">+1.60 pp (p &asymp; 10<sup>&minus;5</sup>)<span class="detail">n = 72 paired forget sets</span></td>
-                <td class="value-cell value-pending col-pending">In progress<span class="detail">results pending</span></td>
-                <td class="value-cell value-pending col-pending">In progress<span class="detail">results pending</span></td>
+                <th scope="row" class="metric-cell">Marin</th>
+                <td class="value-cell">Open mixture</td>
+                <td class="value-cell">8B</td>
+                <td class="value-cell"><span class="status-badge status-pending">In progress</span></td>
+              </tr>
+              <tr>
+                <th scope="row" class="metric-cell">DCLM</th>
+                <td class="value-cell">DCLM-Baseline</td>
+                <td class="value-cell">7B</td>
+                <td class="value-cell"><span class="status-badge status-pending">In progress</span></td>
+              </tr>
+              <tr>
+                <th scope="row" class="metric-cell">Comma</th>
+                <td class="value-cell">Common Pile</td>
+                <td class="value-cell">7B</td>
+                <td class="value-cell"><span class="status-badge status-pending">In progress</span></td>
+              </tr>
+              <tr>
+                <th scope="row" class="metric-cell">OLMo3 Base</th>
+                <td class="value-cell">Dolma3</td>
+                <td class="value-cell">32B</td>
+                <td class="value-cell"><span class="status-badge status-pending">Planned</span></td>
+              </tr>
+              <tr>
+                <th scope="row" class="metric-cell">Marin</th>
+                <td class="value-cell">Open mixture</td>
+                <td class="value-cell">32B</td>
+                <td class="value-cell"><span class="status-badge status-pending">Planned</span></td>
               </tr>
             </tbody>
           </table>
         </div>
         <p class="models-note">
-          The metric set is provisional and will be finalized when the Comma and
-          DCLM results are available. Every number is traceable to the released
-          claims data; no values are filled in for pending models.
+          The roster is qualitative on purpose: no numbers appear here until final cross-model
+          results land, and nothing is ever filled in for pending models. The base-versus-instruct
+          pair asks whether attribution shifts when the query model changes.
         </p>
       </div>
     </div>
@@ -560,9 +586,9 @@
       <div class="paper-copy" data-aos="fade-up" data-aos-delay="100">
         <ul class="limitations-list">
           <li>Attribution is an analytic lens, not an exact proof of causal necessity for individual documents; unlearning validates aggregate patterns without eliminating approximation error.</li>
-          <li>Analysis runs on a 5.68M-document stratified working set drawn from the ~1.26B-document population; results should not be read as characterizing every document in the full corpus.</li>
+          <li>Analysis runs on a stratified working set sampled from the full corpus; results should not be read as characterizing every document the model saw.</li>
           <li>Unlearning shows a corpus region materially supports the aligned benchmark; it does not explain the mechanism by which those documents shape model behavior.</li>
-          <li>The full deep-dive is measured on one open-data ecosystem (OLMo3-7B / Dolma3). The Comma 7B and DCLM 7B extensions are in progress; until they land, generalization across model families remains an open question.</li>
+          <li>The full deep-dive is measured on one open-data ecosystem (OLMo3 / Dolma3). Extensions to OLMo3 Instruct, Marin, DCLM, and Comma &mdash; and 32B-scale runs &mdash; are in progress; until they land, generalization across model families remains an open question.</li>
         </ul>
         <p class="takeaway">
           The contrastive design probes the structure of capability provenance. It does not

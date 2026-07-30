@@ -130,40 +130,18 @@ export const UNLEARNING = {
   ]
 };
 
-/* Cross-model comparison. Each model carries the three headline metrics the
-   "Results across models" section re-runs against the OLMo3 baseline:
-     - socialiqaCorrelation: r-range of SocialIQA's 576-bin profile against the
-       three comparison benchmarks (low = outlier signature).
-     - signatureBin: signed z-scores of the model's extreme SocialIQA-positive
-       bin across the four benchmarks (the sign-flip result).
-     - socialiqaUnlearning: paired influence-minus-random damage on SocialIQA,
-       in accuracy points (medianD * 100) with the Wilcoxon p_BH.
-   Models with status "pending" render an honest placeholder; never fabricate.
-   When Comma/DCLM results land, fill their objects and the table re-renders
-   with no IA change. Comparison metric set is provisional until results land. */
+/* Cross-model roster. The Models section is a qualitative roster by design
+   (maintainer decision, 2026-07-29): rows are models, columns are identity
+   facts (corpus, scale, status). No result numbers live here — when final
+   cross-model metrics land, extend this shape rather than inlining values
+   into the HTML. Status values: "primary" (the published deep-dive),
+   "in-progress", "planned". */
 export const MODELS = [
-  {
-    key: "olmo3",
-    name: "OLMo3-7B",
-    corpus: "Dolma3",
-    status: "done",
-    socialiqaCorrelation: { range: [0.06, 0.22], note: "vs the other three tasks (r = 0.76–0.86 among themselves)" },
-    signatureBin: {
-      label: "Literature × Customer Support",
-      values: { socialiqa: 16.0, mmlu_social_sciences: -7.31, arc_challenge: -1.92, mmlu_stem: -5.75 }
-    },
-    socialiqaUnlearning: { pp: 1.60, wilcoxonPBH: "1.0e-5" }
-  },
-  {
-    key: "comma7b",
-    name: "Comma 7B",
-    corpus: "Common Pile",
-    status: "pending"
-  },
-  {
-    key: "dclm7b",
-    name: "DCLM 7B",
-    corpus: "DCLM-Baseline",
-    status: "pending"
-  }
+  { key: "olmo3_base_7b", name: "OLMo3 Base", corpus: "Dolma3", scale: "7B", status: "primary" },
+  { key: "olmo3_instruct_7b", name: "OLMo3 Instruct", corpus: "Dolma3 + post-training", scale: "7B", status: "in-progress" },
+  { key: "marin_8b", name: "Marin", corpus: "Open mixture", scale: "8B", status: "in-progress" },
+  { key: "dclm_7b", name: "DCLM", corpus: "DCLM-Baseline", scale: "7B", status: "in-progress" },
+  { key: "comma_7b", name: "Comma", corpus: "Common Pile", scale: "7B", status: "in-progress" },
+  { key: "olmo3_base_32b", name: "OLMo3 Base", corpus: "Dolma3", scale: "32B", status: "planned" },
+  { key: "marin_32b", name: "Marin", corpus: "Open mixture", scale: "32B", status: "planned" }
 ];
