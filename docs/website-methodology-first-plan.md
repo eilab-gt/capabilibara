@@ -1,10 +1,15 @@
 # Website update plan: methodology-first, numbers-out, multi-model-ready
 
-Status: drafted 2026-07-29 from team meeting feedback. Supersedes the
-results-forward content decisions in `website-redesign-design.md` (three-tier
-findings with numbers, signature-bin feature, metric-led metrics band) while
-keeping its structural wins (shared data module, pending-model slots,
-single-file stack).
+Status: executed 2026-07-29 on branch `glenn/modest-raman-09a43d`
+(commits 195261b..3957562). Supersedes the results-forward content decisions
+in `website-redesign-design.md` (three-tier findings with numbers,
+signature-bin feature, metric-led metrics band) while keeping its structural
+wins (shared data module, pending-model slots, single-file stack).
+
+Maintainer decisions during execution: the metrics band is COMMENTED OUT in
+place (not cut) with a restore-when-final note; the model roster is the
+seven-entry list OLMo3 Base 7B (primary), OLMo3 Instruct 7B, Marin 8B,
+DCLM 7B, Comma 7B, plus planned OLMo3 32B and Marin 32B.
 
 Source: Capabilibara@COLM meeting, 2026-07-28
 (<https://fathom.video/calls/762069268>, esp. 29:00–33:30). Note: the FinTDA
