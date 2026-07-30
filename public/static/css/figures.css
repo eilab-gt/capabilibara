@@ -188,7 +188,8 @@
    Force them to their final visible state so the page is readable. */
 .no-js .tax-cell,
 .no-js .contrast-cell,
-.no-js .cluster span {
+.no-js .cluster span,
+.no-js .influence-viz .infl-panel {
   opacity: 1;
   transform: none;
 }
@@ -386,6 +387,71 @@
 
 .stem-know strong {
   color: #145a2a;
+}
+
+/* ================= Influence-function explainer ================= */
+.influence-row {
+  margin-bottom: 5.5rem;
+}
+
+.influence-viz {
+  padding: 1rem;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: #fffdf8;
+}
+
+.influence-viz svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.influence-viz .infl-panel rect {
+  fill: #ffffff;
+  stroke: var(--hairline);
+  stroke-width: 1.2;
+}
+
+.influence-viz .infl-title {
+  fill: var(--ink);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.influence-viz .infl-caption {
+  fill: var(--faint);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+.influence-viz .infl-arrow {
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.influence-viz .infl-arrow.infl-query { stroke: var(--soc-reason, #762A83); }
+.influence-viz .infl-head.infl-query { fill: var(--soc-reason, #762A83); }
+.influence-viz .infl-arrow.infl-pos { stroke: var(--infl-pos, #2F6FA8); }
+.influence-viz .infl-head.infl-pos { fill: var(--infl-pos, #2F6FA8); }
+.influence-viz .infl-arrow.infl-neg { stroke: var(--infl-neg, #B35806); }
+.influence-viz .infl-head.infl-neg { fill: var(--infl-neg, #B35806); }
+
+.influence-viz .infl-panel {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.influence-viz .infl-panel:nth-child(2) { transition-delay: 180ms; }
+.influence-viz .infl-panel:nth-child(3) { transition-delay: 360ms; }
+
+.influence-viz.is-visible .infl-panel {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ================= Bar animations ================= */
@@ -629,6 +695,12 @@
 
   .fig1-fallback {
     display: block;
+  }
+
+  .influence-viz .infl-panel {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 

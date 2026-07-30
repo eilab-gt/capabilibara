@@ -98,6 +98,7 @@
       <div class="navbar-end">
         <a class="navbar-item" href="#abstract">Abstract</a>
         <a class="navbar-item" href="#method">Method</a>
+        <a class="navbar-item" href="#influence">Influence</a>
         <a class="navbar-item" href="#data">Data</a>
         <a class="navbar-item" href="#findings">Findings</a>
         <a class="navbar-item" href="#models">Models</a>
@@ -185,21 +186,23 @@
       </div>
       <div class="paper-copy" data-aos="fade-up" data-aos-delay="100">
         <p>
-          We use training-data attribution as an interpretable tool for capability discovery, mapping
-          which regions of the pretraining corpus support social reasoning versus STEM reasoning in
-          OLMo3-7B.
+          Language models learn everything they can do from their training data, but which data
+          taught which skill is usually invisible. We use training-data attribution to make it
+          visible: starting from a capability, we trace back through the model to the kinds of
+          training text that support it.
         </p>
         <p>
-          Document-level attribution scores are too noisy to interpret directly, so we aggregate them
-          through WebOrganizer's 24 topic by 24 format taxonomy over the de-duplicated Dolma3 corpus.
-          The result is a 576 by 4 bin-level influence matrix across SocialIQA, MMLU Social Sciences,
-          ARC-Challenge, and MMLU STEM.
+          We ask one focused question: does social reasoning &mdash; figuring out what people
+          want, feel, and intend &mdash; come from different text than STEM reasoning? We label
+          every document in a fully open training corpus by topic and format, score how strongly
+          each region of the corpus supports each skill, and then check the answer causally by
+          making the model forget flagged regions and re-testing it.
         </p>
         <p>
-          Social and STEM reasoning draw on distinct corpus regions, and the split is sharper for
-          reasoning than for knowledge. Targeted unlearning provides partial causal validation:
-          forgetting high-attribution regions degrades the aligned benchmark more than within-bin
-          random baselines, most clearly for SocialIQA.
+          The answer is yes. Social reasoning draws on conversational, affect-rich,
+          people-centered writing; STEM reasoning draws on technical, expository material. We
+          measured this first in OLMo3, and we are re-running the same pipeline across a family
+          of open-data models to test how far the pattern generalizes.
         </p>
       </div>
     </div>
@@ -214,6 +217,58 @@
           The central move is aggregation: every benchmark query is traced back to many individual
           documents, then summarized into comparable topic-format regions.
         </p>
+      </div>
+
+      <div class="concept-row influence-row" id="influence">
+        <div class="concept-copy" data-aos="fade-up">
+          <p class="mini-kicker">The core tool</p>
+          <h3>What is an influence function?</h3>
+          <p>
+            The model answered a question correctly. Which parts of its training data taught it
+            that? An influence function estimates how the model's answer would change if one
+            training document had been left out &mdash; without retraining the model.
+          </p>
+          <p>
+            During training, every document nudges the model's internal settings a little. A
+            benchmark question also defines a direction: what would make the model better at this?
+            Documents whose nudge points the same way have positive influence &mdash; they
+            supported the skill. Documents whose nudge points the opposite way score negative.
+          </p>
+          <p class="takeaway">
+            One document's score is noisy. Average over thousands of documents that share a topic
+            and format, and the noise fades into a readable map of where a skill comes from. These
+            are estimates, not proofs &mdash; which is why the pipeline ends with an unlearning
+            check.
+          </p>
+        </div>
+        <div class="influence-viz" data-concept="influence" data-aos="fade-up" data-aos-delay="120">
+          <svg viewBox="0 0 460 240" role="img" aria-label="Three panels: a benchmark question defines a direction; a training document pointing the same way supports the skill; a document pointing the opposite way works against it.">
+            <g class="infl-panel">
+              <rect x="10" y="14" width="140" height="196" rx="10"></rect>
+              <text x="80" y="44" class="infl-title">The question</text>
+              <line x1="80" y1="176" x2="80" y2="84" class="infl-arrow infl-query"></line>
+              <polygon points="80,72 72,88 88,88" class="infl-head infl-query"></polygon>
+              <text x="80" y="202" class="infl-caption">"what would make</text>
+              <text x="80" y="216" class="infl-caption">me better at this?"</text>
+            </g>
+            <g class="infl-panel">
+              <rect x="160" y="14" width="140" height="196" rx="10"></rect>
+              <text x="230" y="44" class="infl-title">Aligned nudge</text>
+              <line x1="230" y1="176" x2="230" y2="84" class="infl-arrow infl-pos"></line>
+              <polygon points="230,72 222,88 238,88" class="infl-head infl-pos"></polygon>
+              <text x="230" y="202" class="infl-caption">supports the skill</text>
+              <text x="230" y="216" class="infl-caption">positive influence</text>
+            </g>
+            <g class="infl-panel">
+              <rect x="310" y="14" width="140" height="196" rx="10"></rect>
+              <text x="380" y="44" class="infl-title">Opposed nudge</text>
+              <line x1="380" y1="84" x2="380" y2="176" class="infl-arrow infl-neg"></line>
+              <polygon points="380,188 372,172 388,172" class="infl-head infl-neg"></polygon>
+              <text x="380" y="202" class="infl-caption">works against it</text>
+              <text x="380" y="216" class="infl-caption">negative influence</text>
+            </g>
+          </svg>
+        </div>
       </div>
 
       <div class="method-walkthrough" data-aos="fade-up">
@@ -236,15 +291,11 @@
           <p class="mini-kicker">Corpus taxonomy</p>
           <h3>24 topics crossed with 24 formats.</h3>
           <p>
-            Dolma3 is de-duplicated and classified, then sampled into 10,000 documents per occupied bin.
-            This turns attribution from a document retrieval problem into a structured corpus
-            comparison problem.
+            The corpus is de-duplicated and every document is labeled by what it is about (topic)
+            and what kind of writing it is (format), using an off-the-shelf taxonomy
+            (WebOrganizer). Sampling evenly across the occupied bins turns attribution from a
+            document retrieval problem into a structured corpus comparison problem.
           </p>
-          <dl class="inline-facts">
-            <div><dt>Working set</dt><dd>5.68M documents</dd></div>
-            <div><dt>Scale</dt><dd>about 10.5B tokens</dd></div>
-            <div><dt>Unit</dt><dd>mean influence per bin</dd></div>
-          </dl>
         </div>
         <div class="taxonomy-viz" data-concept="taxonomy" data-aos="fade-up" data-aos-delay="120">
           <div class="tax-axis tax-axis-y">Topics</div>
@@ -254,11 +305,11 @@
             <noscript><p class="tax-note">The interactive 24 &times; 24 grid needs JavaScript; the study crosses 24 topics with 24 formats into 576 bins.</p></noscript>
           </div>
           <div class="tax-labels">
-            <span>Literature &times; Customer Support</span>
-            <span>Politics &times; Documentation</span>
             <span>Social Life &times; Q&amp;A Forum</span>
+            <span>Science &amp; Tech &times; Tutorial</span>
+            <span>Politics &times; Documentation</span>
           </div>
-          <p class="tax-note">Highlighted cells are illustrative; the labeled bins are real examples from the study.</p>
+          <p class="tax-note">Highlighted cells and labels are illustrative examples of topic-format bins.</p>
         </div>
       </div>
 
@@ -314,18 +365,17 @@
       <div class="paper-copy" data-aos="fade-up" data-aos-delay="100">
         <p>
           All four probes are OLMES-standard multiple-choice benchmarks, evaluated 5-shot:
-          SocialIQA (10,000 queries), MMLU Social Sciences (3,077 queries), ARC-Challenge
-          (1,172 queries), and MMLU STEM (3,018 queries). Benchmark query gradients come from
-          OLMo3-7B Instruct on the bare questions; document gradients and corpus-side curvature
-          are computed on OLMo3-7B Base, keeping the analysis tied to pretraining data.
+          SocialIQA (social reasoning), MMLU Social Sciences (social knowledge), ARC-Challenge
+          (science reasoning), and MMLU STEM (STEM knowledge). For the OLMo3 deep-dive, query
+          gradients come from the instruct model on the bare questions, while document gradients
+          are computed on the base model, keeping the analysis tied to pretraining data.
         </p>
-        <dl class="inline-facts">
-          <div><dt>Unique documents</dt><dd>1.26B after de-duplication</dd></div>
-          <div><dt>Taxonomized</dt><dd>1.10B documents (~87%)</dd></div>
-          <div><dt>Corpus skew</dt><dd>top-10 bins hold 27.8% of tokens</dd></div>
-          <div><dt>Bin imbalance</dt><dd>largest &gt;100,000x the smallest</dd></div>
-          <div><dt>Compute</dt><dd>~37K H200-equivalent GPU hours</dd></div>
-        </dl>
+        <p>
+          The corpus side is what makes the study possible: every document the model trained on
+          is open and available for analysis. That is billions of unique documents after
+          de-duplication, from which we draw a stratified sample of several million spread across
+          all topic-format bins &mdash; the raw corpus is heavily skewed toward a few large ones.
+        </p>
       </div>
     </div>
   </section>
