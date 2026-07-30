@@ -202,7 +202,7 @@ img {
 }
 
 .publication-authors a {
-  color: var(--primary-color);
+  color: inherit;
   font-weight: 800;
 }
 
