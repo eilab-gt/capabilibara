@@ -1,18 +1,17 @@
 /* Animated Figure 1 — Capability Provenance Pipeline.
- Self-contained SVG + GSAP timeline. Falls back to the static PNG when
+ Self-contained SVG + GSAP timeline. Falls back to a static schematic when
  GSAP is unavailable or the user prefers reduced motion.
 
  Stages:
-   1) Corpus Construction   — Dolma3 -> dedup -> WebOrganizer 576 bins
+   1) Corpus Construction — open corpus -> dedup -> topic × format taxonomy
    2) Training Data Attribution — benchmark probes -> Bergson/TrackStar scoring
-   3) Bin-Level Influence Map   — signed z-score bars per benchmark (real panel-3 data)
-   4) Unlearning Validation     — Table 49 paired Δ per benchmark (γ_influence − γ_random)
+   3) Influence Map — signed influence per corpus region (illustrative values)
+   4) Unlearning Check — targeted vs random forgetting (schematic)
 
- Scientific values (influence vectors, unlearning paired Δ, benchmark
- order) are imported from the shared data module so this scene cannot drift
- from the claims YAML. Only presentation-only bits (chip labels, colors,
- shortened row labels) live here. */
-import { BENCHMARKS, SELECTED_BINS_PANEL, SIGNATURE_BIN, UNLEARNING } from "./animations/socialtda-data.js";
+ This figure teaches the METHOD; it deliberately carries no result numbers.
+ Scenes 3–4 use clearly-labeled illustrative values so the walkthrough stays
+ correct while quantitative results are rerun across models (maintainer
+ decision, 2026-07-29). */
 
 var NS = "http://www.w3.org/2000/svg";
 var VB_W = 880, VB_H = 360;
@@ -39,35 +38,26 @@ var BENCH = [
   { name: "MMLU STEM",  color: C.stemKnow }
 ];
 
-// Shortened row labels for the heat-scene gutter (presentation only);
-// values are imported so the figure cannot drift from the claims YAML.
-var BIN_LABELS = {
-  "Literature × Customer Support": "Lit. × Cust. Support",
-  "Social Life × Q&A Forum": "Social Life × Q&A",
-  "Home & Hobbies × Creative Writing": "Home × Creative",
-  "Politics × Documentation": "Politics × Docs"
-};
-
-// Figure 2 Panel C: rows x [SocialIQA, MMLU SS, ARC-Chal., MMLU STEM].
-// sig marks the signature-bin row's SocialIQA cell for the purple stroke.
+// Scene 3 data — ILLUSTRATIVE ONLY. Rows are format-level corpus regions;
+// values sketch the qualitative pattern (conversational text supports social
+// reasoning, technical text supports STEM) without quoting any real result.
 var INFLUENCE = {
   cols: BENCH.map(function (b) { return b.name; }),
-  rows: SELECTED_BINS_PANEL.map(function (p) {
-    return {
-      label: BIN_LABELS[p.bin] || p.bin,
-      v: BENCHMARKS.map(function (b) { return p.values[b.key]; }),
-      sig: p === SIGNATURE_BIN ? 0 : undefined
-    };
-  })
+  rows: [
+    { label: "Conversational", v: [2.6, -1.1, -0.4, -0.9], sig: 0 },
+    { label: "Personal stories", v: [1.4, 0.1, -0.5, -0.2] },
+    { label: "Reference & docs", v: [0.2, 1.6, 1.2, 1.5] },
+    { label: "Technical & code", v: [-0.8, 0.5, 2.1, 1.8] }
+  ]
 };
 
-// Table 49: paired Δ = γ_influence − γ_random (acc. points = medianD * 100).
+// Scene 4 data — schematic: the logic of the unlearning check, not a result.
 var UNLEARN = {
-  cols: ["Paired Δ (pp)"],
-  rows: UNLEARNING.pairedInfluenceVsRandom.map(function (e) {
-    var b = BENCHMARKS.filter(function (x) { return x.key === e.key; })[0];
-    return { label: b.short, v: [+(e.medianD * 100).toFixed(2)] };
-  })
+  cols: ["Damage to matched skill"],
+  rows: [
+    { label: "Forget flagged data", v: [1.3] },
+    { label: "Forget random data", v: [0.3] }
+  ]
 };
 
 var STAGES = [
@@ -77,10 +67,10 @@ var STAGES = [
   { icon: "4", title: "Unlearning" }
 ];
 var CAPTIONS = [
-  "<strong>1) Corpus Construction.</strong> Dolma3 (6T tokens) is de-duplicated to ~1.26B unique documents, then binned by WebOrganizer into <strong>576 bins</strong> (24 topics × 24 formats).",
-  "<strong>2) Training Data Attribution.</strong> Four benchmark probes are attributed to bins with gradient-based TrackStar (via Bergson), then aggregated to a 576×4 influence matrix.",
-  "<strong>3) Bin-Level Influence Map.</strong> Signed z-scores map supportive (blue) vs. suppressive (orange) bins. SocialIQA's <strong>signature bin</strong> is positive for social yet negative/flat for STEM.",
-  "<strong>4) Unlearning Validation.</strong> &Delta; = &gamma;<sub>influence</sub> &minus; &gamma;<sub>random</sub> across 24 topics &times; 3 seeds (paper Table 49). Influence-targeted forgetting damages <strong>SocialIQA</strong> (+1.60 pp, p &asymp; 10<sup>-5</sup>); ARC-Challenge <em>reverses</em> (&minus;0.26 pp). Selective damage, not generic topic removal."
+  "<strong>1) Build a labeled corpus.</strong> The fully open training corpus is de-duplicated and every document is labeled by topic and format &mdash; 24 topics &times; 24 formats, <strong>576 bins</strong> in all.",
+  "<strong>2) Score every region.</strong> For each benchmark, gradient-based attribution (TrackStar via Bergson) estimates how much each corpus region supported the model's answers. Positive influence supports the skill; negative opposes it.",
+  "<strong>3) Read the map.</strong> Averaging over each region turns noisy per-document scores into a readable map <em>(values shown are illustrative)</em>. Regions rich in conversational, people-centered text light up for social reasoning; technical regions light up for STEM.",
+  "<strong>4) Check it causally.</strong> Make the model forget the flagged regions and re-test it <em>(schematic)</em>. Targeted forgetting weakens the matched skill more than forgetting random comparable data &mdash; evidence the map tracks something real."
 ];
 
 // ---- helpers ----
@@ -107,8 +97,8 @@ function inflColor(z) {
   return z >= 0 ? mix("#f7f7f7", "#2F6FA8", t) : mix("#f7f7f7", "#B35806", Math.min(Math.abs(z) / 1.2, 1));
 }
 function inflInk(z) { return Math.min(Math.abs(z) / 3.1, 1) > 0.55 ? "#fff" : "#222"; }
-// paired unlearning Δ (γ_influence − γ_random): same signed scale as the rest of
-// the site — positive (selective damage) blue, negative (reversed) orange. Max |Δ| ≈ 1.6 pp.
+// unlearning-check scale (schematic): positive (damage) blue, negative orange;
+// normalized to the illustrative max used in UNLEARN.
 function accColor(d) {
   return d >= 0 ? mix("#eff3ff", "#2F6FA8", Math.min(d / 1.6, 1))
                 : mix("#f7f7f7", "#B35806", Math.min(Math.abs(d) / 1.6, 1));
@@ -149,7 +139,7 @@ function sceneCorpus(root) {
   var pitchX = blockW / docCols, pitchY = blockW / docRows;
   var pageW = pitchX * 0.72, pageH = pitchY * 0.78; // page-shaped (taller than wide)
   var docX = 40, docY = GCY - blockW / 2;
-  txt(g, docX + blockW / 2, docY - 16, "Dolma3 · 6T tokens",
+  txt(g, docX + blockW / 2, docY - 16, "Open training corpus",
     { class: "f1-label", "font-size": 13, "font-weight": 700, "text-anchor": "middle" });
   txt(g, docX + blockW / 2, docY + blockW + 18, "de-duplicated corpus — not all documents are used",
     { class: "f1-label", "font-size": 11, "text-anchor": "middle", fill: C.slate });
@@ -166,7 +156,7 @@ function sceneCorpus(root) {
   var ox = docX + blockW - 4, oy = GCY;
 
   // WebOrganizer 8x8 grid (right), title centered over the grid
-  txt(g, GCX, GRID.y - 20, "WebOrganizer · 576 bins", { class: "f1-title", "font-size": 13, "text-anchor": "middle" });
+  txt(g, GCX, GRID.y - 20, "Label by topic × format · 576 bins", { class: "f1-title", "font-size": 13, "text-anchor": "middle" });
   txt(g, GCX, GRID.y - 5, "24 topics × 24 formats", { class: "f1-label", "font-size": 11, "text-anchor": "middle" });
   var cells = [];
   for (var r = 0; r < GRID.n; r++) for (var c = 0; c < GRID.n; c++) {
@@ -395,8 +385,8 @@ function build(container) {
   var scenes = [
     sceneCorpus(svg),
     sceneAttribution(svg),
-    heatScene(svg, INFLUENCE, inflColor, inflInk, "Bin-Level Influence Map (signed z-score)"),
-    heatScene(svg, UNLEARN, accColor, accInk, "Unlearning Validation (paired Δ, acc. points)")
+    heatScene(svg, INFLUENCE, inflColor, inflInk, "Influence Map (illustrative values)"),
+    heatScene(svg, UNLEARN, accColor, accInk, "Unlearning Check (schematic)")
   ];
 
   var cur = -1, playing = true, tl = null, advance = null, progTween = null;

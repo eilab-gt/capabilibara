@@ -184,11 +184,48 @@
   display: block;
 }
 
+/* Static schematic shown when the animated walkthrough is unavailable. */
+.fig1-schematic {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fig1-schematic .f1s-box rect {
+  fill: #fffdf8;
+  stroke: var(--hairline);
+  stroke-width: 1.4;
+}
+
+.fig1-schematic .f1s-title {
+  fill: var(--ink);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.fig1-schematic .f1s-copy {
+  fill: var(--faint);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 12.5px;
+  text-anchor: middle;
+}
+
+.fig1-schematic .f1s-arrow {
+  fill: none;
+  stroke: var(--soc-reason);
+  stroke-width: 3;
+  stroke-linecap: round;
+  marker-end: none;
+}
+
 /* Without JS the scroll-reveal cells would stay faded or invisible.
    Force them to their final visible state so the page is readable. */
 .no-js .tax-cell,
 .no-js .contrast-cell,
-.no-js .cluster span {
+.no-js .cluster span,
+.no-js .influence-viz .infl-panel {
   opacity: 1;
   transform: none;
 }
@@ -388,8 +425,72 @@
   color: #145a2a;
 }
 
-/* ================= Bar animations ================= */
-.bar-viz,
+/* ================= Influence-function explainer ================= */
+.influence-row {
+  margin-bottom: 5.5rem;
+}
+
+.influence-viz {
+  padding: 1rem;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: #fffdf8;
+}
+
+.influence-viz svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.influence-viz .infl-panel rect {
+  fill: #ffffff;
+  stroke: var(--hairline);
+  stroke-width: 1.2;
+}
+
+.influence-viz .infl-title {
+  fill: var(--ink);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.influence-viz .infl-caption {
+  fill: var(--faint);
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+.influence-viz .infl-arrow {
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.influence-viz .infl-arrow.infl-query { stroke: var(--soc-reason, #762A83); }
+.influence-viz .infl-head.infl-query { fill: var(--soc-reason, #762A83); }
+.influence-viz .infl-arrow.infl-pos { stroke: var(--infl-pos, #2F6FA8); }
+.influence-viz .infl-head.infl-pos { fill: var(--infl-pos, #2F6FA8); }
+.influence-viz .infl-arrow.infl-neg { stroke: var(--infl-neg, #B35806); }
+.influence-viz .infl-head.infl-neg { fill: var(--infl-neg, #B35806); }
+
+.influence-viz .infl-panel {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.influence-viz .infl-panel:nth-child(2) { transition-delay: 180ms; }
+.influence-viz .infl-panel:nth-child(3) { transition-delay: 360ms; }
+
+.influence-viz.is-visible .infl-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================= Cluster animation ================= */
 .cluster-viz {
   padding: 1rem;
   border: 1px solid var(--hairline);
@@ -397,84 +498,10 @@
   background: #fffdf8;
 }
 
-.bar-head,
-.bar-row {
-  display: grid;
-  grid-template-columns: minmax(150px, 0.75fr) minmax(180px, 1.5fr) minmax(100px, auto);
-  gap: 0.8rem;
-  align-items: center;
+.finding-row .cluster-viz {
+  margin-top: 1.3rem;
 }
 
-.bar-head {
-  margin-bottom: 0.7rem;
-  color: var(--faint);
-  font-size: 0.75rem;
-  font-weight: 850;
-  text-transform: uppercase;
-}
-
-.bar-row {
-  min-height: 46px;
-  border-top: 1px solid rgba(23, 23, 23, 0.08);
-}
-
-.bar-label {
-  color: var(--ink);
-  font-weight: 800;
-}
-
-.bar-value {
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  font-weight: 850;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.bar-track {
-  position: relative;
-  height: 22px;
-  overflow: hidden;
-  border: 1px solid rgba(23, 23, 23, 0.1);
-  border-radius: 6px;
-  background:
-    linear-gradient(90deg, rgba(179, 88, 6, 0.08), transparent 50%, rgba(47, 111, 168, 0.08));
-}
-
-.bar-track::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: rgba(23, 23, 23, 0.24);
-}
-
-.bar-fill {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  width: 0;
-  border-radius: 4px;
-  transition: width 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.bar-fill.positive {
-  left: 50%;
-  background: var(--infl-pos);
-}
-
-.bar-fill.negative {
-  right: 50%;
-  background: var(--infl-neg);
-}
-
-.bar-row.is-visible .bar-fill {
-  width: var(--bar-width, 0%);
-}
-
-/* ================= Cluster animation ================= */
 .cluster-viz {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 2px minmax(0, 1fr);
@@ -589,20 +616,6 @@
     font-size: 0.92rem;
   }
 
-  .bar-head,
-  .bar-row {
-    grid-template-columns: 1fr;
-    gap: 0.35rem;
-  }
-
-  .bar-head span:last-child {
-    display: none;
-  }
-
-  .bar-value {
-    text-align: left;
-  }
-
   .cluster-viz {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -626,26 +639,12 @@
   .fig1-fallback {
     display: block;
   }
-}
 
-
-/* Benchmark-tinted bar fills (paper palette): color encodes the benchmark,
-   fill direction already encodes the sign. Higher specificity than
-   .bar-fill.positive / .bar-fill.negative, so it wins. */
-.bar-row[data-claim="socialiqa"] .bar-fill {
-  background: #762a83;
-}
-
-.bar-row[data-claim="mmlu_social_sciences"] .bar-fill {
-  background: #8c6d1f;
-}
-
-.bar-row[data-claim="arc_challenge"] .bar-fill {
-  background: #a14f00;
-}
-
-.bar-row[data-claim="mmlu_stem"] .bar-fill {
-  background: #1b7837;
+  .influence-viz .infl-panel {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 
