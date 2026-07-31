@@ -153,7 +153,7 @@ import { SIGNATURE_BIN, BENCHMARKS, UNLEARNING, MODELS } from "./animations/soci
 
   function initScrollAnimations() {
     var nodes = [].slice.call(document.querySelectorAll(
-      ".taxonomy-viz, .contrast-viz, .cluster-viz, [data-bars]"
+      ".taxonomy-viz, .contrast-viz, .cluster-viz, [data-influence-explainer], [data-bars]"
     ));
 
     if (!("IntersectionObserver" in window)) {

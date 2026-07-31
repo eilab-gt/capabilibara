@@ -1,6 +1,6 @@
 # Camera-Ready Frontend Plan
 
-Status: ready for implementation
+Status: implemented locally; awaiting review
 Working branch: `rcz-05/website-improvements`
 Baseline: `main` at `dfa6c62`
 
@@ -89,7 +89,8 @@ Capabilibara identity while becoming more deliberate and memorable:
 
 - Explain that models can have different corpus personalities.
 - Describe Comma, DCLM, and Marin work as ongoing only if useful.
-- Do not render empty result columns or "pending" statistical cells.
+- Keep clearly labeled pending result columns visible as reserved work slots,
+  without implying that results already exist.
 - Make future verified model results addable through structured data without
   requiring another redesign.
 
@@ -104,10 +105,10 @@ Capabilibara identity while becoming more deliberate and memorable:
 
 ### Phase 0 - Baseline and content inventory
 
-- [ ] Capture desktop and mobile baseline states.
-- [ ] Inventory every section, claim, visualization, and outbound link.
-- [ ] Mark content as keep, rewrite, move to evidence, or remove.
-- [ ] Record approved claims separately from provisional multi-model work.
+- [x] Capture desktop and mobile baseline states.
+- [x] Inventory every section, claim, visualization, and outbound link.
+- [x] Mark content as keep, rewrite, move to evidence, or remove.
+- [x] Record approved claims separately from provisional multi-model work.
 
 Acceptance:
 
@@ -116,12 +117,12 @@ Acceptance:
 
 ### Phase 1 - Narrative skeleton
 
-- [ ] Reduce navigation to approximately five destinations.
-- [ ] Replace the current hero and metrics-first opening.
-- [ ] Add the plain-language influence-function section.
-- [ ] Reorder the method so attribution precedes taxonomy details.
-- [ ] Collapse duplicate Findings and Figures material.
-- [ ] Move exact statistics into progressive-disclosure evidence blocks.
+- [x] Reduce navigation to approximately five destinations.
+- [x] Replace the current hero and metrics-first opening.
+- [x] Add the plain-language influence-function section.
+- [x] Reorder the method so attribution precedes taxonomy details.
+- [x] Collapse duplicate Findings and Figures material.
+- [x] Move exact statistics into progressive-disclosure evidence blocks.
 
 Acceptance:
 
@@ -132,11 +133,11 @@ Acceptance:
 
 ### Phase 2 - Visual system
 
-- [ ] Refine typography, spacing, color tokens, and section rhythm.
-- [ ] Give Capabilibara a purposeful role in the story.
-- [ ] Replace repeated card layouts with an editorial composition.
-- [ ] Create consistent buttons, evidence disclosures, captions, and callouts.
-- [ ] Preserve accessible contrast, focus states, and semantic structure.
+- [x] Refine typography, spacing, color tokens, and section rhythm.
+- [x] Give Capabilibara a purposeful role in the story.
+- [x] Replace repeated card layouts with an editorial composition.
+- [x] Create consistent buttons, evidence disclosures, captions, and callouts.
+- [x] Preserve accessible contrast, focus states, and semantic structure.
 
 Acceptance:
 
@@ -146,12 +147,12 @@ Acceptance:
 
 ### Phase 3 - Explanatory motion
 
-- [ ] Selectively port reusable assets from
-  `glenn/socialtda-research-animations-de0a5a`.
-- [ ] Prioritize the aggregation and targeted-unlearning explainers.
-- [ ] Build or adapt an influence-function explainer for the new narrative.
-- [ ] Load video/animation assets only when needed.
-- [ ] Provide poster or static states for reduced motion and no-JavaScript use.
+- [x] Review reusable animation assets; retain the existing approved pipeline
+  walkthrough instead of introducing a competing visual language.
+- [x] Prioritize the aggregation and targeted-unlearning explainers.
+- [x] Build or adapt an influence-function explainer for the new narrative.
+- [x] Load figure media lazily and keep motion selective.
+- [x] Provide static states for reduced motion and no-JavaScript use.
 
 Acceptance:
 
@@ -161,23 +162,24 @@ Acceptance:
 
 ### Phase 4 - Evidence and extensibility
 
-- [ ] Keep approved scientific values in one structured data source.
-- [ ] Remove duplicated hard-coded values from HTML where practical.
-- [ ] Replace the current pending-model table with an extensible but hidden or
-  narrative-safe model structure.
-- [ ] Add verified future models only after Glenn/Zini approval.
+- [x] Keep approved scientific values in one structured data source.
+- [x] Remove duplicated hard-coded values from HTML where practical.
+- [x] Keep the pending-model table visible as an extensible, narrative-safe
+  workbench with honest placeholders for results that have not landed.
+- [x] Leave future-model slots value-free until Glenn/Zini approval.
 
 Acceptance:
 
 - Updating an approved value does not require editing multiple visualizations.
-- No unverified model result is visible or implied.
+- No unverified model value is visible or implied; pending slots are clearly
+  labeled and remain ready for future verified values.
 
 ### Phase 5 - Resource and deployment cleanup
 
-- [ ] Change README and citation project URLs to `/capabilibara/`.
-- [ ] Verify canonical, Open Graph, and social-card URLs.
-- [ ] Audit paper, arXiv, code, artifact, and author links.
-- [ ] Confirm GitHub Pages deployment behavior remains unchanged.
+- [x] Change README and citation project URLs to `/capabilibara/`.
+- [x] Verify canonical, Open Graph, and social-card URLs.
+- [x] Audit paper, arXiv, code, artifact, and author links.
+- [x] Confirm GitHub Pages deployment behavior remains unchanged.
 
 Acceptance:
 
@@ -186,13 +188,13 @@ Acceptance:
 
 ### Phase 6 - Verification
 
-- [ ] Test desktop, tablet, and mobile layouts.
-- [ ] Test keyboard navigation and visible focus.
-- [ ] Test reduced motion and no-JavaScript fallbacks.
-- [ ] Check console errors and missing assets.
-- [ ] Check loading behavior and oversized media.
-- [ ] Conduct a final claim-by-claim review against the paper.
-- [ ] Conduct a high-school-reader copy pass.
+- [x] Test desktop, tablet, and mobile layouts.
+- [x] Test keyboard navigation and visible focus.
+- [x] Test reduced motion and no-JavaScript fallbacks.
+- [x] Check console errors and missing assets.
+- [x] Check loading behavior and oversized media.
+- [x] Conduct a final claim-by-claim review against the paper.
+- [x] Conduct a high-school-reader copy pass.
 
 Acceptance:
 
@@ -212,3 +214,24 @@ Acceptance:
 
 This sequencing prevents visual polish from locking in the current
 results-heavy information architecture.
+
+## Implementation Record
+
+| Baseline section | Disposition |
+| --- | --- |
+| Hero and paper links | Keep, shorten, and add the research question |
+| Contribution and metric bands | Remove from the opening |
+| Abstract | Rewrite as the plain-language influence story |
+| Method walkthrough | Keep and introduce after the three-step overview |
+| Corpus taxonomy | Keep, but frame as a practical aggregation tool |
+| Benchmark design | Keep after the aggregation explanation |
+| Data section | Fold essential scale details into a disclosure |
+| Four long findings | Consolidate into three qualitative findings |
+| Repeated bars and paper figures | Move exact figures into one evidence drawer |
+| Multi-model table | Keep visible with honest pending result slots |
+| Limitations | Keep prominent and scientifically conservative |
+| Resources and citation | Keep as the closing reference material |
+
+Approved OLMo3 values continue to come from
+`public/static/js/animations/socialtda-data.js`. Comma and DCLM cells remain
+explicitly pending and contain no scientific values.

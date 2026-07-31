@@ -6,8 +6,8 @@
   <!-- badges -->
   <p>
     <a href="https://arxiv.org/abs/2606.19625"><img src="https://img.shields.io/badge/%F0%9F%93%84%20paper-arXiv%202606.19625-1f2328.svg" alt="Paper"></a>
-    <a href="https://eilab.gatech.edu/social-data-attribution/"><img src="https://img.shields.io/badge/venue-COLM%202026-762a83.svg" alt="COLM 2026"></a>
-    <a href="https://eilab.gatech.edu/social-data-attribution/"><img src="https://img.shields.io/badge/%F0%9F%8C%90%20website-project%20page-2f6fa8.svg" alt="Project page"></a>
+    <a href="https://eilab.gatech.edu/capabilibara/"><img src="https://img.shields.io/badge/venue-COLM%202026-762a83.svg" alt="COLM 2026"></a>
+    <a href="https://eilab.gatech.edu/capabilibara/"><img src="https://img.shields.io/badge/%F0%9F%8C%90%20website-project%20page-2f6fa8.svg" alt="Project page"></a>
     <img src="https://img.shields.io/badge/code-pending%20release-8c6d1f.svg" alt="Code status: pending release">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-a93428.svg" alt="License: AGPL-3.0"></a>
     <img src="https://img.shields.io/badge/python-3.12-2f6fa8.svg" alt="Python 3.12">
@@ -29,7 +29,7 @@
 
 This repository will host the audited code for **"Capability Provenance in Language Models: A Case Study in Social Reasoning"** (COLM 2026). The pipeline runs gradient-based training-data attribution over a stratified sample of the Dolma3 corpus, aggregates document-level influence to corpus regions defined by the WebOrganizer 24×24 topic-by-format taxonomy, and validates the flagged regions with selective unlearning.
 
-The full results, figures, and method write-up live in the **[paper](https://arxiv.org/abs/2606.19625)** and on the **[project site](https://eilab.gatech.edu/social-data-attribution/)**. This repository is the software.
+The full results, figures, and method write-up live in the **[paper](https://arxiv.org/abs/2606.19625)** and on the **[project site](https://eilab.gatech.edu/capabilibara/)**. This repository is the software.
 
 > ⚠️ **Status.** The project website is live now. The audited code and aggregate artifacts (sampling manifests, the 576×4 bin-level influence matrix, unlearning checkpoints) arrive with the camera-ready release. Sections marked **pending** below are staged for that release and filled when the code ports in.
 
@@ -65,7 +65,7 @@ Each package maps to a pipeline stage: **corpus construction** (`dolma/`) → **
 ```bash
 # clone, then install (Python 3.12, uv-managed, src/ layout)
 git clone https://github.com/eilab-gt/capabilibara.git
-cd social-data-attribution
+cd capabilibara
 uv sync
 
 # reproduce a headline result (command confirmed at release)
@@ -94,7 +94,7 @@ Public Hugging Face buckets and the released aggregate artifacts are listed in t
 
 ## Roadmap
 
-- [x] Project website live ([eilab.gatech.edu/social-data-attribution](https://eilab.gatech.edu/social-data-attribution/))
+- [x] Project website live ([eilab.gatech.edu/capabilibara](https://eilab.gatech.edu/capabilibara/))
 - [x] Paper on arXiv ([2606.19625](https://arxiv.org/abs/2606.19625))
 - [ ] Audited code port (Copybara)
 - [ ] Sampling manifests
