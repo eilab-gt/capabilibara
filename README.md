@@ -20,16 +20,13 @@
     a training-data attribution pipeline that maps which regions of a pretraining corpus
     support different reasoning capabilities, and validates those regions with targeted unlearning.
   </p>
-
-  <img src="public/static/images/figures/fig-overview-revised.webp" width="780" alt="Figure 1: corpus-scale attribution pipeline that bins Dolma3, scores benchmark probes, aggregates signed influence, and validates selected regions with unlearning.">
-  <p><sub>Figure 1: corpus-scale attribution pipeline — bin Dolma3, score benchmark probes, aggregate signed influence, validate with unlearning.</sub></p>
 </div>
 
 ## Overview
 
 This repository will host the audited code for **"Capability Provenance in Language Models: A Case Study in Social Reasoning"** (COLM 2026). The pipeline runs gradient-based training-data attribution over a stratified sample of the Dolma3 corpus, aggregates document-level influence to corpus regions defined by the WebOrganizer 24×24 topic-by-format taxonomy, and validates the flagged regions with selective unlearning.
 
-The full results, figures, and method write-up live in the **[paper](https://arxiv.org/abs/2606.19625)** and on the **[project site](https://eilab.gatech.edu/social-data-attribution/)**. This repository is the software.
+The full results, figures, and method write-up live in the **[paper](https://arxiv.org/abs/2606.19625)** and on the **[project site](https://eilab.gatech.edu/capabilibara/)**. This repository is the software.
 
 > ⚠️ **Status.** The project website is live now. The audited code and aggregate artifacts (sampling manifests, the 576×4 bin-level influence matrix, unlearning checkpoints) arrive with the camera-ready release. Sections marked **pending** below are staged for that release and filled when the code ports in.
 
