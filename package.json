@@ -1,0 +1,9 @@
+{
+  "name": "capabilibara-site",
+  "private": true,
+  "type": "module",
+  "description": "Preview plumbing for the static site in public/ (not part of the deployed site).",
+  "scripts": {
+    "dev": "node dev-server.mjs"
+  }
+}

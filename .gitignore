@@ -9,3 +9,9 @@ skills-lock.json
 
 # Design review screenshots (ephemeral)
 design-review/
+
+# Python & OS artifacts
+__pycache__/
+*.pyc
+.DS_Store
+
