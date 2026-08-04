@@ -118,7 +118,7 @@ function fmt(v, plus, decimals) {
 // Each returns a <g> with an _enter(gsap) -> timeline method.
 
 // soft multi-hue palette used to suggest distinct strata/bins
-var STRATA = ["#762A83", "#8C6D1F", "#A14F00", "#1B7837", "#006D5B", "#4575B4", "#67A9CF", "#4B5563"];
+var STRATA = ["#762A83", "#8C6D1F", "#A14F00", "#1B7837", "#2F6FA8", "#5589B9", "#87B7D5", "#4B5563"];
 
 // a "document" page glyph: rounded page with a folded corner + text lines
 function docGlyph(parent, x, y, w, h) {
